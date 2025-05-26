@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block style %}
+
+    <link rel="stylesheet" href="/assets/css/editForm.css">
+{% endblock %}
+
+{% block title %}Modifier une destination{% endblock %}
+
+{% block main %}
+  <h1>Modifier la destination</h1>
+
+  <form action="/admin/destinations/edit/{{ destination.id }}" method="POST" enctype="multipart/form-data">
+    <label for="titre">Titre :</label>
+    <input type="text" id="titre" name="titre" value="{{ destination.titre }}" required>
+
+    <label for="pays">Pays :</label>
+    <input type="text" id="pays" name="pays" value="{{ destination.pays }}" required>
+
+    <label for="description">Description :</label>
+    <textarea id="description" name="description" required>{{ destination.description }}</textarea>
+
+    <label for="imagePrincipale">Image principale :</label>
+    {% if destination.imagePrincipale %}
+      <img src="{{ destination.imagePrincipale }}" alt="Aperçu" width="150">
+    {% endif %}
+    <input type="file" name="imagePrincipale" id="imagePrincipale">
+
+    <button type="submit">💾 Enregistrer</button>
+  </form>
+{% endblock %}

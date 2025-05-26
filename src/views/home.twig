@@ -1,0 +1,169 @@
+{% extends "base.twig" %}
+
+{% block style %}
+
+    <link rel="stylesheet" href="/assets/css/home.css">
+{% endblock %}
+
+{% block title %}Accueil – Nomadia{% endblock %}
+
+{% block main %}
+
+<!-- HERO -->
+<section class="hero-section">
+  <!-- Logo en haut à droite -->
+  <img src="/assets/image/logo.png" alt="Logo Nomadia" class="logo">
+
+  <!-- Bloc contenu -->
+  <div class="hero-content">
+    <h1>Pour les aventuriers en quête de découvertes</h1>
+    <a href="/signup" class="cta-button">Rejoins la communauté</a>
+  </div>
+</section>
+
+<!-- FONCTIONNALITÉS -->
+<section class="features-section">
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-number">1</span>
+      <div class="feature-text">
+        <h3>Découvrez des destinations</h3>
+        <p>Trouvez des lieux uniques et inspirez-vous pour votre prochain voyage.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-number">2</span>
+      <div class="feature-text">
+        <h3>Préparez vos formalités</h3>
+        <p>Accédez facilement aux informations sur les visas, vaccins et documents nécessaires.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-number">3</span>
+      <div class="feature-text">
+        <h3>Réservez vos activités</h3>
+        <p>Accédez à une sélection d’expériences uniques et réservez en quelques clics.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-number">4</span>
+      <div class="feature-text">
+        <h3>Gérez votre checklist</h3>
+        <p>Ne manquez rien avant le départ grâce à une liste interactive et des rappels.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-number">5</span>
+      <div class="feature-text">
+        <h3>Consultez votre agenda</h3>
+        <p>Visualisez vos réservations et votre planning de voyage en un coup d’œil.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-number">6</span>
+      <div class="feature-text">
+        <h3>Explorez les avis et expériences</h3>
+        <p>Lisez les témoignages d’autres voyageurs et partagez vos propres découvertes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="destinations-section">
+  <h2>Destinations à découvrir</h2>
+  <p>
+    Explorez des destinations uniques et vivez des aventures inoubliables.<br>
+    Laissez-vous inspirer pour votre prochain voyage.
+  </p>
+
+  <div class="destinations-wrapper">
+    <div class="card-row">
+      <div class="destination-card">
+        <img src="/assets/image/reclO0jpcT0oOtQQj.webp" alt="Parc National de Lencois Maranheses">
+        <div class="destination-text">Parc National de<br>Lencois Maranheses</div>
+      </div>
+      <div class="destination-card">
+        <img src="/assets/image/Russie_-_Lac_Baikal.jpg" alt="Lac de Baikal">
+        <div class="destination-text">Lac de Baikal</div>
+      </div>
+    </div>
+
+    <div class="card-row center">
+      <div class="destination-card large">
+        <img src="/assets/image/yakushima-7.jpg" alt="Île de Yakushima">
+        <div class="destination-text">Île de Yakushima</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+
+{# <section class="destinations-section">
+  <h2 class="destinations-title">Destinations à découvrir</h2>
+  <p class="destinations-subtitle">
+    Explorez des destinations uniques et vivez des aventures inoubliables. Laissez-vous inspirer pour votre prochain voyage.
+  </p>
+
+  <div class="destinations-list">
+    {% set destinations = ['Tassili n’Ajjer', 'Tbilissi', 'Montagnes d’Asie'] %}
+    {% for dest in destinations %}
+    <div class="destination-card">
+      <img src="/img/{{ loop.index }}.jpg" alt="{{ dest }}">
+      <div class="destination-overlay">
+        <h3>{{ dest }}</h3>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section> #}
+
+<section class="testimonial-section">
+  <!-- En-tête avec image de fond -->
+  <div class="testimonial-header">
+    <img src="/assets/image/11190.jpg" alt="Fond lac gelé">
+    <h2>Avis voyageurs</h2>
+  </div>
+
+  <!-- Liste des témoignages -->
+  <div class="testimonial-list">
+
+    <!-- Témoignage 1 (empiète sur l'image) -->
+    <div class="testimonial-card first">
+      <img src="/assets/image/portrait-beautiful-latin-american-woman-600nw-2071168457.webp" alt="Avatar Sofia" class="avatar">
+      <div class="testimonial-content">
+        <p class="testimonial-name">Sofia <span class="stars">⭐⭐⭐⭐⭐</span></p>
+        <p class="testimonial-text">
+          "Je voyage souvent sans plan précis, et cette application est devenue mon compagnon de route indispensable !
+          Grâce à la check-list interactive, je n’oublie plus rien avant de partir, et les infos sur les visas et vaccins me font gagner un temps fou.
+          J’ai aussi découvert des destinations incroyables hors des circuits touristiques classiques ! Mention spéciale pour les conseils sur les transports locaux :
+          <strong>j’ai pu me déplacer facilement sans galérer avec les applis locales.</strong> Bref, un must-have pour tous les baroudeurs spontanés !"
+        </p>
+      </div>
+    </div>
+
+    <!-- Témoignage 2 -->
+    <div class="testimonial-card">
+      <img src="/assets/image/2275848-icone-avatar-hipster-de-homme-barbu-a-lunettes-vectoriel.jpg" alt="Avatar Julien" class="avatar">
+      <div class="testimonial-content">
+        <p class="testimonial-name">Julien <span class="stars">⭐⭐⭐⭐⭐</span></p>
+        <p class="testimonial-text">
+          "En tant que papa et adepte de l’organisation, cette application m’a vraiment simplifié la vie !
+          Tout est centralisé : formalités administratives, check-list avec rappels, et même des infos sur les meilleures périodes pour partir.
+          Fini les dizaines d’onglets ouverts pour comparer les visas et vaccins, tout est clair et accessible en un clic.
+          Lors de notre dernier voyage au Canada, j’ai pu organiser nos trajets et vérifier les documents nécessaires sans stress.
+          <strong>Une appli incontournable pour les voyageurs qui aiment anticiper !</strong>"
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{% endblock %}

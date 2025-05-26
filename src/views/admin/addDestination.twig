@@ -1,0 +1,26 @@
+{% extends "base.twig" %}
+
+{% block style %}
+
+    <link rel="stylesheet" href="/assets/css/destinationForm.css">
+{% endblock %}
+
+{% block title %}Ajouter une destination{% endblock %}
+
+{% block main %}
+ <form method="POST" action="/admin/destinations/add" class="form" enctype="multipart/form-data">
+    <label>Titre :</label>
+    <input type="text" name="titre" required>
+
+    <label>Pays :</label>
+    <input type="text" name="pays" required>
+
+    <label for="imagePrincipale">Image principale :</label>
+  <input type="file" id="imagePrincipale" name="imagePrincipale" accept="image/*" required>
+
+    <label>Description :</label>
+    <textarea name="description" rows="6" required></textarea>
+
+    <button type="submit">Créer</button>
+  </form>
+{% endblock %}

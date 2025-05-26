@@ -1,0 +1,26 @@
+{% extends "base.twig" %}
+
+{% block style %}
+
+    <link rel="stylesheet" href="/assets/css/auth.css">
+{% endblock %}
+
+{% block title %}Connexion – Nomadia{% endblock %}
+
+{% block main %}
+
+<div>
+<h1>Connexion</h1>
+  <div class="divForm">
+    <form action="/login" method="POST" class="space-y-4">
+      <input name="email" type="email" placeholder="Email">
+      <input name="password" type="password" placeholder="Mot de passe">
+      <button type="submit">Se connecter</button>
+    </form>
+    
+  </div>
+  <p>Pas encore de compte ? <a href="/signup">Créer un compte</a></p>
+  </div>
+
+
+{% endblock %}

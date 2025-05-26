@@ -1,0 +1,109 @@
+{% extends "base.twig" %}
+
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+{% endblock %}
+
+{% block title %}
+  Tableau de bord admin
+{% endblock %}
+
+{% block main %}
+<!-- === CONTENEUR GLOBAL AVEC SIDEBAR === -->
+<div class="main-container">
+
+  <!-- ✅ SIDEBAR FIXE À GAUCHE -->
+  <aside class="admin-sidebar">
+    <h2 class="sidebar-title">Admin</h2>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="/dashAdm">🏝 Destinations</a></li>
+        <li><a href="/admin/profil">👤 Profil</a></li>
+        <li><a href="/admin/settings">⚙️ Réglages</a></li>
+        <li><a href="/logout">🚪 Déconnexion</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ✅ CONTENU ADMIN PRINCIPAL -->
+  <main class="admin-main-content">
+  <!-- ✅ CARTES STATISTIQUES -->
+<div class="admin-stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">📍</div>
+    <div class="stat-info">
+      <div class="stat-number">{{ destinations|length }}</div>
+      <div class="stat-label">Destinations totales</div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon">🕒</div>
+    <div class="stat-info">
+      <div class="stat-number">
+        {% if destinations|length > 0 %}
+          {{ destinations[0].createdAt|date('d/m/Y') }}
+        {% else %}
+          N/A
+        {% endif %}
+      </div>
+      <div class="stat-label">Dernier ajout</div>
+    </div>
+  </div>
+  
+  <!--  Carte nombre d’utilisateurs -->
+<div class="stat-card">
+  <div class="stat-icon">👥</div>
+  <div class="stat-info">
+    <div class="stat-number">{{ userCount }}</div>
+    <div class="stat-label">Utilisateurs inscrits</div>
+  </div>
+</div>
+
+
+  <div class="stat-card">
+    <div class="stat-icon">👤</div>
+    <div class="stat-info">
+      <div class="stat-number">{{ app.session.user.email ?? 'Admin' }}</div>
+      <div class="stat-label">Connecté</div>
+    </div>
+  </div>
+</div>
+
+    <h1>Bienvenue dans le tableau de bord administrateur</h1>
+    <p>Tu pourras gérer les destinations ici.</p>
+
+    <a href="/admin/destinations/add" class="btn-ajouter">➕ Ajouter une destination</a>
+
+    <table class="destinations-table">
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>Pays</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dest in destinations %}
+          <tr>
+            <td>{{ dest.titre }}</td>
+            <td>{{ dest.pays }}</td>
+            <td>
+              <a href="/admin/destinations/edit/{{ dest.id }}">✏️ Modifier</a>
+              |
+              <form action="/admin/destinations/delete/{{ dest.id }}" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('Supprimer cette destination ?')">🗑 Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="3">Aucune destination pour le moment.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+
+</div>
+{% endblock %}

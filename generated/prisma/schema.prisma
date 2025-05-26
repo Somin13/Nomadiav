@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nom       String
+  prenom    String
+  email     String   @unique
+  password  String
+  role      Role     @default(user)
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  user
+  admin
+}
+
+// Destination admin
+
+model Destination {
+  id              String    @id @default(cuid())
+  titre           String // ex : "Tassili n’Ajjer"
+  pays            String // ex : "Algérie"
+  imagePrincipale String? // URL de l'image de bannière
+  description     String // intro sous le bouton orange
+  sections        Section[] // relation 1-n
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// Pour lier les destinations aux section dynamique
+
+model Section {
+  id            String      @id @default(cuid())
+  titre         String
+  contenu       String      @db.Text // pour que les textes longs ne soient pas tronqués par défaut
+  ordre         Int
+  type          SectionType
+  destinationId String
+
+  images      Image[]
+  updatedAt   DateTime    @updatedAt
+  destination Destination @relation(fields: [destinationId], references: [id])
+}
+
+// Pour facilement classer chaque section dans le code
+
+enum SectionType {
+  PRESENTATION
+  QUE_FAIRE
+  CONSEILS
+  MEILLEURE_PERIODE
+  SANTE
+  COMMENT_Y_ALLER
+  POURQUOI_Y_ALLER
+}
+
+// pour les galeries d'image
+
+model Image {
+  id        String  @id @default(cuid())
+  url       String
+  alt       String?
+  sectionId String
+
+  section Section @relation(fields: [sectionId], references: [id])
+}
