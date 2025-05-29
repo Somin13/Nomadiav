@@ -3,30 +3,56 @@
 {% block title %}{{ destination.titre }} - {{ destination.pays }}{% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="/assets/css/destination.css">
+<link rel="stylesheet" href="/assets/css/destinations.css">
 {% endblock %}
 
 {% block main %}
-  <div class="destination-header">
-    <img src="/uploads/{{ destination.imagePrincipale }}" alt="Image de {{ destination.titre }}">
-    <h1>{{ destination.titre }}</h1>
-    <p><strong>Pays :</strong> {{ destination.pays }} | <strong>Continent :</strong> {{ destination.continent }}</p>
-    <p class="description">{{ destination.description }}</p>
+  {# ✅ Calcul du chemin de l'image principale de manière sécurisée #}
+  {% set mainImagePath = destination.imagePrincipale starts with '/uploads/' ? destination.imagePrincipale : '/uploads/' ~ destination.imagePrincipale %}
+
+  <div class="banner">
+    <img src="{{ mainImagePath }}" alt="Image de {{ destination.titre }}">
+    <div class="banner-overlay">
+      <div class="banner-content">
+        <h1 class="destination-title">{{ destination.titre }}</h1>
+        <p class="destination-country">{{ destination.pays }}</p>
+        <button class="add-trip-btn">Ajouter ce voyage</button>
+      </div>
+    </div>
   </div>
 
   <div class="destination-sections">
     {% for section in destination.sections %}
       <section class="section">
         <h2>{{ section.titre }}</h2>
-        
-        {% for content in section.contenus %}
-          <p>• {{ content }}</p>
+
+        {# ✅ Affichage des bullet points #}
+        {% for bullet in section.bulletPoints %}
+          <p>• {{ bullet.contenu }}</p>
         {% endfor %}
 
-        {% if section.images.length > 0 %}
+        {# ✅ Affichage des sous-sections #}
+        {% if section.subsections|length > 0 %}
+          <div class="subsections">
+            {% for sub in section.subsections %}
+              <div class="subsection">
+                <h3>{{ sub.titre }}</h3>
+
+                {# ✅ Contenus des sous-sections #}
+                {% for item in sub.contents %}
+                  <p>– {{ item.contenu }}</p>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {# ✅ Affichage des images de section #}
+        {% if section.images|length > 0 %}
           <div class="gallery">
             {% for img in section.images %}
-              <img src="/uploads/{{ img.url }}" alt="{{ img.alt ?? 'Image section' }}">
+              {% set imgPath = img.url starts with '/uploads/' ? img.url : '/uploads/' ~ img.url %}
+              <img src="{{ imgPath }}" alt="{{ img.alt ?? 'Image section' }}">
             {% endfor %}
           </div>
         {% endif %}

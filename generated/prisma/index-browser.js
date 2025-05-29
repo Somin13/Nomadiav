@@ -165,6 +165,13 @@ exports.Prisma.SubsectionScalarFieldEnum = {
   sectionId: 'sectionId'
 };
 
+exports.Prisma.SubsectionContentScalarFieldEnum = {
+  id: 'id',
+  contenu: 'contenu',
+  ordre: 'ordre',
+  subsectionId: 'subsectionId'
+};
+
 exports.Prisma.BulletPointScalarFieldEnum = {
   id: 'id',
   contenu: 'contenu',
@@ -218,6 +225,12 @@ exports.Prisma.SubsectionOrderByRelevanceFieldEnum = {
   sectionId: 'sectionId'
 };
 
+exports.Prisma.SubsectionContentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  contenu: 'contenu',
+  subsectionId: 'subsectionId'
+};
+
 exports.Prisma.BulletPointOrderByRelevanceFieldEnum = {
   id: 'id',
   contenu: 'contenu',
@@ -245,6 +258,7 @@ exports.Prisma.ModelName = {
   Section: 'Section',
   Image: 'Image',
   Subsection: 'Subsection',
+  SubsectionContent: 'SubsectionContent',
   BulletPoint: 'BulletPoint'
 };
 

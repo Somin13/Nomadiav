@@ -108,11 +108,35 @@ export async function showAllDestinations(req, res) {
 
 // Supprime une destination par ID
 export async function deleteDestination(req, res) {
+  const id = req.params.id;
+
   try {
+    // 1️⃣ Trouve toutes les sections liées
+    const sections = await prisma.section.findMany({
+      where: { destinationId: id },
+      select: { id: true }
+    });
+
+    const sectionIds = sections.map(sec => sec.id);
+
+    // 2️⃣ Supprime d'abord les images liées aux sections
+    await prisma.image.deleteMany({
+      where: { sectionId: { in: sectionIds } }
+    });
+
+    // 3️⃣ Supprime les bullet points liés aux sections
+    await prisma.bulletPoint.deleteMany({
+      where: { sectionId: { in: sectionIds } }
+    });
+
+    // 4️⃣ Supprime les sections
+    await prisma.section.deleteMany({
+      where: { destinationId: id }
+    });
+
+    // 5️⃣ Supprime la destination
     await prisma.destination.delete({
-      where: {
-        id: req.params.id,
-      },
+      where: { id }
     });
 
     res.redirect('/dashAdm');
@@ -121,6 +145,7 @@ export async function deleteDestination(req, res) {
     res.status(500).send('Erreur lors de la suppression');
   }
 }
+
 
 // Affiche le formulaire de modification
 export async function renderEditDestination(req, res) {

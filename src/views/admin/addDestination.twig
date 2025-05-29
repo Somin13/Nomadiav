@@ -1,61 +1,62 @@
 {% extends "base.twig" %}
 
 {% block style %}
-  <link rel="stylesheet" href="/assets/css/destinationForm.css">
- 
+	<link rel="stylesheet" href="/assets/css/destinationForm.css">
+
 {% endblock %}
 
-{% block title %}Ajouter une destination{% endblock %}
+{% block title %}Ajouter une destination
+{% endblock %}
 
 {% block main %}
-  <h1>Ajouter une nouvelle destination</h1>
+	<h1>Ajouter une nouvelle destination</h1>
 
-  <form method="POST" action="/admin/destinations/add" enctype="multipart/form-data" id="destination-form">
+	<form method="POST" action="/admin/destinations/add" enctype="multipart/form-data" id="destination-form">
 
-   <label>Continent :</label>
-<select name="continent" required>
-  <option value="">-- Sélectionner un continent --</option>
-  <option value="Afrique">Afrique</option>
-  <option value="Amérique du Nord">Amérique du Nord</option>
-  <option value="Amérique du Sud">Amérique du Sud</option>
-  <option value="Asie">Asie</option>
-  <option value="Europe">Europe</option>
-  <option value="Océanie">Océanie</option>
-  <option value="Antarctique">Antarctique</option>
-</select>
+		<label>Continent :</label>
+		<select name="continent" required>
+			<option value="">-- Sélectionner un continent --</option>
+			<option value="Afrique">Afrique</option>
+			<option value="Amérique du Nord">Amérique du Nord</option>
+			<option value="Amérique du Sud">Amérique du Sud</option>
+			<option value="Asie">Asie</option>
+			<option value="Europe">Europe</option>
+			<option value="Océanie">Océanie</option>
+			<option value="Antarctique">Antarctique</option>
+		</select>
 
-    <label>Titre :</label>
-    <input type="text" name="titre" required>
+		<label>Titre :</label>
+		<input type="text" name="titre" required>
 
-    <label>Pays :</label>
-    <input type="text" name="pays" required>
+		<label>Pays :</label>
+		<input type="text" name="pays" required>
 
-    <label for="description">Description :</label>
-<textarea id="description" name="description" required></textarea>
+		<label for="description">Description :</label>
+		<textarea id="description" name="description" required></textarea>
 
 
-    <label>Image principale :</label>
-    <input type="file" name="imagePrincipale" accept="image/*" required>
+		<label>Image principale :</label>
+		<input type="file" name="imagePrincipale" accept="image/*" required>
 
-    <hr>
+		<hr>
 
-    <h2>Sections dynamiques</h2>
-    <div id="sections-container"></div>
+		<h2>Sections dynamiques</h2>
+		<div id="sections-container"></div>
 
-    <button type="button" onclick="addSection()">➕ Ajouter une section</button>
+		<button type="button" onclick="addSection()">➕ Ajouter une section</button>
 
-    <br><br>
-    <button type="submit">✅ Enregistrer la destination</button>
-  </form>
+		<br><br>
+		<button type="submit">✅ Enregistrer la destination</button>
+	</form>
 
-  <script>
-    let sectionIndex = 0;
+	<script>
+		let sectionIndex = 0;
 
-    function addSection() {
-      const container = document.getElementById('sections-container');
-      const section = document.createElement('div');
-      section.className = 'section-block';
-      section.innerHTML = `
+function addSection() {
+const container = document.getElementById('sections-container');
+const section = document.createElement('div');
+section.className = 'section-block';
+section.innerHTML = `
         <label>Titre de la section :</label>
         <input type="text" name="sections[${sectionIndex}][titre]" required>
 
@@ -76,6 +77,8 @@
         <div class="sub-content" id="contents-${sectionIndex}">
           <h4>Contenus (bullet points, paragraphes…)</h4>
         </div>
+        <button type="button" onclick="addSubsection(${sectionIndex})">➕ Ajouter une sous-section</button>
+
          <button type="button" class="delete-section-btn" onclick="this.closest('.section-block').remove()">❌ Supprimer cette section</button>
         <button type="button" onclick="addContent(${sectionIndex})">➕ Ajouter contenu</button>
 
@@ -84,28 +87,58 @@
         </div>
         <button type="button" onclick="addImage(${sectionIndex})">➕ Ajouter image</button>
       `;
-      container.appendChild(section);
-      sectionIndex++;
-    }
+container.appendChild(section);
+sectionIndex++;
+}
 
-    function addContent(sectionId) {
-      const contentContainer = document.getElementById(`contents-${sectionId}`);
-      const count = contentContainer.querySelectorAll('textarea').length;
-      const textarea = document.createElement('textarea');
-      textarea.name = `sections[${sectionId}][contenus][]`;
-      textarea.rows = 3;
-      textarea.placeholder = "Contenu (paragraphe ou point)";
-      textarea.required = true;
-      contentContainer.appendChild(textarea);
-    }
+function addSubsection(sectionIndex) {
+const section = document.querySelectorAll('.section-block')[sectionIndex];
+const container = document.createElement('div');
+const subsectionIndex = section.querySelectorAll('.subsection-block').length;
 
-    function addImage(sectionId) {
-      const imageContainer = document.getElementById(`images-${sectionId}`);
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.name = `sections[${sectionId}][images][]`;
-      input.accept = 'image/*';
-      imageContainer.appendChild(input);
-    }
-  </script>
+container.className = 'subsection-block';
+container.innerHTML = `
+    <label>📝 Mini sous-titre :</label>
+    <input type="text" name="sections[${sectionIndex}][subsections][${subsectionIndex}][titre]" required>
+
+    <div class="sub-content" id="subcontents-${sectionIndex}-${subsectionIndex}">
+      <h4>Contenus :</h4>
+    </div>
+    <button type="button" onclick="addSubContent(${sectionIndex}, ${subsectionIndex})">➕ Ajouter contenu</button>
+  `;
+
+section.appendChild(container);
+}
+
+function addSubContent(sectionIndex, subsectionIndex) {
+const container = document.getElementById(`subcontents-${sectionIndex}-${subsectionIndex}`);
+const contentCount = container.querySelectorAll('textarea').length;
+const textarea = document.createElement('textarea');
+textarea.name = `sections[${sectionIndex}][subsections][${subsectionIndex}][contents][]`;
+textarea.rows = 2;
+textarea.required = true;
+textarea.placeholder = "Contenu de la sous-section";
+container.appendChild(textarea);
+}
+
+function addContent(sectionId) {
+const contentContainer = document.getElementById (`contents-${sectionId}`);
+const count = contentContainer.querySelectorAll('textarea').length;
+const textarea = document.createElement('textarea');
+textarea.name = `sections[${sectionId}][contenus][]`;
+textarea.rows = 3;
+textarea.placeholder = "Contenu (paragraphe ou point)";
+textarea.required = true;
+contentContainer.appendChild(textarea);
+}
+
+function addImage(sectionId) {
+const imageContainer = document.getElementById (`images-${sectionId}`);
+const input = document.createElement('input');
+input.type = 'file';
+input.name = `sections[${sectionId}][images][]`;
+input.accept = 'image/*';
+imageContainer.appendChild(input);
+}
+	</script>
 {% endblock %}

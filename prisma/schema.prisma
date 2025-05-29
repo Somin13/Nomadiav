@@ -91,7 +91,16 @@ model Subsection {
   titre      String
   ordre      Int
   sectionId  String
+  contents   SubsectionContent[]
   section    Section  @relation(fields: [sectionId], references: [id])
+}
+
+model SubsectionContent {
+  id             String   @id @default(cuid())
+  contenu        String
+  ordre          Int
+  subsectionId   String
+  subsection     Subsection @relation(fields: [subsectionId], references: [id])
 }
 
 model BulletPoint {
