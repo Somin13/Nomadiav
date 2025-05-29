@@ -1,0 +1,36 @@
+{% extends "base.twig" %}
+
+{% block title %}{{ destination.titre }} - {{ destination.pays }}{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="/assets/css/destination.css">
+{% endblock %}
+
+{% block main %}
+  <div class="destination-header">
+    <img src="/uploads/{{ destination.imagePrincipale }}" alt="Image de {{ destination.titre }}">
+    <h1>{{ destination.titre }}</h1>
+    <p><strong>Pays :</strong> {{ destination.pays }} | <strong>Continent :</strong> {{ destination.continent }}</p>
+    <p class="description">{{ destination.description }}</p>
+  </div>
+
+  <div class="destination-sections">
+    {% for section in destination.sections %}
+      <section class="section">
+        <h2>{{ section.titre }}</h2>
+        
+        {% for content in section.contenus %}
+          <p>• {{ content }}</p>
+        {% endfor %}
+
+        {% if section.images.length > 0 %}
+          <div class="gallery">
+            {% for img in section.images %}
+              <img src="/uploads/{{ img.url }}" alt="{{ img.alt ?? 'Image section' }}">
+            {% endfor %}
+          </div>
+        {% endif %}
+      </section>
+    {% endfor %}
+  </div>
+{% endblock %}

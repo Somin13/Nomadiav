@@ -65,7 +65,7 @@ export async function handleLogin(req, res) {
   if (user.role === 'admin') {
   res.redirect('/dashAdm');
 } else {
-  res.redirect('/destination');
+  res.redirect('/userBoard');
 }
 
 }

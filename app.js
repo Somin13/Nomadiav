@@ -9,6 +9,7 @@ import authRoutes from './src/routes/authRoutes.js';
 import destinationRoutes from './src/routes/destinationRoutes.js';
 import adminRoutes from './src/routes/dashAdmRoutes.js'; // ou ton fichier route
 import destinationAdminRoutes from './src/routes/destinationAdminRoutes.js';
+import userRoutes from './src/routes/userRoutes.js'
 
 
 dotenv.config();
@@ -49,6 +50,7 @@ app.use('/', authRoutes);
 app.use('/', destinationRoutes);
 app.use('/', adminRoutes);
 app.use('/', destinationAdminRoutes);
+app.use('/', userRoutes)
 
 // Lancement du serveur
 app.listen(3016, () => {

@@ -1,0 +1,29 @@
+{% extends "base.twig" %}
+
+{% block style %}
+  
+{% endblock %}
+
+{% block title %}Destinations - Nomadia{% endblock %}
+
+{% block main %}
+  <h1>🌍 Explorer les destinations</h1>
+<pre>{{ groupedDestinations | json_encode }}</pre>
+  {% for continent, destinations in groupedDestinations %}
+    <div class="continent-group">
+      <h2 class="continent-title">{{ continent }}</h2>
+      <div class="destination-grid">
+        {% for dest in destinations %}
+          <a href="/destination/{{ dest.id }}" class="destination-card">
+
+            <img src="/uploads/{{ dest.imagePrincipale }}" alt="Image de {{ dest.titre }}">
+            <div class="info">
+              <h3>{{ dest.titre }}</h3>
+              <p>{{ dest.pays }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

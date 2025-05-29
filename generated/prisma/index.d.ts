@@ -33,6 +33,16 @@ export type Section = $Result.DefaultSelection<Prisma.$SectionPayload>
  * 
  */
 export type Image = $Result.DefaultSelection<Prisma.$ImagePayload>
+/**
+ * Model Subsection
+ * 
+ */
+export type Subsection = $Result.DefaultSelection<Prisma.$SubsectionPayload>
+/**
+ * Model BulletPoint
+ * 
+ */
+export type BulletPoint = $Result.DefaultSelection<Prisma.$BulletPointPayload>
 
 /**
  * Enums
@@ -47,12 +57,13 @@ export type Role = (typeof Role)[keyof typeof Role]
 
 
 export const SectionType: {
+  GUIDE: 'GUIDE',
   PRESENTATION: 'PRESENTATION',
+  INFORMATIONS: 'INFORMATIONS',
   QUE_FAIRE: 'QUE_FAIRE',
-  CONSEILS: 'CONSEILS',
-  MEILLEURE_PERIODE: 'MEILLEURE_PERIODE',
-  SANTE: 'SANTE',
   COMMENT_Y_ALLER: 'COMMENT_Y_ALLER',
+  FORMALITES: 'FORMALITES',
+  CONSEILS: 'CONSEILS',
   POURQUOI_Y_ALLER: 'POURQUOI_Y_ALLER'
 };
 
@@ -232,6 +243,26 @@ export class PrismaClient<
     * ```
     */
   get image(): Prisma.ImageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.subsection`: Exposes CRUD operations for the **Subsection** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Subsections
+    * const subsections = await prisma.subsection.findMany()
+    * ```
+    */
+  get subsection(): Prisma.SubsectionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.bulletPoint`: Exposes CRUD operations for the **BulletPoint** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BulletPoints
+    * const bulletPoints = await prisma.bulletPoint.findMany()
+    * ```
+    */
+  get bulletPoint(): Prisma.BulletPointDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -675,7 +706,9 @@ export namespace Prisma {
     User: 'User',
     Destination: 'Destination',
     Section: 'Section',
-    Image: 'Image'
+    Image: 'Image',
+    Subsection: 'Subsection',
+    BulletPoint: 'BulletPoint'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -694,7 +727,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "destination" | "section" | "image"
+      modelProps: "user" | "destination" | "section" | "image" | "subsection" | "bulletPoint"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -962,6 +995,138 @@ export namespace Prisma {
           }
         }
       }
+      Subsection: {
+        payload: Prisma.$SubsectionPayload<ExtArgs>
+        fields: Prisma.SubsectionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubsectionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubsectionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload>
+          }
+          findFirst: {
+            args: Prisma.SubsectionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubsectionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload>
+          }
+          findMany: {
+            args: Prisma.SubsectionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload>[]
+          }
+          create: {
+            args: Prisma.SubsectionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload>
+          }
+          createMany: {
+            args: Prisma.SubsectionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.SubsectionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload>
+          }
+          update: {
+            args: Prisma.SubsectionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubsectionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubsectionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SubsectionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubsectionPayload>
+          }
+          aggregate: {
+            args: Prisma.SubsectionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubsection>
+          }
+          groupBy: {
+            args: Prisma.SubsectionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubsectionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubsectionCountArgs<ExtArgs>
+            result: $Utils.Optional<SubsectionCountAggregateOutputType> | number
+          }
+        }
+      }
+      BulletPoint: {
+        payload: Prisma.$BulletPointPayload<ExtArgs>
+        fields: Prisma.BulletPointFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BulletPointFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BulletPointFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload>
+          }
+          findFirst: {
+            args: Prisma.BulletPointFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BulletPointFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload>
+          }
+          findMany: {
+            args: Prisma.BulletPointFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload>[]
+          }
+          create: {
+            args: Prisma.BulletPointCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload>
+          }
+          createMany: {
+            args: Prisma.BulletPointCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.BulletPointDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload>
+          }
+          update: {
+            args: Prisma.BulletPointUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload>
+          }
+          deleteMany: {
+            args: Prisma.BulletPointDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BulletPointUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BulletPointUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BulletPointPayload>
+          }
+          aggregate: {
+            args: Prisma.BulletPointAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBulletPoint>
+          }
+          groupBy: {
+            args: Prisma.BulletPointGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BulletPointGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BulletPointCountArgs<ExtArgs>
+            result: $Utils.Optional<BulletPointCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1050,6 +1215,8 @@ export namespace Prisma {
     destination?: DestinationOmit
     section?: SectionOmit
     image?: ImageOmit
+    subsection?: SubsectionOmit
+    bulletPoint?: BulletPointOmit
   }
 
   /* Types for Logging */
@@ -1175,10 +1342,14 @@ export namespace Prisma {
    */
 
   export type SectionCountOutputType = {
+    subsections: number
+    bulletPoints: number
     images: number
   }
 
   export type SectionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subsections?: boolean | SectionCountOutputTypeCountSubsectionsArgs
+    bulletPoints?: boolean | SectionCountOutputTypeCountBulletPointsArgs
     images?: boolean | SectionCountOutputTypeCountImagesArgs
   }
 
@@ -1191,6 +1362,20 @@ export namespace Prisma {
      * Select specific fields to fetch from the SectionCountOutputType
      */
     select?: SectionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SectionCountOutputType without action
+   */
+  export type SectionCountOutputTypeCountSubsectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubsectionWhereInput
+  }
+
+  /**
+   * SectionCountOutputType without action
+   */
+  export type SectionCountOutputTypeCountBulletPointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BulletPointWhereInput
   }
 
   /**
@@ -2157,8 +2342,9 @@ export namespace Prisma {
     id: string | null
     titre: string | null
     pays: string | null
-    imagePrincipale: string | null
+    continent: string | null
     description: string | null
+    imagePrincipale: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2167,8 +2353,9 @@ export namespace Prisma {
     id: string | null
     titre: string | null
     pays: string | null
-    imagePrincipale: string | null
+    continent: string | null
     description: string | null
+    imagePrincipale: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2177,8 +2364,9 @@ export namespace Prisma {
     id: number
     titre: number
     pays: number
-    imagePrincipale: number
+    continent: number
     description: number
+    imagePrincipale: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2189,8 +2377,9 @@ export namespace Prisma {
     id?: true
     titre?: true
     pays?: true
-    imagePrincipale?: true
+    continent?: true
     description?: true
+    imagePrincipale?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2199,8 +2388,9 @@ export namespace Prisma {
     id?: true
     titre?: true
     pays?: true
-    imagePrincipale?: true
+    continent?: true
     description?: true
+    imagePrincipale?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2209,8 +2399,9 @@ export namespace Prisma {
     id?: true
     titre?: true
     pays?: true
-    imagePrincipale?: true
+    continent?: true
     description?: true
+    imagePrincipale?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2292,8 +2483,9 @@ export namespace Prisma {
     id: string
     titre: string
     pays: string
+    continent: string | null
+    description: string | null
     imagePrincipale: string | null
-    description: string
     createdAt: Date
     updatedAt: Date
     _count: DestinationCountAggregateOutputType | null
@@ -2319,8 +2511,9 @@ export namespace Prisma {
     id?: boolean
     titre?: boolean
     pays?: boolean
-    imagePrincipale?: boolean
+    continent?: boolean
     description?: boolean
+    imagePrincipale?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     sections?: boolean | Destination$sectionsArgs<ExtArgs>
@@ -2333,13 +2526,14 @@ export namespace Prisma {
     id?: boolean
     titre?: boolean
     pays?: boolean
-    imagePrincipale?: boolean
+    continent?: boolean
     description?: boolean
+    imagePrincipale?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type DestinationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "pays" | "imagePrincipale" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["destination"]>
+  export type DestinationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "pays" | "continent" | "description" | "imagePrincipale" | "createdAt" | "updatedAt", ExtArgs["result"]["destination"]>
   export type DestinationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sections?: boolean | Destination$sectionsArgs<ExtArgs>
     _count?: boolean | DestinationCountOutputTypeDefaultArgs<ExtArgs>
@@ -2354,8 +2548,9 @@ export namespace Prisma {
       id: string
       titre: string
       pays: string
+      continent: string | null
+      description: string | null
       imagePrincipale: string | null
-      description: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["destination"]>
@@ -2731,8 +2926,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Destination", 'String'>
     readonly titre: FieldRef<"Destination", 'String'>
     readonly pays: FieldRef<"Destination", 'String'>
-    readonly imagePrincipale: FieldRef<"Destination", 'String'>
+    readonly continent: FieldRef<"Destination", 'String'>
     readonly description: FieldRef<"Destination", 'String'>
+    readonly imagePrincipale: FieldRef<"Destination", 'String'>
     readonly createdAt: FieldRef<"Destination", 'DateTime'>
     readonly updatedAt: FieldRef<"Destination", 'DateTime'>
   }
@@ -3334,6 +3530,8 @@ export namespace Prisma {
     type?: boolean
     destinationId?: boolean
     updatedAt?: boolean
+    subsections?: boolean | Section$subsectionsArgs<ExtArgs>
+    bulletPoints?: boolean | Section$bulletPointsArgs<ExtArgs>
     images?: boolean | Section$imagesArgs<ExtArgs>
     destination?: boolean | DestinationDefaultArgs<ExtArgs>
     _count?: boolean | SectionCountOutputTypeDefaultArgs<ExtArgs>
@@ -3353,6 +3551,8 @@ export namespace Prisma {
 
   export type SectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "contenu" | "ordre" | "type" | "destinationId" | "updatedAt", ExtArgs["result"]["section"]>
   export type SectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subsections?: boolean | Section$subsectionsArgs<ExtArgs>
+    bulletPoints?: boolean | Section$bulletPointsArgs<ExtArgs>
     images?: boolean | Section$imagesArgs<ExtArgs>
     destination?: boolean | DestinationDefaultArgs<ExtArgs>
     _count?: boolean | SectionCountOutputTypeDefaultArgs<ExtArgs>
@@ -3361,6 +3561,8 @@ export namespace Prisma {
   export type $SectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Section"
     objects: {
+      subsections: Prisma.$SubsectionPayload<ExtArgs>[]
+      bulletPoints: Prisma.$BulletPointPayload<ExtArgs>[]
       images: Prisma.$ImagePayload<ExtArgs>[]
       destination: Prisma.$DestinationPayload<ExtArgs>
     }
@@ -3712,6 +3914,8 @@ export namespace Prisma {
    */
   export interface Prisma__SectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    subsections<T extends Section$subsectionsArgs<ExtArgs> = {}>(args?: Subset<T, Section$subsectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bulletPoints<T extends Section$bulletPointsArgs<ExtArgs> = {}>(args?: Subset<T, Section$bulletPointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     images<T extends Section$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Section$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     destination<T extends DestinationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DestinationDefaultArgs<ExtArgs>>): Prisma__DestinationClient<$Result.GetResult<Prisma.$DestinationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -4090,6 +4294,54 @@ export namespace Prisma {
      * Limit how many Sections to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Section.subsections
+   */
+  export type Section$subsectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    where?: SubsectionWhereInput
+    orderBy?: SubsectionOrderByWithRelationInput | SubsectionOrderByWithRelationInput[]
+    cursor?: SubsectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubsectionScalarFieldEnum | SubsectionScalarFieldEnum[]
+  }
+
+  /**
+   * Section.bulletPoints
+   */
+  export type Section$bulletPointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    where?: BulletPointWhereInput
+    orderBy?: BulletPointOrderByWithRelationInput | BulletPointOrderByWithRelationInput[]
+    cursor?: BulletPointWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BulletPointScalarFieldEnum | BulletPointScalarFieldEnum[]
   }
 
   /**
@@ -5054,6 +5306,1910 @@ export namespace Prisma {
 
 
   /**
+   * Model Subsection
+   */
+
+  export type AggregateSubsection = {
+    _count: SubsectionCountAggregateOutputType | null
+    _avg: SubsectionAvgAggregateOutputType | null
+    _sum: SubsectionSumAggregateOutputType | null
+    _min: SubsectionMinAggregateOutputType | null
+    _max: SubsectionMaxAggregateOutputType | null
+  }
+
+  export type SubsectionAvgAggregateOutputType = {
+    ordre: number | null
+  }
+
+  export type SubsectionSumAggregateOutputType = {
+    ordre: number | null
+  }
+
+  export type SubsectionMinAggregateOutputType = {
+    id: string | null
+    titre: string | null
+    ordre: number | null
+    sectionId: string | null
+  }
+
+  export type SubsectionMaxAggregateOutputType = {
+    id: string | null
+    titre: string | null
+    ordre: number | null
+    sectionId: string | null
+  }
+
+  export type SubsectionCountAggregateOutputType = {
+    id: number
+    titre: number
+    ordre: number
+    sectionId: number
+    _all: number
+  }
+
+
+  export type SubsectionAvgAggregateInputType = {
+    ordre?: true
+  }
+
+  export type SubsectionSumAggregateInputType = {
+    ordre?: true
+  }
+
+  export type SubsectionMinAggregateInputType = {
+    id?: true
+    titre?: true
+    ordre?: true
+    sectionId?: true
+  }
+
+  export type SubsectionMaxAggregateInputType = {
+    id?: true
+    titre?: true
+    ordre?: true
+    sectionId?: true
+  }
+
+  export type SubsectionCountAggregateInputType = {
+    id?: true
+    titre?: true
+    ordre?: true
+    sectionId?: true
+    _all?: true
+  }
+
+  export type SubsectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Subsection to aggregate.
+     */
+    where?: SubsectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subsections to fetch.
+     */
+    orderBy?: SubsectionOrderByWithRelationInput | SubsectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubsectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subsections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subsections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Subsections
+    **/
+    _count?: true | SubsectionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubsectionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubsectionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubsectionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubsectionMaxAggregateInputType
+  }
+
+  export type GetSubsectionAggregateType<T extends SubsectionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubsection]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubsection[P]>
+      : GetScalarType<T[P], AggregateSubsection[P]>
+  }
+
+
+
+
+  export type SubsectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubsectionWhereInput
+    orderBy?: SubsectionOrderByWithAggregationInput | SubsectionOrderByWithAggregationInput[]
+    by: SubsectionScalarFieldEnum[] | SubsectionScalarFieldEnum
+    having?: SubsectionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubsectionCountAggregateInputType | true
+    _avg?: SubsectionAvgAggregateInputType
+    _sum?: SubsectionSumAggregateInputType
+    _min?: SubsectionMinAggregateInputType
+    _max?: SubsectionMaxAggregateInputType
+  }
+
+  export type SubsectionGroupByOutputType = {
+    id: string
+    titre: string
+    ordre: number
+    sectionId: string
+    _count: SubsectionCountAggregateOutputType | null
+    _avg: SubsectionAvgAggregateOutputType | null
+    _sum: SubsectionSumAggregateOutputType | null
+    _min: SubsectionMinAggregateOutputType | null
+    _max: SubsectionMaxAggregateOutputType | null
+  }
+
+  type GetSubsectionGroupByPayload<T extends SubsectionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubsectionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubsectionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubsectionGroupByOutputType[P]>
+            : GetScalarType<T[P], SubsectionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubsectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    titre?: boolean
+    ordre?: boolean
+    sectionId?: boolean
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subsection"]>
+
+
+
+  export type SubsectionSelectScalar = {
+    id?: boolean
+    titre?: boolean
+    ordre?: boolean
+    sectionId?: boolean
+  }
+
+  export type SubsectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "ordre" | "sectionId", ExtArgs["result"]["subsection"]>
+  export type SubsectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+
+  export type $SubsectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Subsection"
+    objects: {
+      section: Prisma.$SectionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      titre: string
+      ordre: number
+      sectionId: string
+    }, ExtArgs["result"]["subsection"]>
+    composites: {}
+  }
+
+  type SubsectionGetPayload<S extends boolean | null | undefined | SubsectionDefaultArgs> = $Result.GetResult<Prisma.$SubsectionPayload, S>
+
+  type SubsectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubsectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubsectionCountAggregateInputType | true
+    }
+
+  export interface SubsectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Subsection'], meta: { name: 'Subsection' } }
+    /**
+     * Find zero or one Subsection that matches the filter.
+     * @param {SubsectionFindUniqueArgs} args - Arguments to find a Subsection
+     * @example
+     * // Get one Subsection
+     * const subsection = await prisma.subsection.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubsectionFindUniqueArgs>(args: SelectSubset<T, SubsectionFindUniqueArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Subsection that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubsectionFindUniqueOrThrowArgs} args - Arguments to find a Subsection
+     * @example
+     * // Get one Subsection
+     * const subsection = await prisma.subsection.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubsectionFindUniqueOrThrowArgs>(args: SelectSubset<T, SubsectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Subsection that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubsectionFindFirstArgs} args - Arguments to find a Subsection
+     * @example
+     * // Get one Subsection
+     * const subsection = await prisma.subsection.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubsectionFindFirstArgs>(args?: SelectSubset<T, SubsectionFindFirstArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Subsection that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubsectionFindFirstOrThrowArgs} args - Arguments to find a Subsection
+     * @example
+     * // Get one Subsection
+     * const subsection = await prisma.subsection.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubsectionFindFirstOrThrowArgs>(args?: SelectSubset<T, SubsectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Subsections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubsectionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Subsections
+     * const subsections = await prisma.subsection.findMany()
+     * 
+     * // Get first 10 Subsections
+     * const subsections = await prisma.subsection.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const subsectionWithIdOnly = await prisma.subsection.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubsectionFindManyArgs>(args?: SelectSubset<T, SubsectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Subsection.
+     * @param {SubsectionCreateArgs} args - Arguments to create a Subsection.
+     * @example
+     * // Create one Subsection
+     * const Subsection = await prisma.subsection.create({
+     *   data: {
+     *     // ... data to create a Subsection
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubsectionCreateArgs>(args: SelectSubset<T, SubsectionCreateArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Subsections.
+     * @param {SubsectionCreateManyArgs} args - Arguments to create many Subsections.
+     * @example
+     * // Create many Subsections
+     * const subsection = await prisma.subsection.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubsectionCreateManyArgs>(args?: SelectSubset<T, SubsectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Subsection.
+     * @param {SubsectionDeleteArgs} args - Arguments to delete one Subsection.
+     * @example
+     * // Delete one Subsection
+     * const Subsection = await prisma.subsection.delete({
+     *   where: {
+     *     // ... filter to delete one Subsection
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubsectionDeleteArgs>(args: SelectSubset<T, SubsectionDeleteArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Subsection.
+     * @param {SubsectionUpdateArgs} args - Arguments to update one Subsection.
+     * @example
+     * // Update one Subsection
+     * const subsection = await prisma.subsection.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubsectionUpdateArgs>(args: SelectSubset<T, SubsectionUpdateArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Subsections.
+     * @param {SubsectionDeleteManyArgs} args - Arguments to filter Subsections to delete.
+     * @example
+     * // Delete a few Subsections
+     * const { count } = await prisma.subsection.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubsectionDeleteManyArgs>(args?: SelectSubset<T, SubsectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Subsections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubsectionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Subsections
+     * const subsection = await prisma.subsection.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubsectionUpdateManyArgs>(args: SelectSubset<T, SubsectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Subsection.
+     * @param {SubsectionUpsertArgs} args - Arguments to update or create a Subsection.
+     * @example
+     * // Update or create a Subsection
+     * const subsection = await prisma.subsection.upsert({
+     *   create: {
+     *     // ... data to create a Subsection
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Subsection we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubsectionUpsertArgs>(args: SelectSubset<T, SubsectionUpsertArgs<ExtArgs>>): Prisma__SubsectionClient<$Result.GetResult<Prisma.$SubsectionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Subsections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubsectionCountArgs} args - Arguments to filter Subsections to count.
+     * @example
+     * // Count the number of Subsections
+     * const count = await prisma.subsection.count({
+     *   where: {
+     *     // ... the filter for the Subsections we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubsectionCountArgs>(
+      args?: Subset<T, SubsectionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubsectionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Subsection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubsectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubsectionAggregateArgs>(args: Subset<T, SubsectionAggregateArgs>): Prisma.PrismaPromise<GetSubsectionAggregateType<T>>
+
+    /**
+     * Group by Subsection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubsectionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubsectionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubsectionGroupByArgs['orderBy'] }
+        : { orderBy?: SubsectionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubsectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubsectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Subsection model
+   */
+  readonly fields: SubsectionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Subsection.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubsectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    section<T extends SectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SectionDefaultArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Subsection model
+   */
+  interface SubsectionFieldRefs {
+    readonly id: FieldRef<"Subsection", 'String'>
+    readonly titre: FieldRef<"Subsection", 'String'>
+    readonly ordre: FieldRef<"Subsection", 'Int'>
+    readonly sectionId: FieldRef<"Subsection", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Subsection findUnique
+   */
+  export type SubsectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subsection to fetch.
+     */
+    where: SubsectionWhereUniqueInput
+  }
+
+  /**
+   * Subsection findUniqueOrThrow
+   */
+  export type SubsectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subsection to fetch.
+     */
+    where: SubsectionWhereUniqueInput
+  }
+
+  /**
+   * Subsection findFirst
+   */
+  export type SubsectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subsection to fetch.
+     */
+    where?: SubsectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subsections to fetch.
+     */
+    orderBy?: SubsectionOrderByWithRelationInput | SubsectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Subsections.
+     */
+    cursor?: SubsectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subsections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subsections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Subsections.
+     */
+    distinct?: SubsectionScalarFieldEnum | SubsectionScalarFieldEnum[]
+  }
+
+  /**
+   * Subsection findFirstOrThrow
+   */
+  export type SubsectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subsection to fetch.
+     */
+    where?: SubsectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subsections to fetch.
+     */
+    orderBy?: SubsectionOrderByWithRelationInput | SubsectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Subsections.
+     */
+    cursor?: SubsectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subsections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subsections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Subsections.
+     */
+    distinct?: SubsectionScalarFieldEnum | SubsectionScalarFieldEnum[]
+  }
+
+  /**
+   * Subsection findMany
+   */
+  export type SubsectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * Filter, which Subsections to fetch.
+     */
+    where?: SubsectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Subsections to fetch.
+     */
+    orderBy?: SubsectionOrderByWithRelationInput | SubsectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Subsections.
+     */
+    cursor?: SubsectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Subsections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Subsections.
+     */
+    skip?: number
+    distinct?: SubsectionScalarFieldEnum | SubsectionScalarFieldEnum[]
+  }
+
+  /**
+   * Subsection create
+   */
+  export type SubsectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Subsection.
+     */
+    data: XOR<SubsectionCreateInput, SubsectionUncheckedCreateInput>
+  }
+
+  /**
+   * Subsection createMany
+   */
+  export type SubsectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Subsections.
+     */
+    data: SubsectionCreateManyInput | SubsectionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Subsection update
+   */
+  export type SubsectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Subsection.
+     */
+    data: XOR<SubsectionUpdateInput, SubsectionUncheckedUpdateInput>
+    /**
+     * Choose, which Subsection to update.
+     */
+    where: SubsectionWhereUniqueInput
+  }
+
+  /**
+   * Subsection updateMany
+   */
+  export type SubsectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Subsections.
+     */
+    data: XOR<SubsectionUpdateManyMutationInput, SubsectionUncheckedUpdateManyInput>
+    /**
+     * Filter which Subsections to update
+     */
+    where?: SubsectionWhereInput
+    /**
+     * Limit how many Subsections to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Subsection upsert
+   */
+  export type SubsectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Subsection to update in case it exists.
+     */
+    where: SubsectionWhereUniqueInput
+    /**
+     * In case the Subsection found by the `where` argument doesn't exist, create a new Subsection with this data.
+     */
+    create: XOR<SubsectionCreateInput, SubsectionUncheckedCreateInput>
+    /**
+     * In case the Subsection was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubsectionUpdateInput, SubsectionUncheckedUpdateInput>
+  }
+
+  /**
+   * Subsection delete
+   */
+  export type SubsectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+    /**
+     * Filter which Subsection to delete.
+     */
+    where: SubsectionWhereUniqueInput
+  }
+
+  /**
+   * Subsection deleteMany
+   */
+  export type SubsectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Subsections to delete
+     */
+    where?: SubsectionWhereInput
+    /**
+     * Limit how many Subsections to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Subsection without action
+   */
+  export type SubsectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Subsection
+     */
+    select?: SubsectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Subsection
+     */
+    omit?: SubsectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubsectionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BulletPoint
+   */
+
+  export type AggregateBulletPoint = {
+    _count: BulletPointCountAggregateOutputType | null
+    _avg: BulletPointAvgAggregateOutputType | null
+    _sum: BulletPointSumAggregateOutputType | null
+    _min: BulletPointMinAggregateOutputType | null
+    _max: BulletPointMaxAggregateOutputType | null
+  }
+
+  export type BulletPointAvgAggregateOutputType = {
+    ordre: number | null
+  }
+
+  export type BulletPointSumAggregateOutputType = {
+    ordre: number | null
+  }
+
+  export type BulletPointMinAggregateOutputType = {
+    id: string | null
+    contenu: string | null
+    ordre: number | null
+    sectionId: string | null
+  }
+
+  export type BulletPointMaxAggregateOutputType = {
+    id: string | null
+    contenu: string | null
+    ordre: number | null
+    sectionId: string | null
+  }
+
+  export type BulletPointCountAggregateOutputType = {
+    id: number
+    contenu: number
+    ordre: number
+    sectionId: number
+    _all: number
+  }
+
+
+  export type BulletPointAvgAggregateInputType = {
+    ordre?: true
+  }
+
+  export type BulletPointSumAggregateInputType = {
+    ordre?: true
+  }
+
+  export type BulletPointMinAggregateInputType = {
+    id?: true
+    contenu?: true
+    ordre?: true
+    sectionId?: true
+  }
+
+  export type BulletPointMaxAggregateInputType = {
+    id?: true
+    contenu?: true
+    ordre?: true
+    sectionId?: true
+  }
+
+  export type BulletPointCountAggregateInputType = {
+    id?: true
+    contenu?: true
+    ordre?: true
+    sectionId?: true
+    _all?: true
+  }
+
+  export type BulletPointAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BulletPoint to aggregate.
+     */
+    where?: BulletPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BulletPoints to fetch.
+     */
+    orderBy?: BulletPointOrderByWithRelationInput | BulletPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BulletPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BulletPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BulletPoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BulletPoints
+    **/
+    _count?: true | BulletPointCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BulletPointAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BulletPointSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BulletPointMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BulletPointMaxAggregateInputType
+  }
+
+  export type GetBulletPointAggregateType<T extends BulletPointAggregateArgs> = {
+        [P in keyof T & keyof AggregateBulletPoint]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBulletPoint[P]>
+      : GetScalarType<T[P], AggregateBulletPoint[P]>
+  }
+
+
+
+
+  export type BulletPointGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BulletPointWhereInput
+    orderBy?: BulletPointOrderByWithAggregationInput | BulletPointOrderByWithAggregationInput[]
+    by: BulletPointScalarFieldEnum[] | BulletPointScalarFieldEnum
+    having?: BulletPointScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BulletPointCountAggregateInputType | true
+    _avg?: BulletPointAvgAggregateInputType
+    _sum?: BulletPointSumAggregateInputType
+    _min?: BulletPointMinAggregateInputType
+    _max?: BulletPointMaxAggregateInputType
+  }
+
+  export type BulletPointGroupByOutputType = {
+    id: string
+    contenu: string
+    ordre: number
+    sectionId: string
+    _count: BulletPointCountAggregateOutputType | null
+    _avg: BulletPointAvgAggregateOutputType | null
+    _sum: BulletPointSumAggregateOutputType | null
+    _min: BulletPointMinAggregateOutputType | null
+    _max: BulletPointMaxAggregateOutputType | null
+  }
+
+  type GetBulletPointGroupByPayload<T extends BulletPointGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BulletPointGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BulletPointGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BulletPointGroupByOutputType[P]>
+            : GetScalarType<T[P], BulletPointGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BulletPointSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    contenu?: boolean
+    ordre?: boolean
+    sectionId?: boolean
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bulletPoint"]>
+
+
+
+  export type BulletPointSelectScalar = {
+    id?: boolean
+    contenu?: boolean
+    ordre?: boolean
+    sectionId?: boolean
+  }
+
+  export type BulletPointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "contenu" | "ordre" | "sectionId", ExtArgs["result"]["bulletPoint"]>
+  export type BulletPointInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    section?: boolean | SectionDefaultArgs<ExtArgs>
+  }
+
+  export type $BulletPointPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BulletPoint"
+    objects: {
+      section: Prisma.$SectionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      contenu: string
+      ordre: number
+      sectionId: string
+    }, ExtArgs["result"]["bulletPoint"]>
+    composites: {}
+  }
+
+  type BulletPointGetPayload<S extends boolean | null | undefined | BulletPointDefaultArgs> = $Result.GetResult<Prisma.$BulletPointPayload, S>
+
+  type BulletPointCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BulletPointFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BulletPointCountAggregateInputType | true
+    }
+
+  export interface BulletPointDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BulletPoint'], meta: { name: 'BulletPoint' } }
+    /**
+     * Find zero or one BulletPoint that matches the filter.
+     * @param {BulletPointFindUniqueArgs} args - Arguments to find a BulletPoint
+     * @example
+     * // Get one BulletPoint
+     * const bulletPoint = await prisma.bulletPoint.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BulletPointFindUniqueArgs>(args: SelectSubset<T, BulletPointFindUniqueArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BulletPoint that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BulletPointFindUniqueOrThrowArgs} args - Arguments to find a BulletPoint
+     * @example
+     * // Get one BulletPoint
+     * const bulletPoint = await prisma.bulletPoint.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BulletPointFindUniqueOrThrowArgs>(args: SelectSubset<T, BulletPointFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BulletPoint that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletPointFindFirstArgs} args - Arguments to find a BulletPoint
+     * @example
+     * // Get one BulletPoint
+     * const bulletPoint = await prisma.bulletPoint.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BulletPointFindFirstArgs>(args?: SelectSubset<T, BulletPointFindFirstArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BulletPoint that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletPointFindFirstOrThrowArgs} args - Arguments to find a BulletPoint
+     * @example
+     * // Get one BulletPoint
+     * const bulletPoint = await prisma.bulletPoint.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BulletPointFindFirstOrThrowArgs>(args?: SelectSubset<T, BulletPointFindFirstOrThrowArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BulletPoints that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletPointFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BulletPoints
+     * const bulletPoints = await prisma.bulletPoint.findMany()
+     * 
+     * // Get first 10 BulletPoints
+     * const bulletPoints = await prisma.bulletPoint.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bulletPointWithIdOnly = await prisma.bulletPoint.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BulletPointFindManyArgs>(args?: SelectSubset<T, BulletPointFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BulletPoint.
+     * @param {BulletPointCreateArgs} args - Arguments to create a BulletPoint.
+     * @example
+     * // Create one BulletPoint
+     * const BulletPoint = await prisma.bulletPoint.create({
+     *   data: {
+     *     // ... data to create a BulletPoint
+     *   }
+     * })
+     * 
+     */
+    create<T extends BulletPointCreateArgs>(args: SelectSubset<T, BulletPointCreateArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BulletPoints.
+     * @param {BulletPointCreateManyArgs} args - Arguments to create many BulletPoints.
+     * @example
+     * // Create many BulletPoints
+     * const bulletPoint = await prisma.bulletPoint.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BulletPointCreateManyArgs>(args?: SelectSubset<T, BulletPointCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BulletPoint.
+     * @param {BulletPointDeleteArgs} args - Arguments to delete one BulletPoint.
+     * @example
+     * // Delete one BulletPoint
+     * const BulletPoint = await prisma.bulletPoint.delete({
+     *   where: {
+     *     // ... filter to delete one BulletPoint
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BulletPointDeleteArgs>(args: SelectSubset<T, BulletPointDeleteArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BulletPoint.
+     * @param {BulletPointUpdateArgs} args - Arguments to update one BulletPoint.
+     * @example
+     * // Update one BulletPoint
+     * const bulletPoint = await prisma.bulletPoint.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BulletPointUpdateArgs>(args: SelectSubset<T, BulletPointUpdateArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BulletPoints.
+     * @param {BulletPointDeleteManyArgs} args - Arguments to filter BulletPoints to delete.
+     * @example
+     * // Delete a few BulletPoints
+     * const { count } = await prisma.bulletPoint.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BulletPointDeleteManyArgs>(args?: SelectSubset<T, BulletPointDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BulletPoints.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletPointUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BulletPoints
+     * const bulletPoint = await prisma.bulletPoint.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BulletPointUpdateManyArgs>(args: SelectSubset<T, BulletPointUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BulletPoint.
+     * @param {BulletPointUpsertArgs} args - Arguments to update or create a BulletPoint.
+     * @example
+     * // Update or create a BulletPoint
+     * const bulletPoint = await prisma.bulletPoint.upsert({
+     *   create: {
+     *     // ... data to create a BulletPoint
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BulletPoint we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BulletPointUpsertArgs>(args: SelectSubset<T, BulletPointUpsertArgs<ExtArgs>>): Prisma__BulletPointClient<$Result.GetResult<Prisma.$BulletPointPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BulletPoints.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletPointCountArgs} args - Arguments to filter BulletPoints to count.
+     * @example
+     * // Count the number of BulletPoints
+     * const count = await prisma.bulletPoint.count({
+     *   where: {
+     *     // ... the filter for the BulletPoints we want to count
+     *   }
+     * })
+    **/
+    count<T extends BulletPointCountArgs>(
+      args?: Subset<T, BulletPointCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BulletPointCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BulletPoint.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletPointAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BulletPointAggregateArgs>(args: Subset<T, BulletPointAggregateArgs>): Prisma.PrismaPromise<GetBulletPointAggregateType<T>>
+
+    /**
+     * Group by BulletPoint.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BulletPointGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BulletPointGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BulletPointGroupByArgs['orderBy'] }
+        : { orderBy?: BulletPointGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BulletPointGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBulletPointGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BulletPoint model
+   */
+  readonly fields: BulletPointFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BulletPoint.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BulletPointClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    section<T extends SectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SectionDefaultArgs<ExtArgs>>): Prisma__SectionClient<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BulletPoint model
+   */
+  interface BulletPointFieldRefs {
+    readonly id: FieldRef<"BulletPoint", 'String'>
+    readonly contenu: FieldRef<"BulletPoint", 'String'>
+    readonly ordre: FieldRef<"BulletPoint", 'Int'>
+    readonly sectionId: FieldRef<"BulletPoint", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BulletPoint findUnique
+   */
+  export type BulletPointFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * Filter, which BulletPoint to fetch.
+     */
+    where: BulletPointWhereUniqueInput
+  }
+
+  /**
+   * BulletPoint findUniqueOrThrow
+   */
+  export type BulletPointFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * Filter, which BulletPoint to fetch.
+     */
+    where: BulletPointWhereUniqueInput
+  }
+
+  /**
+   * BulletPoint findFirst
+   */
+  export type BulletPointFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * Filter, which BulletPoint to fetch.
+     */
+    where?: BulletPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BulletPoints to fetch.
+     */
+    orderBy?: BulletPointOrderByWithRelationInput | BulletPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BulletPoints.
+     */
+    cursor?: BulletPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BulletPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BulletPoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BulletPoints.
+     */
+    distinct?: BulletPointScalarFieldEnum | BulletPointScalarFieldEnum[]
+  }
+
+  /**
+   * BulletPoint findFirstOrThrow
+   */
+  export type BulletPointFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * Filter, which BulletPoint to fetch.
+     */
+    where?: BulletPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BulletPoints to fetch.
+     */
+    orderBy?: BulletPointOrderByWithRelationInput | BulletPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BulletPoints.
+     */
+    cursor?: BulletPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BulletPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BulletPoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BulletPoints.
+     */
+    distinct?: BulletPointScalarFieldEnum | BulletPointScalarFieldEnum[]
+  }
+
+  /**
+   * BulletPoint findMany
+   */
+  export type BulletPointFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * Filter, which BulletPoints to fetch.
+     */
+    where?: BulletPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BulletPoints to fetch.
+     */
+    orderBy?: BulletPointOrderByWithRelationInput | BulletPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BulletPoints.
+     */
+    cursor?: BulletPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BulletPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BulletPoints.
+     */
+    skip?: number
+    distinct?: BulletPointScalarFieldEnum | BulletPointScalarFieldEnum[]
+  }
+
+  /**
+   * BulletPoint create
+   */
+  export type BulletPointCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BulletPoint.
+     */
+    data: XOR<BulletPointCreateInput, BulletPointUncheckedCreateInput>
+  }
+
+  /**
+   * BulletPoint createMany
+   */
+  export type BulletPointCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BulletPoints.
+     */
+    data: BulletPointCreateManyInput | BulletPointCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BulletPoint update
+   */
+  export type BulletPointUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BulletPoint.
+     */
+    data: XOR<BulletPointUpdateInput, BulletPointUncheckedUpdateInput>
+    /**
+     * Choose, which BulletPoint to update.
+     */
+    where: BulletPointWhereUniqueInput
+  }
+
+  /**
+   * BulletPoint updateMany
+   */
+  export type BulletPointUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BulletPoints.
+     */
+    data: XOR<BulletPointUpdateManyMutationInput, BulletPointUncheckedUpdateManyInput>
+    /**
+     * Filter which BulletPoints to update
+     */
+    where?: BulletPointWhereInput
+    /**
+     * Limit how many BulletPoints to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BulletPoint upsert
+   */
+  export type BulletPointUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BulletPoint to update in case it exists.
+     */
+    where: BulletPointWhereUniqueInput
+    /**
+     * In case the BulletPoint found by the `where` argument doesn't exist, create a new BulletPoint with this data.
+     */
+    create: XOR<BulletPointCreateInput, BulletPointUncheckedCreateInput>
+    /**
+     * In case the BulletPoint was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BulletPointUpdateInput, BulletPointUncheckedUpdateInput>
+  }
+
+  /**
+   * BulletPoint delete
+   */
+  export type BulletPointDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+    /**
+     * Filter which BulletPoint to delete.
+     */
+    where: BulletPointWhereUniqueInput
+  }
+
+  /**
+   * BulletPoint deleteMany
+   */
+  export type BulletPointDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BulletPoints to delete
+     */
+    where?: BulletPointWhereInput
+    /**
+     * Limit how many BulletPoints to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BulletPoint without action
+   */
+  export type BulletPointDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BulletPoint
+     */
+    select?: BulletPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BulletPoint
+     */
+    omit?: BulletPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BulletPointInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -5084,8 +7240,9 @@ export namespace Prisma {
     id: 'id',
     titre: 'titre',
     pays: 'pays',
-    imagePrincipale: 'imagePrincipale',
+    continent: 'continent',
     description: 'description',
+    imagePrincipale: 'imagePrincipale',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -5114,6 +7271,26 @@ export namespace Prisma {
   };
 
   export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
+
+
+  export const SubsectionScalarFieldEnum: {
+    id: 'id',
+    titre: 'titre',
+    ordre: 'ordre',
+    sectionId: 'sectionId'
+  };
+
+  export type SubsectionScalarFieldEnum = (typeof SubsectionScalarFieldEnum)[keyof typeof SubsectionScalarFieldEnum]
+
+
+  export const BulletPointScalarFieldEnum: {
+    id: 'id',
+    contenu: 'contenu',
+    ordre: 'ordre',
+    sectionId: 'sectionId'
+  };
+
+  export type BulletPointScalarFieldEnum = (typeof BulletPointScalarFieldEnum)[keyof typeof BulletPointScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5146,8 +7323,9 @@ export namespace Prisma {
     id: 'id',
     titre: 'titre',
     pays: 'pays',
-    imagePrincipale: 'imagePrincipale',
-    description: 'description'
+    continent: 'continent',
+    description: 'description',
+    imagePrincipale: 'imagePrincipale'
   };
 
   export type DestinationOrderByRelevanceFieldEnum = (typeof DestinationOrderByRelevanceFieldEnum)[keyof typeof DestinationOrderByRelevanceFieldEnum]
@@ -5171,6 +7349,24 @@ export namespace Prisma {
   };
 
   export type ImageOrderByRelevanceFieldEnum = (typeof ImageOrderByRelevanceFieldEnum)[keyof typeof ImageOrderByRelevanceFieldEnum]
+
+
+  export const SubsectionOrderByRelevanceFieldEnum: {
+    id: 'id',
+    titre: 'titre',
+    sectionId: 'sectionId'
+  };
+
+  export type SubsectionOrderByRelevanceFieldEnum = (typeof SubsectionOrderByRelevanceFieldEnum)[keyof typeof SubsectionOrderByRelevanceFieldEnum]
+
+
+  export const BulletPointOrderByRelevanceFieldEnum: {
+    id: 'id',
+    contenu: 'contenu',
+    sectionId: 'sectionId'
+  };
+
+  export type BulletPointOrderByRelevanceFieldEnum = (typeof BulletPointOrderByRelevanceFieldEnum)[keyof typeof BulletPointOrderByRelevanceFieldEnum]
 
 
   /**
@@ -5295,8 +7491,9 @@ export namespace Prisma {
     id?: StringFilter<"Destination"> | string
     titre?: StringFilter<"Destination"> | string
     pays?: StringFilter<"Destination"> | string
+    continent?: StringNullableFilter<"Destination"> | string | null
+    description?: StringNullableFilter<"Destination"> | string | null
     imagePrincipale?: StringNullableFilter<"Destination"> | string | null
-    description?: StringFilter<"Destination"> | string
     createdAt?: DateTimeFilter<"Destination"> | Date | string
     updatedAt?: DateTimeFilter<"Destination"> | Date | string
     sections?: SectionListRelationFilter
@@ -5306,8 +7503,9 @@ export namespace Prisma {
     id?: SortOrder
     titre?: SortOrder
     pays?: SortOrder
+    continent?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     imagePrincipale?: SortOrderInput | SortOrder
-    description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sections?: SectionOrderByRelationAggregateInput
@@ -5321,8 +7519,9 @@ export namespace Prisma {
     NOT?: DestinationWhereInput | DestinationWhereInput[]
     titre?: StringFilter<"Destination"> | string
     pays?: StringFilter<"Destination"> | string
+    continent?: StringNullableFilter<"Destination"> | string | null
+    description?: StringNullableFilter<"Destination"> | string | null
     imagePrincipale?: StringNullableFilter<"Destination"> | string | null
-    description?: StringFilter<"Destination"> | string
     createdAt?: DateTimeFilter<"Destination"> | Date | string
     updatedAt?: DateTimeFilter<"Destination"> | Date | string
     sections?: SectionListRelationFilter
@@ -5332,8 +7531,9 @@ export namespace Prisma {
     id?: SortOrder
     titre?: SortOrder
     pays?: SortOrder
+    continent?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     imagePrincipale?: SortOrderInput | SortOrder
-    description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: DestinationCountOrderByAggregateInput
@@ -5348,8 +7548,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Destination"> | string
     titre?: StringWithAggregatesFilter<"Destination"> | string
     pays?: StringWithAggregatesFilter<"Destination"> | string
+    continent?: StringNullableWithAggregatesFilter<"Destination"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Destination"> | string | null
     imagePrincipale?: StringNullableWithAggregatesFilter<"Destination"> | string | null
-    description?: StringWithAggregatesFilter<"Destination"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Destination"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Destination"> | Date | string
   }
@@ -5365,6 +7566,8 @@ export namespace Prisma {
     type?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     destinationId?: StringFilter<"Section"> | string
     updatedAt?: DateTimeFilter<"Section"> | Date | string
+    subsections?: SubsectionListRelationFilter
+    bulletPoints?: BulletPointListRelationFilter
     images?: ImageListRelationFilter
     destination?: XOR<DestinationScalarRelationFilter, DestinationWhereInput>
   }
@@ -5377,6 +7580,8 @@ export namespace Prisma {
     type?: SortOrder
     destinationId?: SortOrder
     updatedAt?: SortOrder
+    subsections?: SubsectionOrderByRelationAggregateInput
+    bulletPoints?: BulletPointOrderByRelationAggregateInput
     images?: ImageOrderByRelationAggregateInput
     destination?: DestinationOrderByWithRelationInput
     _relevance?: SectionOrderByRelevanceInput
@@ -5393,6 +7598,8 @@ export namespace Prisma {
     type?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     destinationId?: StringFilter<"Section"> | string
     updatedAt?: DateTimeFilter<"Section"> | Date | string
+    subsections?: SubsectionListRelationFilter
+    bulletPoints?: BulletPointListRelationFilter
     images?: ImageListRelationFilter
     destination?: XOR<DestinationScalarRelationFilter, DestinationWhereInput>
   }, "id">
@@ -5476,6 +7683,112 @@ export namespace Prisma {
     sectionId?: StringWithAggregatesFilter<"Image"> | string
   }
 
+  export type SubsectionWhereInput = {
+    AND?: SubsectionWhereInput | SubsectionWhereInput[]
+    OR?: SubsectionWhereInput[]
+    NOT?: SubsectionWhereInput | SubsectionWhereInput[]
+    id?: StringFilter<"Subsection"> | string
+    titre?: StringFilter<"Subsection"> | string
+    ordre?: IntFilter<"Subsection"> | number
+    sectionId?: StringFilter<"Subsection"> | string
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }
+
+  export type SubsectionOrderByWithRelationInput = {
+    id?: SortOrder
+    titre?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+    section?: SectionOrderByWithRelationInput
+    _relevance?: SubsectionOrderByRelevanceInput
+  }
+
+  export type SubsectionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SubsectionWhereInput | SubsectionWhereInput[]
+    OR?: SubsectionWhereInput[]
+    NOT?: SubsectionWhereInput | SubsectionWhereInput[]
+    titre?: StringFilter<"Subsection"> | string
+    ordre?: IntFilter<"Subsection"> | number
+    sectionId?: StringFilter<"Subsection"> | string
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }, "id">
+
+  export type SubsectionOrderByWithAggregationInput = {
+    id?: SortOrder
+    titre?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+    _count?: SubsectionCountOrderByAggregateInput
+    _avg?: SubsectionAvgOrderByAggregateInput
+    _max?: SubsectionMaxOrderByAggregateInput
+    _min?: SubsectionMinOrderByAggregateInput
+    _sum?: SubsectionSumOrderByAggregateInput
+  }
+
+  export type SubsectionScalarWhereWithAggregatesInput = {
+    AND?: SubsectionScalarWhereWithAggregatesInput | SubsectionScalarWhereWithAggregatesInput[]
+    OR?: SubsectionScalarWhereWithAggregatesInput[]
+    NOT?: SubsectionScalarWhereWithAggregatesInput | SubsectionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Subsection"> | string
+    titre?: StringWithAggregatesFilter<"Subsection"> | string
+    ordre?: IntWithAggregatesFilter<"Subsection"> | number
+    sectionId?: StringWithAggregatesFilter<"Subsection"> | string
+  }
+
+  export type BulletPointWhereInput = {
+    AND?: BulletPointWhereInput | BulletPointWhereInput[]
+    OR?: BulletPointWhereInput[]
+    NOT?: BulletPointWhereInput | BulletPointWhereInput[]
+    id?: StringFilter<"BulletPoint"> | string
+    contenu?: StringFilter<"BulletPoint"> | string
+    ordre?: IntFilter<"BulletPoint"> | number
+    sectionId?: StringFilter<"BulletPoint"> | string
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }
+
+  export type BulletPointOrderByWithRelationInput = {
+    id?: SortOrder
+    contenu?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+    section?: SectionOrderByWithRelationInput
+    _relevance?: BulletPointOrderByRelevanceInput
+  }
+
+  export type BulletPointWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BulletPointWhereInput | BulletPointWhereInput[]
+    OR?: BulletPointWhereInput[]
+    NOT?: BulletPointWhereInput | BulletPointWhereInput[]
+    contenu?: StringFilter<"BulletPoint"> | string
+    ordre?: IntFilter<"BulletPoint"> | number
+    sectionId?: StringFilter<"BulletPoint"> | string
+    section?: XOR<SectionScalarRelationFilter, SectionWhereInput>
+  }, "id">
+
+  export type BulletPointOrderByWithAggregationInput = {
+    id?: SortOrder
+    contenu?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+    _count?: BulletPointCountOrderByAggregateInput
+    _avg?: BulletPointAvgOrderByAggregateInput
+    _max?: BulletPointMaxOrderByAggregateInput
+    _min?: BulletPointMinOrderByAggregateInput
+    _sum?: BulletPointSumOrderByAggregateInput
+  }
+
+  export type BulletPointScalarWhereWithAggregatesInput = {
+    AND?: BulletPointScalarWhereWithAggregatesInput | BulletPointScalarWhereWithAggregatesInput[]
+    OR?: BulletPointScalarWhereWithAggregatesInput[]
+    NOT?: BulletPointScalarWhereWithAggregatesInput | BulletPointScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BulletPoint"> | string
+    contenu?: StringWithAggregatesFilter<"BulletPoint"> | string
+    ordre?: IntWithAggregatesFilter<"BulletPoint"> | number
+    sectionId?: StringWithAggregatesFilter<"BulletPoint"> | string
+  }
+
   export type UserCreateInput = {
     nom: string
     prenom: string
@@ -5547,8 +7860,9 @@ export namespace Prisma {
     id?: string
     titre: string
     pays: string
+    continent?: string | null
+    description?: string | null
     imagePrincipale?: string | null
-    description: string
     createdAt?: Date | string
     updatedAt?: Date | string
     sections?: SectionCreateNestedManyWithoutDestinationInput
@@ -5558,8 +7872,9 @@ export namespace Prisma {
     id?: string
     titre: string
     pays: string
+    continent?: string | null
+    description?: string | null
     imagePrincipale?: string | null
-    description: string
     createdAt?: Date | string
     updatedAt?: Date | string
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
@@ -5569,8 +7884,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
     pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sections?: SectionUpdateManyWithoutDestinationNestedInput
@@ -5580,8 +7896,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
     pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
@@ -5591,8 +7908,9 @@ export namespace Prisma {
     id?: string
     titre: string
     pays: string
+    continent?: string | null
+    description?: string | null
     imagePrincipale?: string | null
-    description: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5601,8 +7919,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
     pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5611,8 +7930,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
     pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5624,6 +7944,8 @@ export namespace Prisma {
     ordre: number
     type: $Enums.SectionType
     updatedAt?: Date | string
+    subsections?: SubsectionCreateNestedManyWithoutSectionInput
+    bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
     images?: ImageCreateNestedManyWithoutSectionInput
     destination: DestinationCreateNestedOneWithoutSectionsInput
   }
@@ -5636,6 +7958,8 @@ export namespace Prisma {
     type: $Enums.SectionType
     destinationId: string
     updatedAt?: Date | string
+    subsections?: SubsectionUncheckedCreateNestedManyWithoutSectionInput
+    bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
     images?: ImageUncheckedCreateNestedManyWithoutSectionInput
   }
 
@@ -5646,6 +7970,8 @@ export namespace Prisma {
     ordre?: IntFieldUpdateOperationsInput | number
     type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUpdateManyWithoutSectionNestedInput
+    bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
     images?: ImageUpdateManyWithoutSectionNestedInput
     destination?: DestinationUpdateOneRequiredWithoutSectionsNestedInput
   }
@@ -5658,6 +7984,8 @@ export namespace Prisma {
     type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     destinationId?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUncheckedUpdateManyWithoutSectionNestedInput
+    bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
     images?: ImageUncheckedUpdateManyWithoutSectionNestedInput
   }
 
@@ -5735,6 +8063,102 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     alt?: NullableStringFieldUpdateOperationsInput | string | null
+    sectionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubsectionCreateInput = {
+    id?: string
+    titre: string
+    ordre: number
+    section: SectionCreateNestedOneWithoutSubsectionsInput
+  }
+
+  export type SubsectionUncheckedCreateInput = {
+    id?: string
+    titre: string
+    ordre: number
+    sectionId: string
+  }
+
+  export type SubsectionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    section?: SectionUpdateOneRequiredWithoutSubsectionsNestedInput
+  }
+
+  export type SubsectionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    sectionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SubsectionCreateManyInput = {
+    id?: string
+    titre: string
+    ordre: number
+    sectionId: string
+  }
+
+  export type SubsectionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SubsectionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    sectionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BulletPointCreateInput = {
+    id?: string
+    contenu: string
+    ordre: number
+    section: SectionCreateNestedOneWithoutBulletPointsInput
+  }
+
+  export type BulletPointUncheckedCreateInput = {
+    id?: string
+    contenu: string
+    ordre: number
+    sectionId: string
+  }
+
+  export type BulletPointUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    section?: SectionUpdateOneRequiredWithoutBulletPointsNestedInput
+  }
+
+  export type BulletPointUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    sectionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BulletPointCreateManyInput = {
+    id?: string
+    contenu: string
+    ordre: number
+    sectionId: string
+  }
+
+  export type BulletPointUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type BulletPointUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
     sectionId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -5924,8 +8348,9 @@ export namespace Prisma {
     id?: SortOrder
     titre?: SortOrder
     pays?: SortOrder
-    imagePrincipale?: SortOrder
+    continent?: SortOrder
     description?: SortOrder
+    imagePrincipale?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5934,8 +8359,9 @@ export namespace Prisma {
     id?: SortOrder
     titre?: SortOrder
     pays?: SortOrder
-    imagePrincipale?: SortOrder
+    continent?: SortOrder
     description?: SortOrder
+    imagePrincipale?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5944,8 +8370,9 @@ export namespace Prisma {
     id?: SortOrder
     titre?: SortOrder
     pays?: SortOrder
-    imagePrincipale?: SortOrder
+    continent?: SortOrder
     description?: SortOrder
+    imagePrincipale?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5975,6 +8402,18 @@ export namespace Prisma {
     not?: NestedEnumSectionTypeFilter<$PrismaModel> | $Enums.SectionType
   }
 
+  export type SubsectionListRelationFilter = {
+    every?: SubsectionWhereInput
+    some?: SubsectionWhereInput
+    none?: SubsectionWhereInput
+  }
+
+  export type BulletPointListRelationFilter = {
+    every?: BulletPointWhereInput
+    some?: BulletPointWhereInput
+    none?: BulletPointWhereInput
+  }
+
   export type ImageListRelationFilter = {
     every?: ImageWhereInput
     some?: ImageWhereInput
@@ -5984,6 +8423,14 @@ export namespace Prisma {
   export type DestinationScalarRelationFilter = {
     is?: DestinationWhereInput
     isNot?: DestinationWhereInput
+  }
+
+  export type SubsectionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BulletPointOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ImageOrderByRelationAggregateInput = {
@@ -6076,6 +8523,76 @@ export namespace Prisma {
     sectionId?: SortOrder
   }
 
+  export type SubsectionOrderByRelevanceInput = {
+    fields: SubsectionOrderByRelevanceFieldEnum | SubsectionOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type SubsectionCountOrderByAggregateInput = {
+    id?: SortOrder
+    titre?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+  }
+
+  export type SubsectionAvgOrderByAggregateInput = {
+    ordre?: SortOrder
+  }
+
+  export type SubsectionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    titre?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+  }
+
+  export type SubsectionMinOrderByAggregateInput = {
+    id?: SortOrder
+    titre?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+  }
+
+  export type SubsectionSumOrderByAggregateInput = {
+    ordre?: SortOrder
+  }
+
+  export type BulletPointOrderByRelevanceInput = {
+    fields: BulletPointOrderByRelevanceFieldEnum | BulletPointOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type BulletPointCountOrderByAggregateInput = {
+    id?: SortOrder
+    contenu?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+  }
+
+  export type BulletPointAvgOrderByAggregateInput = {
+    ordre?: SortOrder
+  }
+
+  export type BulletPointMaxOrderByAggregateInput = {
+    id?: SortOrder
+    contenu?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+  }
+
+  export type BulletPointMinOrderByAggregateInput = {
+    id?: SortOrder
+    contenu?: SortOrder
+    ordre?: SortOrder
+    sectionId?: SortOrder
+  }
+
+  export type BulletPointSumOrderByAggregateInput = {
+    ordre?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -6142,6 +8659,20 @@ export namespace Prisma {
     deleteMany?: SectionScalarWhereInput | SectionScalarWhereInput[]
   }
 
+  export type SubsectionCreateNestedManyWithoutSectionInput = {
+    create?: XOR<SubsectionCreateWithoutSectionInput, SubsectionUncheckedCreateWithoutSectionInput> | SubsectionCreateWithoutSectionInput[] | SubsectionUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: SubsectionCreateOrConnectWithoutSectionInput | SubsectionCreateOrConnectWithoutSectionInput[]
+    createMany?: SubsectionCreateManySectionInputEnvelope
+    connect?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+  }
+
+  export type BulletPointCreateNestedManyWithoutSectionInput = {
+    create?: XOR<BulletPointCreateWithoutSectionInput, BulletPointUncheckedCreateWithoutSectionInput> | BulletPointCreateWithoutSectionInput[] | BulletPointUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: BulletPointCreateOrConnectWithoutSectionInput | BulletPointCreateOrConnectWithoutSectionInput[]
+    createMany?: BulletPointCreateManySectionInputEnvelope
+    connect?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+  }
+
   export type ImageCreateNestedManyWithoutSectionInput = {
     create?: XOR<ImageCreateWithoutSectionInput, ImageUncheckedCreateWithoutSectionInput> | ImageCreateWithoutSectionInput[] | ImageUncheckedCreateWithoutSectionInput[]
     connectOrCreate?: ImageCreateOrConnectWithoutSectionInput | ImageCreateOrConnectWithoutSectionInput[]
@@ -6155,6 +8686,20 @@ export namespace Prisma {
     connect?: DestinationWhereUniqueInput
   }
 
+  export type SubsectionUncheckedCreateNestedManyWithoutSectionInput = {
+    create?: XOR<SubsectionCreateWithoutSectionInput, SubsectionUncheckedCreateWithoutSectionInput> | SubsectionCreateWithoutSectionInput[] | SubsectionUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: SubsectionCreateOrConnectWithoutSectionInput | SubsectionCreateOrConnectWithoutSectionInput[]
+    createMany?: SubsectionCreateManySectionInputEnvelope
+    connect?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+  }
+
+  export type BulletPointUncheckedCreateNestedManyWithoutSectionInput = {
+    create?: XOR<BulletPointCreateWithoutSectionInput, BulletPointUncheckedCreateWithoutSectionInput> | BulletPointCreateWithoutSectionInput[] | BulletPointUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: BulletPointCreateOrConnectWithoutSectionInput | BulletPointCreateOrConnectWithoutSectionInput[]
+    createMany?: BulletPointCreateManySectionInputEnvelope
+    connect?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+  }
+
   export type ImageUncheckedCreateNestedManyWithoutSectionInput = {
     create?: XOR<ImageCreateWithoutSectionInput, ImageUncheckedCreateWithoutSectionInput> | ImageCreateWithoutSectionInput[] | ImageUncheckedCreateWithoutSectionInput[]
     connectOrCreate?: ImageCreateOrConnectWithoutSectionInput | ImageCreateOrConnectWithoutSectionInput[]
@@ -6164,6 +8709,34 @@ export namespace Prisma {
 
   export type EnumSectionTypeFieldUpdateOperationsInput = {
     set?: $Enums.SectionType
+  }
+
+  export type SubsectionUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<SubsectionCreateWithoutSectionInput, SubsectionUncheckedCreateWithoutSectionInput> | SubsectionCreateWithoutSectionInput[] | SubsectionUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: SubsectionCreateOrConnectWithoutSectionInput | SubsectionCreateOrConnectWithoutSectionInput[]
+    upsert?: SubsectionUpsertWithWhereUniqueWithoutSectionInput | SubsectionUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: SubsectionCreateManySectionInputEnvelope
+    set?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    disconnect?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    delete?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    connect?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    update?: SubsectionUpdateWithWhereUniqueWithoutSectionInput | SubsectionUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: SubsectionUpdateManyWithWhereWithoutSectionInput | SubsectionUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: SubsectionScalarWhereInput | SubsectionScalarWhereInput[]
+  }
+
+  export type BulletPointUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<BulletPointCreateWithoutSectionInput, BulletPointUncheckedCreateWithoutSectionInput> | BulletPointCreateWithoutSectionInput[] | BulletPointUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: BulletPointCreateOrConnectWithoutSectionInput | BulletPointCreateOrConnectWithoutSectionInput[]
+    upsert?: BulletPointUpsertWithWhereUniqueWithoutSectionInput | BulletPointUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: BulletPointCreateManySectionInputEnvelope
+    set?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    disconnect?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    delete?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    connect?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    update?: BulletPointUpdateWithWhereUniqueWithoutSectionInput | BulletPointUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: BulletPointUpdateManyWithWhereWithoutSectionInput | BulletPointUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: BulletPointScalarWhereInput | BulletPointScalarWhereInput[]
   }
 
   export type ImageUpdateManyWithoutSectionNestedInput = {
@@ -6186,6 +8759,34 @@ export namespace Prisma {
     upsert?: DestinationUpsertWithoutSectionsInput
     connect?: DestinationWhereUniqueInput
     update?: XOR<XOR<DestinationUpdateToOneWithWhereWithoutSectionsInput, DestinationUpdateWithoutSectionsInput>, DestinationUncheckedUpdateWithoutSectionsInput>
+  }
+
+  export type SubsectionUncheckedUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<SubsectionCreateWithoutSectionInput, SubsectionUncheckedCreateWithoutSectionInput> | SubsectionCreateWithoutSectionInput[] | SubsectionUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: SubsectionCreateOrConnectWithoutSectionInput | SubsectionCreateOrConnectWithoutSectionInput[]
+    upsert?: SubsectionUpsertWithWhereUniqueWithoutSectionInput | SubsectionUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: SubsectionCreateManySectionInputEnvelope
+    set?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    disconnect?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    delete?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    connect?: SubsectionWhereUniqueInput | SubsectionWhereUniqueInput[]
+    update?: SubsectionUpdateWithWhereUniqueWithoutSectionInput | SubsectionUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: SubsectionUpdateManyWithWhereWithoutSectionInput | SubsectionUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: SubsectionScalarWhereInput | SubsectionScalarWhereInput[]
+  }
+
+  export type BulletPointUncheckedUpdateManyWithoutSectionNestedInput = {
+    create?: XOR<BulletPointCreateWithoutSectionInput, BulletPointUncheckedCreateWithoutSectionInput> | BulletPointCreateWithoutSectionInput[] | BulletPointUncheckedCreateWithoutSectionInput[]
+    connectOrCreate?: BulletPointCreateOrConnectWithoutSectionInput | BulletPointCreateOrConnectWithoutSectionInput[]
+    upsert?: BulletPointUpsertWithWhereUniqueWithoutSectionInput | BulletPointUpsertWithWhereUniqueWithoutSectionInput[]
+    createMany?: BulletPointCreateManySectionInputEnvelope
+    set?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    disconnect?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    delete?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    connect?: BulletPointWhereUniqueInput | BulletPointWhereUniqueInput[]
+    update?: BulletPointUpdateWithWhereUniqueWithoutSectionInput | BulletPointUpdateWithWhereUniqueWithoutSectionInput[]
+    updateMany?: BulletPointUpdateManyWithWhereWithoutSectionInput | BulletPointUpdateManyWithWhereWithoutSectionInput[]
+    deleteMany?: BulletPointScalarWhereInput | BulletPointScalarWhereInput[]
   }
 
   export type ImageUncheckedUpdateManyWithoutSectionNestedInput = {
@@ -6214,6 +8815,34 @@ export namespace Prisma {
     upsert?: SectionUpsertWithoutImagesInput
     connect?: SectionWhereUniqueInput
     update?: XOR<XOR<SectionUpdateToOneWithWhereWithoutImagesInput, SectionUpdateWithoutImagesInput>, SectionUncheckedUpdateWithoutImagesInput>
+  }
+
+  export type SectionCreateNestedOneWithoutSubsectionsInput = {
+    create?: XOR<SectionCreateWithoutSubsectionsInput, SectionUncheckedCreateWithoutSubsectionsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutSubsectionsInput
+    connect?: SectionWhereUniqueInput
+  }
+
+  export type SectionUpdateOneRequiredWithoutSubsectionsNestedInput = {
+    create?: XOR<SectionCreateWithoutSubsectionsInput, SectionUncheckedCreateWithoutSubsectionsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutSubsectionsInput
+    upsert?: SectionUpsertWithoutSubsectionsInput
+    connect?: SectionWhereUniqueInput
+    update?: XOR<XOR<SectionUpdateToOneWithWhereWithoutSubsectionsInput, SectionUpdateWithoutSubsectionsInput>, SectionUncheckedUpdateWithoutSubsectionsInput>
+  }
+
+  export type SectionCreateNestedOneWithoutBulletPointsInput = {
+    create?: XOR<SectionCreateWithoutBulletPointsInput, SectionUncheckedCreateWithoutBulletPointsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutBulletPointsInput
+    connect?: SectionWhereUniqueInput
+  }
+
+  export type SectionUpdateOneRequiredWithoutBulletPointsNestedInput = {
+    create?: XOR<SectionCreateWithoutBulletPointsInput, SectionUncheckedCreateWithoutBulletPointsInput>
+    connectOrCreate?: SectionCreateOrConnectWithoutBulletPointsInput
+    upsert?: SectionUpsertWithoutBulletPointsInput
+    connect?: SectionWhereUniqueInput
+    update?: XOR<XOR<SectionUpdateToOneWithWhereWithoutBulletPointsInput, SectionUpdateWithoutBulletPointsInput>, SectionUncheckedUpdateWithoutBulletPointsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -6397,6 +9026,8 @@ export namespace Prisma {
     ordre: number
     type: $Enums.SectionType
     updatedAt?: Date | string
+    subsections?: SubsectionCreateNestedManyWithoutSectionInput
+    bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
     images?: ImageCreateNestedManyWithoutSectionInput
   }
 
@@ -6407,6 +9038,8 @@ export namespace Prisma {
     ordre: number
     type: $Enums.SectionType
     updatedAt?: Date | string
+    subsections?: SubsectionUncheckedCreateNestedManyWithoutSectionInput
+    bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
     images?: ImageUncheckedCreateNestedManyWithoutSectionInput
   }
 
@@ -6449,6 +9082,50 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Section"> | Date | string
   }
 
+  export type SubsectionCreateWithoutSectionInput = {
+    id?: string
+    titre: string
+    ordre: number
+  }
+
+  export type SubsectionUncheckedCreateWithoutSectionInput = {
+    id?: string
+    titre: string
+    ordre: number
+  }
+
+  export type SubsectionCreateOrConnectWithoutSectionInput = {
+    where: SubsectionWhereUniqueInput
+    create: XOR<SubsectionCreateWithoutSectionInput, SubsectionUncheckedCreateWithoutSectionInput>
+  }
+
+  export type SubsectionCreateManySectionInputEnvelope = {
+    data: SubsectionCreateManySectionInput | SubsectionCreateManySectionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BulletPointCreateWithoutSectionInput = {
+    id?: string
+    contenu: string
+    ordre: number
+  }
+
+  export type BulletPointUncheckedCreateWithoutSectionInput = {
+    id?: string
+    contenu: string
+    ordre: number
+  }
+
+  export type BulletPointCreateOrConnectWithoutSectionInput = {
+    where: BulletPointWhereUniqueInput
+    create: XOR<BulletPointCreateWithoutSectionInput, BulletPointUncheckedCreateWithoutSectionInput>
+  }
+
+  export type BulletPointCreateManySectionInputEnvelope = {
+    data: BulletPointCreateManySectionInput | BulletPointCreateManySectionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ImageCreateWithoutSectionInput = {
     id?: string
     url: string
@@ -6475,8 +9152,9 @@ export namespace Prisma {
     id?: string
     titre: string
     pays: string
+    continent?: string | null
+    description?: string | null
     imagePrincipale?: string | null
-    description: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6485,8 +9163,9 @@ export namespace Prisma {
     id?: string
     titre: string
     pays: string
+    continent?: string | null
+    description?: string | null
     imagePrincipale?: string | null
-    description: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6494,6 +9173,58 @@ export namespace Prisma {
   export type DestinationCreateOrConnectWithoutSectionsInput = {
     where: DestinationWhereUniqueInput
     create: XOR<DestinationCreateWithoutSectionsInput, DestinationUncheckedCreateWithoutSectionsInput>
+  }
+
+  export type SubsectionUpsertWithWhereUniqueWithoutSectionInput = {
+    where: SubsectionWhereUniqueInput
+    update: XOR<SubsectionUpdateWithoutSectionInput, SubsectionUncheckedUpdateWithoutSectionInput>
+    create: XOR<SubsectionCreateWithoutSectionInput, SubsectionUncheckedCreateWithoutSectionInput>
+  }
+
+  export type SubsectionUpdateWithWhereUniqueWithoutSectionInput = {
+    where: SubsectionWhereUniqueInput
+    data: XOR<SubsectionUpdateWithoutSectionInput, SubsectionUncheckedUpdateWithoutSectionInput>
+  }
+
+  export type SubsectionUpdateManyWithWhereWithoutSectionInput = {
+    where: SubsectionScalarWhereInput
+    data: XOR<SubsectionUpdateManyMutationInput, SubsectionUncheckedUpdateManyWithoutSectionInput>
+  }
+
+  export type SubsectionScalarWhereInput = {
+    AND?: SubsectionScalarWhereInput | SubsectionScalarWhereInput[]
+    OR?: SubsectionScalarWhereInput[]
+    NOT?: SubsectionScalarWhereInput | SubsectionScalarWhereInput[]
+    id?: StringFilter<"Subsection"> | string
+    titre?: StringFilter<"Subsection"> | string
+    ordre?: IntFilter<"Subsection"> | number
+    sectionId?: StringFilter<"Subsection"> | string
+  }
+
+  export type BulletPointUpsertWithWhereUniqueWithoutSectionInput = {
+    where: BulletPointWhereUniqueInput
+    update: XOR<BulletPointUpdateWithoutSectionInput, BulletPointUncheckedUpdateWithoutSectionInput>
+    create: XOR<BulletPointCreateWithoutSectionInput, BulletPointUncheckedCreateWithoutSectionInput>
+  }
+
+  export type BulletPointUpdateWithWhereUniqueWithoutSectionInput = {
+    where: BulletPointWhereUniqueInput
+    data: XOR<BulletPointUpdateWithoutSectionInput, BulletPointUncheckedUpdateWithoutSectionInput>
+  }
+
+  export type BulletPointUpdateManyWithWhereWithoutSectionInput = {
+    where: BulletPointScalarWhereInput
+    data: XOR<BulletPointUpdateManyMutationInput, BulletPointUncheckedUpdateManyWithoutSectionInput>
+  }
+
+  export type BulletPointScalarWhereInput = {
+    AND?: BulletPointScalarWhereInput | BulletPointScalarWhereInput[]
+    OR?: BulletPointScalarWhereInput[]
+    NOT?: BulletPointScalarWhereInput | BulletPointScalarWhereInput[]
+    id?: StringFilter<"BulletPoint"> | string
+    contenu?: StringFilter<"BulletPoint"> | string
+    ordre?: IntFilter<"BulletPoint"> | number
+    sectionId?: StringFilter<"BulletPoint"> | string
   }
 
   export type ImageUpsertWithWhereUniqueWithoutSectionInput = {
@@ -6537,8 +9268,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
     pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6547,8 +9279,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
     pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6560,6 +9293,8 @@ export namespace Prisma {
     ordre: number
     type: $Enums.SectionType
     updatedAt?: Date | string
+    subsections?: SubsectionCreateNestedManyWithoutSectionInput
+    bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
     destination: DestinationCreateNestedOneWithoutSectionsInput
   }
 
@@ -6571,6 +9306,8 @@ export namespace Prisma {
     type: $Enums.SectionType
     destinationId: string
     updatedAt?: Date | string
+    subsections?: SubsectionUncheckedCreateNestedManyWithoutSectionInput
+    bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
   }
 
   export type SectionCreateOrConnectWithoutImagesInput = {
@@ -6596,6 +9333,8 @@ export namespace Prisma {
     ordre?: IntFieldUpdateOperationsInput | number
     type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUpdateManyWithoutSectionNestedInput
+    bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
     destination?: DestinationUpdateOneRequiredWithoutSectionsNestedInput
   }
 
@@ -6607,6 +9346,136 @@ export namespace Prisma {
     type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     destinationId?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUncheckedUpdateManyWithoutSectionNestedInput
+    bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionCreateWithoutSubsectionsInput = {
+    id?: string
+    titre: string
+    contenu: string
+    ordre: number
+    type: $Enums.SectionType
+    updatedAt?: Date | string
+    bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
+    images?: ImageCreateNestedManyWithoutSectionInput
+    destination: DestinationCreateNestedOneWithoutSectionsInput
+  }
+
+  export type SectionUncheckedCreateWithoutSubsectionsInput = {
+    id?: string
+    titre: string
+    contenu: string
+    ordre: number
+    type: $Enums.SectionType
+    destinationId: string
+    updatedAt?: Date | string
+    bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
+    images?: ImageUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutSubsectionsInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutSubsectionsInput, SectionUncheckedCreateWithoutSubsectionsInput>
+  }
+
+  export type SectionUpsertWithoutSubsectionsInput = {
+    update: XOR<SectionUpdateWithoutSubsectionsInput, SectionUncheckedUpdateWithoutSubsectionsInput>
+    create: XOR<SectionCreateWithoutSubsectionsInput, SectionUncheckedCreateWithoutSubsectionsInput>
+    where?: SectionWhereInput
+  }
+
+  export type SectionUpdateToOneWithWhereWithoutSubsectionsInput = {
+    where?: SectionWhereInput
+    data: XOR<SectionUpdateWithoutSubsectionsInput, SectionUncheckedUpdateWithoutSubsectionsInput>
+  }
+
+  export type SectionUpdateWithoutSubsectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
+    images?: ImageUpdateManyWithoutSectionNestedInput
+    destination?: DestinationUpdateOneRequiredWithoutSectionsNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutSubsectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    destinationId?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
+    images?: ImageUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type SectionCreateWithoutBulletPointsInput = {
+    id?: string
+    titre: string
+    contenu: string
+    ordre: number
+    type: $Enums.SectionType
+    updatedAt?: Date | string
+    subsections?: SubsectionCreateNestedManyWithoutSectionInput
+    images?: ImageCreateNestedManyWithoutSectionInput
+    destination: DestinationCreateNestedOneWithoutSectionsInput
+  }
+
+  export type SectionUncheckedCreateWithoutBulletPointsInput = {
+    id?: string
+    titre: string
+    contenu: string
+    ordre: number
+    type: $Enums.SectionType
+    destinationId: string
+    updatedAt?: Date | string
+    subsections?: SubsectionUncheckedCreateNestedManyWithoutSectionInput
+    images?: ImageUncheckedCreateNestedManyWithoutSectionInput
+  }
+
+  export type SectionCreateOrConnectWithoutBulletPointsInput = {
+    where: SectionWhereUniqueInput
+    create: XOR<SectionCreateWithoutBulletPointsInput, SectionUncheckedCreateWithoutBulletPointsInput>
+  }
+
+  export type SectionUpsertWithoutBulletPointsInput = {
+    update: XOR<SectionUpdateWithoutBulletPointsInput, SectionUncheckedUpdateWithoutBulletPointsInput>
+    create: XOR<SectionCreateWithoutBulletPointsInput, SectionUncheckedCreateWithoutBulletPointsInput>
+    where?: SectionWhereInput
+  }
+
+  export type SectionUpdateToOneWithWhereWithoutBulletPointsInput = {
+    where?: SectionWhereInput
+    data: XOR<SectionUpdateWithoutBulletPointsInput, SectionUncheckedUpdateWithoutBulletPointsInput>
+  }
+
+  export type SectionUpdateWithoutBulletPointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUpdateManyWithoutSectionNestedInput
+    images?: ImageUpdateManyWithoutSectionNestedInput
+    destination?: DestinationUpdateOneRequiredWithoutSectionsNestedInput
+  }
+
+  export type SectionUncheckedUpdateWithoutBulletPointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+    destinationId?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUncheckedUpdateManyWithoutSectionNestedInput
+    images?: ImageUncheckedUpdateManyWithoutSectionNestedInput
   }
 
   export type SectionCreateManyDestinationInput = {
@@ -6625,6 +9494,8 @@ export namespace Prisma {
     ordre?: IntFieldUpdateOperationsInput | number
     type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUpdateManyWithoutSectionNestedInput
+    bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
     images?: ImageUpdateManyWithoutSectionNestedInput
   }
 
@@ -6635,6 +9506,8 @@ export namespace Prisma {
     ordre?: IntFieldUpdateOperationsInput | number
     type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subsections?: SubsectionUncheckedUpdateManyWithoutSectionNestedInput
+    bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
     images?: ImageUncheckedUpdateManyWithoutSectionNestedInput
   }
 
@@ -6647,10 +9520,58 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SubsectionCreateManySectionInput = {
+    id?: string
+    titre: string
+    ordre: number
+  }
+
+  export type BulletPointCreateManySectionInput = {
+    id?: string
+    contenu: string
+    ordre: number
+  }
+
   export type ImageCreateManySectionInput = {
     id?: string
     url: string
     alt?: string | null
+  }
+
+  export type SubsectionUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SubsectionUncheckedUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SubsectionUncheckedUpdateManyWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type BulletPointUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type BulletPointUncheckedUpdateWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type BulletPointUncheckedUpdateManyWithoutSectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenu?: StringFieldUpdateOperationsInput | string
+    ordre?: IntFieldUpdateOperationsInput | number
   }
 
   export type ImageUpdateWithoutSectionInput = {

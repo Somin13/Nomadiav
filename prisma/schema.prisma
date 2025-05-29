@@ -33,15 +33,16 @@ enum Role {
 
 model Destination {
   id              String           @id @default(cuid())
-  titre           String           // ex : "Tassili n’Ajjer"
-  pays            String           // ex : "Algérie"
-  imagePrincipale String?          // URL de l'image de bannière
-  description     String           // intro sous le bouton orange
-  sections        Section[]        // relation 1-n
+  titre           String
+  pays            String
+  continent       String?         
+  description String ? 
+  imagePrincipale String?
+  sections        Section[]
   createdAt       DateTime         @default(now())
-  updatedAt DateTime @updatedAt
-
+  updatedAt       DateTime         @updatedAt
 }
+
 
 // Pour lier les destinations aux section dynamique
 
@@ -52,8 +53,11 @@ model Section {
   ordre          Int        
   type           SectionType
   destinationId  String
-
+  
+  subsections Subsection[]
+  bulletPoints BulletPoint[]
   images    Image[]
+
   updatedAt DateTime @updatedAt
   destination    Destination @relation(fields: [destinationId], references: [id])
 }
@@ -61,12 +65,13 @@ model Section {
 // Pour facilement classer chaque section dans le code
 
 enum SectionType {
+  GUIDE
   PRESENTATION
+  INFORMATIONS
   QUE_FAIRE
-  CONSEILS
-  MEILLEURE_PERIODE
-  SANTE
   COMMENT_Y_ALLER
+  FORMALITES
+  CONSEILS
   POURQUOI_Y_ALLER
 }
 
@@ -81,3 +86,18 @@ model Image {
   section       Section  @relation(fields: [sectionId], references: [id])
 }
 
+model Subsection {
+  id         String   @id @default(cuid())
+  titre      String
+  ordre      Int
+  sectionId  String
+  section    Section  @relation(fields: [sectionId], references: [id])
+}
+
+model BulletPoint {
+  id         String   @id @default(cuid())
+  contenu    String
+  ordre      Int
+  sectionId  String
+  section    Section  @relation(fields: [sectionId], references: [id])
+}

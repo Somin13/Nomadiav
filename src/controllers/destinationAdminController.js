@@ -7,13 +7,14 @@ export function renderAddDestination(req, res) {
 
 // Traite l'ajout d'une nouvelle destination
 export async function handleAddDestination(req, res) {
-  const { titre, pays, description } = req.body;
+  const { titre, pays, continent, description } = req.body;
   const image = req.file ? '/uploads/' + req.file.filename : null;
 
   await prisma.destination.create({
     data: {
       titre,
       pays,
+      continent,
       description,
       imagePrincipale: image,
     },
@@ -80,14 +81,15 @@ export async function renderEditDestination(req, res) {
 // Traite la mise à jour d'une destination
 export async function handleEditDestination(req, res) {
   const id = req.params.id;
-  const { titre, pays, description } = req.body;
+  const { titre, pays, continent, description } = req.body;
   const image = req.file ? '/uploads/' + req.file.filename : null;
 
   try {
     const updateData = {
       titre,
       pays,
-      description,
+      continent,
+      description
     };
 
     if (image) {

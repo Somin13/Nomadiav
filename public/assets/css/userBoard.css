@@ -1,0 +1,54 @@
+.continent-group {
+  margin-bottom: 40px;
+}
+
+.continent-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #f25c1e;
+  border-bottom: 2px solid #fcd1bb;
+  padding-bottom: 5px;
+}
+
+.destination-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.destination-card {
+  background-color: #fff4ef;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  width: 220px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: scale(1.03);
+}
+
+.destination-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.destination-card .info {
+  padding: 12px;
+}
+
+.destination-card .info h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.destination-card .info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}

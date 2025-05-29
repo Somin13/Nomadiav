@@ -1,26 +1,109 @@
 {% extends "base.twig" %}
 
 {% block style %}
-
-    <link rel="stylesheet" href="/assets/css/destinationForm.css">
+  <link rel="stylesheet" href="/assets/css/destinationForm.css">
+ 
 {% endblock %}
 
 {% block title %}Ajouter une destination{% endblock %}
 
 {% block main %}
- <form method="POST" action="/admin/destinations/add" class="form" enctype="multipart/form-data">
+  <h1>Ajouter une nouvelle destination</h1>
+
+  <form method="POST" action="/admin/destinations/add" enctype="multipart/form-data" id="destination-form">
+
+   <label>Continent :</label>
+<select name="continent" required>
+  <option value="">-- Sélectionner un continent --</option>
+  <option value="Afrique">Afrique</option>
+  <option value="Amérique du Nord">Amérique du Nord</option>
+  <option value="Amérique du Sud">Amérique du Sud</option>
+  <option value="Asie">Asie</option>
+  <option value="Europe">Europe</option>
+  <option value="Océanie">Océanie</option>
+  <option value="Antarctique">Antarctique</option>
+</select>
+
     <label>Titre :</label>
     <input type="text" name="titre" required>
 
     <label>Pays :</label>
     <input type="text" name="pays" required>
 
-    <label for="imagePrincipale">Image principale :</label>
-  <input type="file" id="imagePrincipale" name="imagePrincipale" accept="image/*" required>
+    <label for="description">Description :</label>
+<textarea id="description" name="description" required></textarea>
 
-    <label>Description :</label>
-    <textarea name="description" rows="6" required></textarea>
 
-    <button type="submit">Créer</button>
+    <label>Image principale :</label>
+    <input type="file" name="imagePrincipale" accept="image/*" required>
+
+    <hr>
+
+    <h2>Sections dynamiques</h2>
+    <div id="sections-container"></div>
+
+    <button type="button" onclick="addSection()">➕ Ajouter une section</button>
+
+    <br><br>
+    <button type="submit">✅ Enregistrer la destination</button>
   </form>
+
+  <script>
+    let sectionIndex = 0;
+
+    function addSection() {
+      const container = document.getElementById('sections-container');
+      const section = document.createElement('div');
+      section.className = 'section-block';
+      section.innerHTML = `
+        <label>Titre de la section :</label>
+        <input type="text" name="sections[${sectionIndex}][titre]" required>
+
+        <label>Type de section :</label>
+        <select name="sections[${sectionIndex}][type]" required>
+        <option value="GUIDE">Guide complet</option>
+          <option value="PRESENTATION">Présentation</option>
+          <option value="INFORMATIONS">Présentation</option>
+          <option value="QUE_FAIRE">Que faire</option>
+          <option value="COMMENT_Y_ALLER">Comment y aller</option>
+          <option value="FORMALITES">Formalités de voyages et informations pratiques</option>
+          <option value="CONSEILS">Conseils</option>
+          <option value="POURQUOI_Y_ALLER">Pourquoi y aller</option>
+        </select>
+
+        <div class="sub-content" id="contents-${sectionIndex}">
+          <h4>Contenus (bullet points, paragraphes…)</h4>
+        </div>
+         <button type="button" class="delete-section-btn" onclick="this.closest('.section-block').remove()">❌ Supprimer cette section</button>
+        <button type="button" onclick="addContent(${sectionIndex})">➕ Ajouter contenu</button>
+
+        <div class="sub-content" id="images-${sectionIndex}">
+          <h4>Images (facultatives)</h4>
+        </div>
+        <button type="button" onclick="addImage(${sectionIndex})">➕ Ajouter image</button>
+      `;
+      container.appendChild(section);
+      sectionIndex++;
+    }
+
+    function addContent(sectionId) {
+      const contentContainer = document.getElementById(`contents-${sectionId}`);
+      const count = contentContainer.querySelectorAll('textarea').length;
+      const textarea = document.createElement('textarea');
+      textarea.name = `sections[${sectionId}][contenus][]`;
+      textarea.rows = 3;
+      textarea.placeholder = "Contenu (paragraphe ou point)";
+      textarea.required = true;
+      contentContainer.appendChild(textarea);
+    }
+
+    function addImage(sectionId) {
+      const imageContainer = document.getElementById(`images-${sectionId}`);
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.name = `sections[${sectionId}][images][]`;
+      input.accept = 'image/*';
+      imageContainer.appendChild(input);
+    }
+  </script>
 {% endblock %}
