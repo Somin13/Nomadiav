@@ -7,7 +7,6 @@ export function renderAddDestination(req, res) {
 
 // src/controllers/destinationController.js
 
-import path from 'path';
 
 // 🧠 Contrôleur pour traiter l’ajout d’une nouvelle destination
 export async function handleAddDestination(req, res) {

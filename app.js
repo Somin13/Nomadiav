@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Si tes images sont dans /public/uploads, c’est déjà accessible via app.use(express.static('public'))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/uploads', express.static('uploads'))
+
 
 
 // Middleware session

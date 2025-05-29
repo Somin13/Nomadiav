@@ -1,45 +1,103 @@
-.destination-header {
+/* ----------- Base ----------- */
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #111;
+}
+
+h1 {
+  font-size: 2rem;
   text-align: center;
-  margin-bottom: 40px;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  color: #111;
 }
 
-.destination-header img {
-  max-width: 100%;
-  border-radius: 20px;
+/* ----------- Continent Section ----------- */
+.continent-group {
+  margin-bottom: 4rem;
+  padding: 0 2rem;
 }
 
-.destination-header h1 {
-  font-size: 32px;
-  margin-top: 20px;
+.continent-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
 }
 
-.description {
-  font-style: italic;
-  margin: 12px auto;
-  max-width: 800px;
-}
-
-.destination-sections {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.section {
-  margin-bottom: 40px;
-}
-
-.section h2 {
-  color: #f25c1e;
-  margin-bottom: 12px;
-}
-
-.gallery {
+/* ----------- Grid de Cartes ----------- */
+.destination-grid {
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  background-color: #ffeae2; /* rose clair comme sur ta maquette */
+  padding: 2rem;
+  border-radius: 1.5rem;
 }
 
-.gallery img {
-  max-width: 200px;
-  border-radius: 12px;
+/* ----------- Carte Individuelle ----------- */
+.destination-card {
+  display: block;
+  width: 190px;
+  height: 270px;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #000;
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: scale(1.03);
+}
+
+.destination-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ----------- Texte sur l’image ----------- */
+.destination-card .info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  color: white;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 80%);
+}
+
+.destination-card .info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.destination-card .info p {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+}
+
+/* ----------- Bouton flèche orange (style décoratif) ----------- */
+.destination-card::after {
+  content: "➜";
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.3rem;
+  color: #ff5f2e; /* orange bouton */
+  background-color: white;
+  border-radius: 999px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,29 +1,81 @@
+/* ----------- Base ----------- */
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #111;
+}
+/* ----------- Bannière Hero ----------- */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Texte posé en bas à gauche de la bannière */
+.hero-text {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+}
+
+.site-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.site-slogan {
+  font-size: 1.25rem;
+  margin-top: 0.3rem;
+}
+
+
+/* ----------- Continent Section ----------- */
 .continent-group {
-  margin-bottom: 40px;
+  margin-bottom: 4rem;
+  padding: 0 2rem;
 }
 
 .continent-title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #f25c1e;
-  border-bottom: 2px solid #fcd1bb;
-  padding-bottom: 5px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
 }
 
+/* ----------- Grid de Cartes ----------- */
 .destination-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 1.5rem;
+  justify-content: center;
+  background-color: #ffeae2; /* rose clair comme sur ta maquette */
+  padding: 2rem;
+  border-radius: 1.5rem;
 }
 
+/* ----------- Carte Individuelle ----------- */
 .destination-card {
-  background-color: #fff4ef;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  width: 220px;
+  display: block;
+  width: 190px;
+  height: 270px;
+  position: relative;
+  border-radius: 1rem;
   overflow: hidden;
   text-decoration: none;
-  color: inherit;
+  background-color: #000;
   transition: transform 0.3s ease;
 }
 
@@ -33,22 +85,46 @@
 
 .destination-card img {
   width: 100%;
-  height: 140px;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 
+/* ----------- Texte sur l’image ----------- */
 .destination-card .info {
-  padding: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  color: white;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 80%);
 }
 
 .destination-card .info h3 {
-  margin: 0 0 5px 0;
-  font-size: 18px;
-  font-weight: 700;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .destination-card .info p {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+}
+
+/* ----------- Bouton flèche orange (style décoratif) ----------- */
+.destination-card::after {
+  content: "➜";
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.3rem;
+  color: #ff5f2e; /* orange bouton */
+  background-color: white;
+  border-radius: 999px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

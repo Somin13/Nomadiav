@@ -1,13 +1,19 @@
 {% extends "base.twig" %}
 
 {% block style %}
-  
+  <link rel="stylesheet" href="/assets/css/userBoard.css">
 {% endblock %}
 
 {% block title %}Destinations - Nomadia{% endblock %}
 
 {% block main %}
-  <h1>🌍 Explorer les destinations</h1>
+  <div class="hero-banner">
+    <img src="/assets/image/Rectangle32.png" alt="Bannière Nomadia" class="hero-image">
+    <div class="hero-text">
+      <h1 class="site-title">Nomadia</h1>
+      <p class="site-slogan">Découvre, planifie, pars.</p>
+    </div>
+  </div>
 
   {% for continent, destinations in groupedDestinations %}
     <div class="continent-group">
@@ -16,7 +22,9 @@
         {% for dest in destinations %}
           <a href="/destination/{{ dest.id }}" class="destination-card">
 
-            <img src="/uploads/{{ dest.imagePrincipale }}" alt="Image de {{ dest.titre }}">
+            {% set imagePath = dest.imagePrincipale starts with '/uploads/' ? dest.imagePrincipale : '/uploads/' ~ dest.imagePrincipale %}
+
+            <img src="{{ imagePath }}" alt="Image de {{ dest.titre }}">
             <div class="info">
               <h3>{{ dest.titre }}</h3>
               <p>{{ dest.pays }}</p>
