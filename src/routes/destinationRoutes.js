@@ -3,10 +3,6 @@ import { getAllDestinationsGrouped, getDestinationDetails } from '../controllers
 
 const router = express.Router();
 
-router.get('/destination', (req, res) => {
-  res.render('destination'); // ↪️ attention : il te faut src/views/destination.twig
-});
-
 // Route pour afficher toutes les destinations groupées par continent
 router.get('/destinations', getAllDestinationsGrouped);
 

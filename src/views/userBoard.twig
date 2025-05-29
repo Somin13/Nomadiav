@@ -8,7 +8,7 @@
 
 {% block main %}
   <h1>🌍 Explorer les destinations</h1>
-<pre>{{ groupedDestinations | json_encode }}</pre>
+
   {% for continent, destinations in groupedDestinations %}
     <div class="continent-group">
       <h2 class="continent-title">{{ continent }}</h2>

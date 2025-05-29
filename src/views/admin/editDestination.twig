@@ -1,16 +1,15 @@
 {% extends "base.twig" %}
 
 {% block style %}
-
-    <link rel="stylesheet" href="/assets/css/editForm.css">
+  <link rel="stylesheet" href="/assets/css/editForm.css">
 {% endblock %}
 
 {% block title %}Modifier une destination{% endblock %}
 
 {% block main %}
-  <h1>Modifier la destination</h1>
+  <h1>✏️ Modifier la destination</h1>
 
-  <form action="/admin/destinations/edit/{{ destination.id }}" method="POST" enctype="multipart/form-data">
+  <form action="/admin/destinations/edit/{{ destination.id }}" method="POST" enctype="multipart/form-data" id="edit-destination-form">
     <label for="titre">Titre :</label>
     <input type="text" id="titre" name="titre" value="{{ destination.titre }}" required>
 
@@ -20,12 +19,111 @@
     <label for="description">Description :</label>
     <textarea id="description" name="description" required>{{ destination.description }}</textarea>
 
-    <label for="imagePrincipale">Image principale :</label>
+    <label>Image principale :</label>
     {% if destination.imagePrincipale %}
       <img src="{{ destination.imagePrincipale }}" alt="Aperçu" width="150">
     {% endif %}
     <input type="file" name="imagePrincipale" id="imagePrincipale">
 
+    <hr>
+
+    <h2>🧩 Sections existantes</h2>
+    <div id="sections-container">
+      {% for section in destination.sections %}
+        <div class="section-block">
+          <input type="hidden" name="sections[{{ loop.index0 }}][id]" value="{{ section.id }}">
+
+          <label>Titre :</label>
+          <input type="text" name="sections[{{ loop.index0 }}][titre]" value="{{ section.titre }}" required>
+
+          <label>Type de section :</label>
+          <select name="sections[{{ loop.index0 }}][type]" required>
+            {% for option in ['GUIDE', 'PRESENTATION', 'INFORMATIONS', 'QUE_FAIRE', 'COMMENT_Y_ALLER', 'FORMALITES', 'CONSEILS', 'POURQUOI_Y_ALLER'] %}
+              <option value="{{ option }}" {% if section.type == option %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+          </select>
+
+          <label>Contenus :</label>
+          {% for bp in section.bulletPoints %}
+            <textarea name="sections[{{ loop.parent.loop.index0 }}][contenus][]">{{ bp.contenu }}</textarea>
+          {% endfor %}
+          <button type="button" onclick="addContent({{ loop.index0 }})">➕ Ajouter contenu</button>
+
+          <div class="sub-content" id="images-{{ loop.index0 }}">
+            <h4>Images existantes :</h4>
+            {% for image in section.images %}
+              <img src="{{ image.url }}" alt="{{ image.alt }}" width="120">
+            {% endfor %}
+            <h4>Ajouter des images :</h4>
+          </div>
+          <button type="button" onclick="addImage({{ loop.index0 }})">➕ Ajouter image</button>
+
+          <hr>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button type="button" onclick="addSection()">➕ Ajouter une nouvelle section</button>
+
+    <br><br>
     <button type="submit">💾 Enregistrer</button>
   </form>
+
+  <script>
+    let sectionIndex = {{ destination.sections|length }};
+
+    function addSection() {
+      const container = document.getElementById('sections-container');
+      const section = document.createElement('div');
+      section.className = 'section-block';
+      section.innerHTML = `
+        <label>Titre :</label>
+        <input type="text" name="sections[\${sectionIndex}][titre]" required>
+
+        <label>Type de section :</label>
+        <select name="sections[\${sectionIndex}][type]" required>
+          <option value="GUIDE">Guide complet</option>
+          <option value="PRESENTATION">Présentation</option>
+          <option value="INFORMATIONS">Informations</option>
+          <option value="QUE_FAIRE">Que faire</option>
+          <option value="COMMENT_Y_ALLER">Comment y aller</option>
+          <option value="FORMALITES">Formalités</option>
+          <option value="CONSEILS">Conseils</option>
+          <option value="POURQUOI_Y_ALLER">Pourquoi y aller</option>
+        </select>
+
+        <div class="sub-content" id="contents-\${sectionIndex}">
+          <h4>Contenus</h4>
+        </div>
+        <button type="button" onclick="addContent(\${sectionIndex})">➕ Ajouter contenu</button>
+
+        <div class="sub-content" id="images-\${sectionIndex}">
+          <h4>Images</h4>
+        </div>
+        <button type="button" onclick="addImage(\${sectionIndex})">➕ Ajouter image</button>
+
+        <hr>
+      `;
+      container.appendChild(section);
+      sectionIndex++;
+    }
+
+    function addContent(index) {
+      const container = document.getElementById(`contents-${index}`);
+      const textarea = document.createElement('textarea');
+      textarea.name = `sections[${index}][contenus][]`;
+      textarea.rows = 3;
+      textarea.placeholder = "Contenu texte ou point";
+      container.appendChild(textarea);
+    }
+
+    function addImage(index) {
+      const container = document.getElementById(`images-${index}`);
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.name = `sections[${index}][images][]`;
+      input.accept = 'image/*';
+      container.appendChild(input);
+    }
+  </script>
 {% endblock %}

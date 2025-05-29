@@ -18,7 +18,7 @@ export async function getDestinationDetails(req, res) {
       return res.status(404).render('404.twig', { message: 'Destination non trouvée' })
     }
 
-    res.render('destinationDetails.twig', { destination })
+    res.render('destinations.twig', { destination })
   } catch (err) {
     console.error('❌ Erreur getDestinationDetails :', err)
     res.status(500).render('error.twig', { message: 'Erreur serveur' })
@@ -72,43 +72,4 @@ export async function getAllDestinationsGrouped(req, res) {
     res.status(500).render('error.twig', { message: "Erreur serveur" });
   }
 }
-
-
-// // ✅ Affiche toutes les destinations groupées par continent
-// export async function getAllDestinationsGrouped(req, res) {
-//   try {
-//     // Récupère toutes les destinations, triées par continent
-//     const destinations = await prisma.destination.findMany({
-//       orderBy: { continent: 'asc' }, // tri pour les grouper facilement
-//       select: {
-//         id: true,
-//         titre: true,
-//         pays: true,
-//         continent: true,
-//         imagePrincipale: true
-//       }
-//     });
-
-//     // Regroupe les destinations par continent
-//     const grouped = {};
-
-//     destinations.forEach(dest => {
-//       if (!grouped[dest.continent]) {
-//         grouped[dest.continent] = [];
-//       }
-//       grouped[dest.continent].push(dest);
-//     });
-
-//     // Affiche la page twig avec les destinations groupées
-//     res.render('userBoard.twig', { groupedDestinations: grouped });
-//   } catch (err) {
-//     console.error('❌ Erreur récupération destinations :', err);
-//     res.status(500).render('error.twig', { message: "Erreur serveur" });
-//   }
-// }
-
-
-
-
-
 
