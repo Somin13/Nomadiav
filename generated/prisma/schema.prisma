@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -29,8 +23,6 @@ enum Role {
   admin
 }
 
-// Destination admin
-
 model Destination {
   id              String    @id @default(cuid())
   titre           String
@@ -43,69 +35,49 @@ model Destination {
   updatedAt       DateTime  @updatedAt
 }
 
-// Pour lier les destinations aux section dynamique
-
 model Section {
-  id            String @id @default(cuid())
+  id            String               @id @default(cuid())
   titre         String
-  contenu       String @db.Text // pour que les textes longs ne soient pas tronqués par défaut
+  contenu       String               @db.Text
   ordre         Int
   type          String
   destinationId String
-
-  subsections  Subsection[]
-  bulletPoints BulletPoint[]
-  images       Image[]
-
-  updatedAt   DateTime    @updatedAt
-  destination Destination @relation(fields: [destinationId], references: [id])
-}
-
-// Pour facilement classer chaque section dans le code
-
-// enum SectionType {
-//   GUIDE
-//   PRESENTATION
-//   INFORMATIONS
-//   QUE_FAIRE
-//   COMMENT_Y_ALLER
-//   FORMALITES
-//   CONSEILS
-//   POURQUOI_Y_ALLER
-// }
-
-// pour les galeries d'image
-
-model Image {
-  id        String  @id @default(cuid())
-  url       String
-  alt       String?
-  sectionId String
-
-  section Section @relation(fields: [sectionId], references: [id])
-}
-
-model Subsection {
-  id        String              @id @default(cuid())
-  titre     String
-  ordre     Int
-  sectionId String
-  contents  SubsectionContent[]
-  section   Section             @relation(fields: [sectionId], references: [id])
-}
-
-model SubsectionContent {
-  id           String     @id @default(cuid())
-  contenu      String
-  ordre        Int
-  subsectionId String
-  subsection   Subsection @relation(fields: [subsectionId], references: [id])
+  bulletPoints  BulletPoint[]
+  groupedPoints GroupedBulletPoint[]
+  images        Image[]
+  updatedAt     DateTime             @updatedAt
+  destination   Destination          @relation(fields: [destinationId], references: [id])
 }
 
 model BulletPoint {
   id        String  @id @default(cuid())
   contenu   String
   ordre     Int
+  sectionId String
+  section   Section @relation(fields: [sectionId], references: [id])
+}
+
+model GroupedBulletPoint {
+  id        String               @id @default(cuid())
+  titre     String
+  ordre     Int
+  sectionId String
+  section   Section              @relation(fields: [sectionId], references: [id])
+  contents  BulletPointContent[]
+}
+
+model BulletPointContent {
+  id      String             @id @default(cuid())
+  contenu String
+  ordre   Int
+  groupId String
+  group   GroupedBulletPoint @relation(fields: [groupId], references: [id])
+}
+
+model Image {
+  id        String  @id @default(cuid())
+  url       String
+  alt       String?
   sectionId String
   section   Section @relation(fields: [sectionId], references: [id])
 }

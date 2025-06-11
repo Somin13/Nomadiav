@@ -151,31 +151,31 @@ exports.Prisma.SectionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ImageScalarFieldEnum = {
+exports.Prisma.BulletPointScalarFieldEnum = {
   id: 'id',
-  url: 'url',
-  alt: 'alt',
+  contenu: 'contenu',
+  ordre: 'ordre',
   sectionId: 'sectionId'
 };
 
-exports.Prisma.SubsectionScalarFieldEnum = {
+exports.Prisma.GroupedBulletPointScalarFieldEnum = {
   id: 'id',
   titre: 'titre',
   ordre: 'ordre',
   sectionId: 'sectionId'
 };
 
-exports.Prisma.SubsectionContentScalarFieldEnum = {
+exports.Prisma.BulletPointContentScalarFieldEnum = {
   id: 'id',
   contenu: 'contenu',
   ordre: 'ordre',
-  subsectionId: 'subsectionId'
+  groupId: 'groupId'
 };
 
-exports.Prisma.BulletPointScalarFieldEnum = {
+exports.Prisma.ImageScalarFieldEnum = {
   id: 'id',
-  contenu: 'contenu',
-  ordre: 'ordre',
+  url: 'url',
+  alt: 'alt',
   sectionId: 'sectionId'
 };
 
@@ -213,28 +213,28 @@ exports.Prisma.SectionOrderByRelevanceFieldEnum = {
   destinationId: 'destinationId'
 };
 
-exports.Prisma.ImageOrderByRelevanceFieldEnum = {
+exports.Prisma.BulletPointOrderByRelevanceFieldEnum = {
   id: 'id',
-  url: 'url',
-  alt: 'alt',
+  contenu: 'contenu',
   sectionId: 'sectionId'
 };
 
-exports.Prisma.SubsectionOrderByRelevanceFieldEnum = {
+exports.Prisma.GroupedBulletPointOrderByRelevanceFieldEnum = {
   id: 'id',
   titre: 'titre',
   sectionId: 'sectionId'
 };
 
-exports.Prisma.SubsectionContentOrderByRelevanceFieldEnum = {
+exports.Prisma.BulletPointContentOrderByRelevanceFieldEnum = {
   id: 'id',
   contenu: 'contenu',
-  subsectionId: 'subsectionId'
+  groupId: 'groupId'
 };
 
-exports.Prisma.BulletPointOrderByRelevanceFieldEnum = {
+exports.Prisma.ImageOrderByRelevanceFieldEnum = {
   id: 'id',
-  contenu: 'contenu',
+  url: 'url',
+  alt: 'alt',
   sectionId: 'sectionId'
 };
 exports.Role = exports.$Enums.Role = {
@@ -246,10 +246,10 @@ exports.Prisma.ModelName = {
   User: 'User',
   Destination: 'Destination',
   Section: 'Section',
-  Image: 'Image',
-  Subsection: 'Subsection',
-  SubsectionContent: 'SubsectionContent',
-  BulletPoint: 'BulletPoint'
+  BulletPoint: 'BulletPoint',
+  GroupedBulletPoint: 'GroupedBulletPoint',
+  BulletPointContent: 'BulletPointContent',
+  Image: 'Image'
 };
 
 /**

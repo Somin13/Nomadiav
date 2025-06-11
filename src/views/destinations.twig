@@ -3,11 +3,10 @@
 {% block title %}{{ destination.titre }} - {{ destination.pays }}{% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="/assets/css/destinations.css">
+  <link rel="stylesheet" href="/assets/css/destinations.css">
 {% endblock %}
 
 {% block main %}
-  {# ✅ Calcul du chemin de l'image principale de manière sécurisée #}
   {% set mainImagePath = destination.imagePrincipale starts with '/uploads/' ? destination.imagePrincipale : '/uploads/' ~ destination.imagePrincipale %}
 
   <div class="banner">
@@ -25,47 +24,27 @@
     {% for section in destination.sections %}
       <section class="section">
         <h2>{{ section.titre }}</h2>
+        <p>{{ section.contenu }}</p>
 
-        {# ✅ Contenu principal de la section (texte long) #}
-        {% if section.contenu %}
-          <p class="section-text">{{ section.contenu }}</p>
-        {% endif %}
-
-        {# ✅ Affichage des bullet points #}
-        {% if section.bulletPoints|length > 0 %}
-          <ul class="bullet-points">
+        {# ✅ Liste simple de bullet points #}
+        {% if section.bulletPoints.length > 0 %}
+          <ul class="bullet-list">
             {% for bullet in section.bulletPoints %}
               <li>• {{ bullet.contenu }}</li>
             {% endfor %}
           </ul>
         {% endif %}
 
-        {# ✅ Affichage des sous-sections #}
-        {% if section.subsections|length > 0 %}
-          <div class="subsections">
-            {% for sub in section.subsections %}
-              <div class="subsection">
-                <h3>{{ sub.titre }}</h3>
-
-                {# ✅ Contenus des sous-sections #}
-                {% if sub.contents|length > 0 %}
-                  <ul class="sub-contents">
-                    {% for item in sub.contents %}
-                      <li>– {{ item.contenu }}</li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-              </div>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        {# ✅ Affichage des images de section #}
-        {% if section.images|length > 0 %}
-          <div class="gallery">
-            {% for img in section.images %}
-              {% set imgPath = img.url starts with '/uploads/' ? img.url : '/uploads/' ~ img.url %}
-              <img src="{{ imgPath }}" alt="{{ img.alt ?? 'Image section' }}">
+        {# ✅ Groupes de bullet points #}
+        {% if section.groupedPoints.length > 0 %}
+          <div class="grouped-bullets">
+            {% for group in section.groupedPoints %}
+              <h4>{{ group.titre }}</h4>
+              <ul>
+                {% for point in group.contents %}
+                  <li>• {{ point.contenu }}</li>
+                {% endfor %}
+              </ul>
             {% endfor %}
           </div>
         {% endif %}
