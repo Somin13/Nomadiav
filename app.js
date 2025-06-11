@@ -15,7 +15,8 @@ import userRoutes from './src/routes/userRoutes.js'
 dotenv.config();
 const app = express();
 app.use(express.static('./public'))
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -38,8 +39,6 @@ app.use(session({
   saveUninitialized: true
 }));
 
-// Middleware pour parser les formulaires
-app.use(express.urlencoded({ extended: true }));
 
 // 🟠 ROUTE PAGE D’ACCUEIL VITRINE
 app.get('/', (req, res) => {

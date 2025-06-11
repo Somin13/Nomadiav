@@ -46,11 +46,11 @@ model Destination {
 // Pour lier les destinations aux section dynamique
 
 model Section {
-  id            String      @id @default(cuid())
+  id            String @id @default(cuid())
   titre         String
-  contenu       String      @db.Text // pour que les textes longs ne soient pas tronqués par défaut
+  contenu       String @db.Text // pour que les textes longs ne soient pas tronqués par défaut
   ordre         Int
-  type          SectionType
+  type          String
   destinationId String
 
   subsections  Subsection[]
@@ -63,16 +63,16 @@ model Section {
 
 // Pour facilement classer chaque section dans le code
 
-enum SectionType {
-  GUIDE
-  PRESENTATION
-  INFORMATIONS
-  QUE_FAIRE
-  COMMENT_Y_ALLER
-  FORMALITES
-  CONSEILS
-  POURQUOI_Y_ALLER
-}
+// enum SectionType {
+//   GUIDE
+//   PRESENTATION
+//   INFORMATIONS
+//   QUE_FAIRE
+//   COMMENT_Y_ALLER
+//   FORMALITES
+//   CONSEILS
+//   POURQUOI_Y_ALLER
+// }
 
 // pour les galeries d'image
 

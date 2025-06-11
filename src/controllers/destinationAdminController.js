@@ -5,19 +5,15 @@ export function renderAddDestination(req, res) {
   res.render('admin/addDestination');
 }
 
-// src/controllers/destinationController.js
 
-
-// 🧠 Contrôleur pour traiter l’ajout d’une nouvelle destination
+// Contrôleur pour traiter l’ajout complet
 export async function handleAddDestination(req, res) {
   try {
     const { titre, pays, continent, description } = req.body;
 
-    // ✅ Trouve l'image principale
     const imagePrincipaleFile = req.files.find(f => f.fieldname === 'imagePrincipale');
     const imagePrincipale = imagePrincipaleFile ? '/uploads/' + imagePrincipaleFile.filename : null;
 
-    // ✅ Création de la destination principale
     const destination = await prisma.destination.create({
       data: {
         titre,
@@ -28,16 +24,12 @@ export async function handleAddDestination(req, res) {
       },
     });
 
-    // ✅ Traitement des sections dynamiques
     const sectionsRaw = req.body.sections || [];
-
-    // ⚠️ Si une seule section, ce sera un objet, sinon tableau
     const sections = Array.isArray(sectionsRaw) ? sectionsRaw : Object.values(sectionsRaw);
 
     for (let i = 0; i < sections.length; i++) {
       const sectionData = sections[i];
 
-      // 🔁 1. Création de la section
       const newSection = await prisma.section.create({
         data: {
           titre: sectionData.titre,
@@ -45,12 +37,12 @@ export async function handleAddDestination(req, res) {
             ? sectionData.contenus.join('\n')
             : sectionData.contenus || '',
           ordre: i,
-          type: sectionData.type,
+          type: sectionData.type || 'Autre',
           destinationId: destination.id,
         },
       });
 
-      // 🔁 2. Insertion des bullet points
+      // Bullet points
       if (Array.isArray(sectionData.contenus)) {
         for (let j = 0; j < sectionData.contenus.length; j++) {
           await prisma.bulletPoint.create({
@@ -63,7 +55,7 @@ export async function handleAddDestination(req, res) {
         }
       }
 
-      // 📸 3. Insertion des images liées à cette section
+      // Images
       const imageFiles = req.files.filter(file =>
         file.fieldname === `sections[${i}][images][]`
       );
@@ -76,9 +68,35 @@ export async function handleAddDestination(req, res) {
           },
         });
       }
+
+      // Sous-sections
+      const subsectionsRaw = sectionData.subsections || [];
+      const subsections = Array.isArray(subsectionsRaw) ? subsectionsRaw : Object.values(subsectionsRaw);
+
+      for (let k = 0; k < subsections.length; k++) {
+        const sub = subsections[k];
+
+        const newSubsection = await prisma.subsection.create({
+          data: {
+            titre: sub.titre,
+            ordre: k,
+            sectionId: newSection.id,
+          },
+        });
+
+        const subContents = Array.isArray(sub.contents) ? sub.contents : Object.values(sub.contents || {});
+        for (let l = 0; l < subContents.length; l++) {
+          await prisma.subsectionContent.create({
+            data: {
+              contenu: subContents[l],
+              ordre: l,
+              subsectionId: newSubsection.id,
+            },
+          });
+        }
+      }
     }
 
-    // ✅ Redirection après succès
     res.redirect('/dashAdm');
   } catch (err) {
     console.error('❌ Erreur lors de l’ajout complet de la destination :', err);
@@ -111,7 +129,7 @@ export async function deleteDestination(req, res) {
   const id = req.params.id;
 
   try {
-    // 1️⃣ Trouve toutes les sections liées
+    // 1️⃣ Récupère toutes les sections liées à la destination
     const sections = await prisma.section.findMany({
       where: { destinationId: id },
       select: { id: true }
@@ -119,22 +137,40 @@ export async function deleteDestination(req, res) {
 
     const sectionIds = sections.map(sec => sec.id);
 
-    // 2️⃣ Supprime d'abord les images liées aux sections
-    await prisma.image.deleteMany({
+    // 2️⃣ Récupère toutes les sous-sections liées à ces sections
+    const subsections = await prisma.subsection.findMany({
+      where: { sectionId: { in: sectionIds } },
+      select: { id: true }
+    });
+
+    const subsectionIds = subsections.map(s => s.id);
+
+    // 🧽 Supprime les contenus des sous-sections
+    await prisma.subsectionContent.deleteMany({
+      where: { subsectionId: { in: subsectionIds } }
+    });
+
+    // 🧽 Supprime les sous-sections
+    await prisma.subsection.deleteMany({
       where: { sectionId: { in: sectionIds } }
     });
 
-    // 3️⃣ Supprime les bullet points liés aux sections
+    // 🧽 Supprime les bullet points
     await prisma.bulletPoint.deleteMany({
       where: { sectionId: { in: sectionIds } }
     });
 
-    // 4️⃣ Supprime les sections
+    // 🧽 Supprime les images
+    await prisma.image.deleteMany({
+      where: { sectionId: { in: sectionIds } }
+    });
+
+    // 🧽 Supprime les sections
     await prisma.section.deleteMany({
       where: { destinationId: id }
     });
 
-    // 5️⃣ Supprime la destination
+    // 🧽 Supprime la destination
     await prisma.destination.delete({
       where: { id }
     });
@@ -147,25 +183,61 @@ export async function deleteDestination(req, res) {
 }
 
 
-// Affiche le formulaire de modification
+// ✅ Contrôleur : Affiche le formulaire de modification avec toutes les données liées
 export async function renderEditDestination(req, res) {
   const id = req.params.id;
 
   try {
     const destination = await prisma.destination.findUnique({
       where: { id },
+      include: {
+        sections: {
+          include: {
+            bulletPoints: true,              // 🔁 Récupère les bullet points
+            images: true,                    // 🖼️ Récupère les images de section
+            subsections: {
+              include: {
+                contents: true              // 🧾 Récupère les contenus des sous-sections
+              }
+            }
+          }
+        }
+      }
     });
 
     if (!destination) {
       return res.status(404).send('Destination introuvable');
     }
 
+    // ✅ Rendu avec les données complètes
     res.render('admin/editDestination', { destination });
   } catch (err) {
     console.error('❌ Erreur récupération destination :', err);
     res.status(500).send('Erreur serveur');
   }
 }
+
+
+
+// Affiche le formulaire de modification
+// export async function renderEditDestination(req, res) {
+//   const id = req.params.id;
+
+//   try {
+//     const destination = await prisma.destination.findUnique({
+//       where: { id },
+//     });
+
+//     if (!destination) {
+//       return res.status(404).send('Destination introuvable');
+//     }
+
+//     res.render('admin/editDestination', { destination });
+//   } catch (err) {
+//     console.error('❌ Erreur récupération destination :', err);
+//     res.status(500).send('Erreur serveur');
+//   }
+// }
 
 // Traite la mise à jour d'une destination
 export async function handleEditDestination(req, res) {
@@ -270,3 +342,87 @@ export async function handleEditDestination(req, res) {
 }
 
 
+// // ✅ Contrôleur : Affiche une destination complète pour l'utilisateur
+// export async function getDestinationById(req, res) {
+//   const id = req.params.id;
+
+//   try {
+//     const destination = await prisma.destination.findUnique({
+//       where: { id },
+//       include: {
+//         sections: {
+//           orderBy: { ordre: 'asc' },
+//           include: {
+//             bulletPoints: { orderBy: { ordre: 'asc' } },
+//             images: true,
+//             subsections: {
+//               orderBy: { ordre: 'asc' },
+//               include: {
+//                 contents: { orderBy: { ordre: 'asc' } }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     });
+
+//     if (!destination) {
+//       return res.status(404).render('error.twig', { message: 'Destination introuvable' });
+//     }
+
+//     const mainImagePath = destination.imagePrincipale?.startsWith('/uploads/')
+//       ? destination.imagePrincipale
+//       : '/uploads/' + destination.imagePrincipale;
+
+//     res.render('destination.twig', {
+//       destination,
+//       mainImagePath,
+//     });
+//   } catch (err) {
+//     console.error('❌ Erreur affichage destination :', err);
+//     res.status(500).render('error.twig', { message: 'Erreur serveur' });
+//   }
+// }
+
+// src/controllers/destinationAdminController.js
+
+export async function getDestinationById(req, res) {
+  const id = req.params.id;
+
+  try {
+    const destination = await prisma.destination.findUnique({
+      where: { id },
+      include: {
+        sections: {
+          orderBy: { ordre: 'asc' },
+          include: {
+            bulletPoints: { orderBy: { ordre: 'asc' } },
+            images: true,
+            subsections: {
+              orderBy: { ordre: 'asc' },
+              include: {
+                contents: { orderBy: { ordre: 'asc' } }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!destination) {
+      return res.status(404).render('error.twig', { message: 'Destination introuvable' });
+    }
+
+    const mainImagePath = destination.imagePrincipale?.startsWith('/uploads/')
+      ? destination.imagePrincipale
+      : '/uploads/' + destination.imagePrincipale;
+
+    res.render('destination.twig', {
+      destination,
+      mainImagePath,
+    });
+  } catch (err) {
+    console.error('❌ Erreur affichage destination :', err);
+    res.status(500).render('error.twig', { message: 'Erreur serveur' });
+  }
+}

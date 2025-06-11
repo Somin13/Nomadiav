@@ -209,6 +209,7 @@ exports.Prisma.SectionOrderByRelevanceFieldEnum = {
   id: 'id',
   titre: 'titre',
   contenu: 'contenu',
+  type: 'type',
   destinationId: 'destinationId'
 };
 
@@ -239,17 +240,6 @@ exports.Prisma.BulletPointOrderByRelevanceFieldEnum = {
 exports.Role = exports.$Enums.Role = {
   user: 'user',
   admin: 'admin'
-};
-
-exports.SectionType = exports.$Enums.SectionType = {
-  GUIDE: 'GUIDE',
-  PRESENTATION: 'PRESENTATION',
-  INFORMATIONS: 'INFORMATIONS',
-  QUE_FAIRE: 'QUE_FAIRE',
-  COMMENT_Y_ALLER: 'COMMENT_Y_ALLER',
-  FORMALITES: 'FORMALITES',
-  CONSEILS: 'CONSEILS',
-  POURQUOI_Y_ALLER: 'POURQUOI_Y_ALLER'
 };
 
 exports.Prisma.ModelName = {

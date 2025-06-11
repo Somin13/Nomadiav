@@ -59,3 +59,43 @@ body{
 .add-trip-btn:hover {
   background-color: #e04f00;
 }
+
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.section-bullets,
+.subsection-contents {
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style: none;
+}
+
+.section-bullets li::before {
+  content: "• ";
+  color: #666;
+}
+
+.subsection-contents li::before {
+  content: "– ";
+  color: #888;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.gallery img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 6px;
+}
