@@ -4,126 +4,180 @@
   <link rel="stylesheet" href="/assets/css/editForm.css">
 {% endblock %}
 
-{% block title %}Modifier une destination{% endblock %}
+{% block title %}Modifier la destination{% endblock %}
 
 {% block main %}
-  <h1>✏️ Modifier la destination</h1>
+<h1>Modifier la destination</h1>
 
-  <form action="/admin/destinations/edit/{{ destination.id }}" method="POST" enctype="multipart/form-data" id="edit-destination-form">
-    <label for="titre">Titre :</label>
-    <input type="text" id="titre" name="titre" value="{{ destination.titre }}" required>
+<form method="POST" action="/admin/destinations/edit/{{ destination.id }}" enctype="multipart/form-data" id="destination-form">
+  <input type="hidden" name="_method" value="PUT">
 
-    <label for="pays">Pays :</label>
-    <input type="text" id="pays" name="pays" value="{{ destination.pays }}" required>
+  <label>Titre :</label>
+  <input type="text" name="titre" value="{{ destination.titre }}" required>
 
-    <label for="description">Description :</label>
-    <textarea id="description" name="description" required>{{ destination.description }}</textarea>
+  <label>Pays :</label>
+  <input type="text" name="pays" value="{{ destination.pays }}" required>
 
-    <label>Image principale :</label>
-    {% if destination.imagePrincipale %}
-      <img src="{{ destination.imagePrincipale }}" alt="Aperçu" width="150">
-    {% endif %}
-    <input type="file" name="imagePrincipale" id="imagePrincipale">
+  <label>Continent :</label>
+  <select name="continent" required>
+    {% for c in ["Afrique", "Amérique du Nord", "Amérique du Sud", "Asie", "Europe", "Océanie", "Antarctique"] %}
+      <option value="{{ c }}" {{ c == destination.continent ? 'selected' : '' }}>{{ c }}</option>
+    {% endfor %}
+  </select>
 
-    <hr>
+  <label>Description :</label>
+  <textarea name="description" required>{{ destination.description }}</textarea>
 
-    <h2>🧩 Sections existantes</h2>
-    <div id="sections-container">
-      {% for section in destination.sections %}
-        <div class="section-block">
-          <input type="hidden" name="sections[{{ loop.index0 }}][id]" value="{{ section.id }}">
+  <label>Image principale actuelle :</label><br>
+  {% if destination.imagePrincipale %}
+    <img src="{{ destination.imagePrincipale }}" alt="Image actuelle" width="150"><br>
+  {% endif %}
+  <label>Nouvelle image principale (facultatif) :</label>
+  <input type="file" name="imagePrincipale" accept="image/*">
 
-          <label>Titre :</label>
-          <input type="text" name="sections[{{ loop.index0 }}][titre]" value="{{ section.titre }}" required>
+  <hr>
 
-          <label>Type de section :</label>
-          <select name="sections[{{ loop.index0 }}][type]" required>
-            {% for option in ['GUIDE', 'PRESENTATION', 'INFORMATIONS', 'QUE_FAIRE', 'COMMENT_Y_ALLER', 'FORMALITES', 'CONSEILS', 'POURQUOI_Y_ALLER'] %}
-              <option value="{{ option }}" {% if section.type == option %}selected{% endif %}>{{ option }}</option>
-            {% endfor %}
-          </select>
+  <h2>Sections</h2>
+  <div id="sections-container">
+    {% for section in destination.sections %}
+      <div class="section-block">
+        <input type="hidden" name="sections[{{ loop.index0 }}][id]" value="{{ section.id }}">
 
-          <label>Contenus :</label>
-          {% for bp in section.bulletPoints %}
-            <textarea name="sections[{{ loop.parent.loop.index0 }}][contenus][]">{{ bp.contenu }}</textarea>
-          {% endfor %}
-          <button type="button" onclick="addContent({{ loop.index0 }})">➕ Ajouter contenu</button>
-
-          <div class="sub-content" id="images-{{ loop.index0 }}">
-            <h4>Images existantes :</h4>
-            {% for image in section.images %}
-              <img src="{{ image.url }}" alt="{{ image.alt }}" width="120">
-            {% endfor %}
-            <h4>Ajouter des images :</h4>
-          </div>
-          <button type="button" onclick="addImage({{ loop.index0 }})">➕ Ajouter image</button>
-
-          <hr>
-        </div>
-      {% endfor %}
-    </div>
-
-    <button type="button" onclick="addSection()">➕ Ajouter une nouvelle section</button>
-
-    <br><br>
-    <button type="submit">💾 Enregistrer</button>
-  </form>
-
-  <script>
-    let sectionIndex = {{ destination.sections|length }};
-
-    function addSection() {
-      const container = document.getElementById('sections-container');
-      const section = document.createElement('div');
-      section.className = 'section-block';
-      section.innerHTML = `
         <label>Titre :</label>
-        <input type="text" name="sections[\${sectionIndex}][titre]" required>
+        <input type="text" name="sections[{{ loop.index0 }}][titre]" value="{{ section.titre }}" required>
 
-        <label>Type de section :</label>
-        <select name="sections[\${sectionIndex}][type]" required>
-          <option value="GUIDE">Guide complet</option>
-          <option value="PRESENTATION">Présentation</option>
-          <option value="INFORMATIONS">Informations</option>
-          <option value="QUE_FAIRE">Que faire</option>
-          <option value="COMMENT_Y_ALLER">Comment y aller</option>
-          <option value="FORMALITES">Formalités</option>
-          <option value="CONSEILS">Conseils</option>
-          <option value="POURQUOI_Y_ALLER">Pourquoi y aller</option>
-        </select>
+        <label>Type :</label>
+        <input type="text" name="sections[{{ loop.index0 }}][type]" value="{{ section.type }}" required>
 
-        <div class="sub-content" id="contents-\${sectionIndex}">
-          <h4>Contenus</h4>
+        <label>Contenu :</label>
+        <textarea name="sections[{{ loop.index0 }}][contenu]" required>{{ section.contenu }}</textarea>
+
+        <div>
+          <h4>Images associées :</h4>
+          {% for img in section.images %}
+            <div>
+              <img src="{{ img.url }}" width="100">
+              <button type="button" onclick="markDeleted(this, 'deletedImages', '{{ img.id }}')">❌ Supprimer</button>
+            </div>
+          {% endfor %}
         </div>
-        <button type="button" onclick="addContent(\${sectionIndex})">➕ Ajouter contenu</button>
 
-        <div class="sub-content" id="images-\${sectionIndex}">
-          <h4>Images</h4>
+        <div class="grouped-bullets-wrapper" id="grouped-{{ loop.index0 }}">
+          <h4>Groupes de bullet points</h4>
+          {% for group in section.groupedPoints %}
+            <div class="grouped-bullet-block">
+              <input type="hidden" name="sections[{{ loop.parent.loop.index0 }}][groups][{{ loop.index0 }}][id]" value="{{ group.id }}">
+              <label>Titre du groupe :</label>
+              <input type="text" name="sections[{{ loop.parent.loop.index0 }}][groups][{{ loop.index0 }}][titre]" value="{{ group.titre }}" required>
+
+              {% for bp in group.contents %}
+                <div>
+                  <input type="text" name="sections[{{ loop.parent.parent.loop.index0 }}][groups][{{ loop.parent.loop.index0 }}][contenus][]" value="{{ bp.contenu }}" required>
+                  <button type="button" onclick="markDeleted(this, 'deletedBulletPoints', '{{ bp.id }}')">❌</button>
+                </div>
+              {% endfor %}
+
+              <button type="button" onclick="markDeleted(this.closest('.grouped-bullet-block'), 'deletedGroups', '{{ group.id }}')">❌ Supprimer ce groupe</button>
+            </div>
+          {% endfor %}
         </div>
-        <button type="button" onclick="addImage(\${sectionIndex})">➕ Ajouter image</button>
 
+        <div class="images-wrapper" id="images-{{ loop.index0 }}">
+          <h4>Ajouter de nouvelles images :</h4>
+        </div>
+        <button type="button" onclick="addImage({{ loop.index0 }})">➕ Ajouter image</button>
+
+        <button type="button" onclick="markDeleted(this.closest('.section-block'), 'deletedSections', '{{ section.id }}')">❌ Supprimer cette section</button>
         <hr>
-      `;
-      container.appendChild(section);
-      sectionIndex++;
-    }
+      </div>
+    {% endfor %}
+  </div>
 
-    function addContent(index) {
-      const container = document.getElementById(`contents-${index}`);
-      const textarea = document.createElement('textarea');
-      textarea.name = `sections[${index}][contenus][]`;
-      textarea.rows = 3;
-      textarea.placeholder = "Contenu texte ou point";
-      container.appendChild(textarea);
-    }
+  <button type="button" onclick="addSection()">➕ Ajouter une nouvelle section</button>
+  <div id="deleted-inputs"></div>
+  <br>
+  <button type="submit">✅ Enregistrer</button>
+</form>
 
-    function addImage(index) {
-      const container = document.getElementById(`images-${index}`);
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.name = `sections[${index}][images][]`;
-      input.accept = 'image/*';
-      container.appendChild(input);
-    }
-  </script>
+<script>
+  function markDeleted(element, type, id) {
+    element.remove();
+    const hidden = document.createElement('input');
+    hidden.type = 'hidden';
+    hidden.name = `deleted[${type}][]`;
+    hidden.value = id;
+    document.getElementById('deleted-inputs').appendChild(hidden);
+  }
+
+  let sectionIndex = {{ destination.sections.length }};
+
+  function addSection() {
+    const container = document.getElementById('sections-container');
+    const section = document.createElement('div');
+    section.className = 'section-block';
+    section.innerHTML = `
+      <label>Titre :</label>
+      <input type="text" name="sections[${sectionIndex}][titre]" required>
+
+      <label>Type :</label>
+      <input type="text" name="sections[${sectionIndex}][type]" required>
+
+      <label>Contenu :</label>
+      <textarea name="sections[${sectionIndex}][contenu]" required></textarea>
+
+      <div class="grouped-bullets-wrapper" id="grouped-${sectionIndex}">
+        <h4>Groupes de bullet points</h4>
+      </div>
+      <button type="button" onclick="addGroupedBulletPoint(${sectionIndex})">➕ Ajouter un groupe de bullet points</button>
+
+      <div class="images-wrapper" id="images-${sectionIndex}">
+        <h4>Images associées</h4>
+      </div>
+      <button type="button" onclick="addImage(${sectionIndex})">➕ Ajouter image</button>
+
+      <button type="button" onclick="this.closest('.section-block').remove()">❌ Supprimer cette section</button>
+      <hr>
+    `;
+    container.appendChild(section);
+    sectionIndex++;
+  }
+
+  function addImage(sectionId) {
+    const imageContainer = document.getElementById(`images-${sectionId}`);
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.name = `sections[${sectionId}][images][]`;
+    input.accept = 'image/*';
+    imageContainer.appendChild(input);
+  }
+
+  function addGroupedBulletPoint(sectionId) {
+    const wrapper = document.getElementById(`grouped-${sectionId}`);
+    const groupIndex = wrapper.querySelectorAll('.grouped-bullet-block').length;
+
+    const group = document.createElement('div');
+    group.className = 'grouped-bullet-block';
+    group.innerHTML = `
+      <label>Titre du groupe :</label>
+      <input type="text" name="sections[${sectionId}][groups][${groupIndex}][titre]" required>
+
+      <div id="group-bullets-${sectionId}-${groupIndex}">
+        <h5>Liste des bullet points :</h5>
+      </div>
+      <button type="button" onclick="addBulletPoint(${sectionId}, ${groupIndex})">➕ Ajouter bullet point</button>
+      <hr>
+    `;
+    wrapper.appendChild(group);
+  }
+
+  function addBulletPoint(sectionId, groupIndex) {
+    const container = document.getElementById(`group-bullets-${sectionId}-${groupIndex}`);
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <input type="text" name="sections[${sectionId}][groups][${groupIndex}][contenus][]" placeholder="• Texte du bullet point" required>
+      <button type="button" onclick="this.parentElement.remove()">❌</button>
+    `;
+    container.appendChild(div);
+  }
+</script>
 {% endblock %}

@@ -1,195 +1,196 @@
-/* ===== SIDEBAR ADMIN ===== */
+/* --- RESET GÉNÉRAL --- */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #fff7f1;
+  color: #333;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #792f1d;
+  margin-bottom: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: #ff6d2e;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #d94e12;
+}
+
+/* --- LAYOUT GLOBAL --- */
 .main-container {
   display: flex;
   min-height: 100vh;
 }
 
+/* --- SIDEBAR --- */
 .admin-sidebar {
+  background: linear-gradient(to bottom, #ffd6bb, #ffb38a);
+  color: #792f1d;
   width: 240px;
-  background: #fde4d1;
-  padding: 30px 20px;
-  border-right: 3px solid #f25c1e;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  padding: 2rem 1rem;
   position: sticky;
   top: 0;
   height: 100vh;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
 }
 
 .sidebar-title {
-  font-size: 22px;
-  color: #f25c1e;
-  font-weight: bold;
-  margin-bottom: 30px;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .sidebar-nav {
   list-style: none;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
-.sidebar-nav li a {
-  color: #333;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
+.sidebar-nav li {
+  margin-bottom: 1.2rem;
+}
+
+.sidebar-nav a {
   display: block;
-  padding: 10px 14px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  background-color: #fff5ec;
+  transition: background 0.3s, transform 0.2s;
 }
 
-.sidebar-nav li a:hover {
-  background-color: #fcd1bb;
-  color: #000;
+.sidebar-nav a:hover {
+  background-color: #ffe2d0;
+  transform: translateX(5px);
 }
 
-/* ===== CONTENU ADMIN À DROITE ===== */
+/* --- CONTENU PRINCIPAL --- */
 .admin-main-content {
   flex: 1;
-  padding: 40px;
-  background: #fff9f5;
-  overflow-x: auto;
+  padding: 2rem;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
-/* === BOUTON AJOUTER UNE DESTINATION === */
+/* --- BOUTON AJOUTER --- */
 .btn-ajouter {
   display: inline-block;
-  margin: 30px 0;
-  background-color: #f25c1e;
+  margin: 1.5rem 0;
+  padding: 0.8rem 1.5rem;
+  background-color: #ff6d2e;
   color: white;
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .btn-ajouter:hover {
-  background-color: #e14a0c;
-  transform: translateY(-2px);
+  transform: scale(1.03);
+  background-color: #e95512;
 }
 
-/* === TABLEAU DES DESTINATIONS === */
+/* --- TABLEAU DESTINATIONS --- */
 .destinations-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: #fff4ef;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.destinations-table th,
+.destinations-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
 .destinations-table th {
-  background-color: #fcd1bb;
-  color: #333;
-  padding: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: left;
+  background-color: #ffe8db;
+  color: #792f1d;
 }
 
 .destinations-table td {
-  padding: 14px 16px;
-  font-size: 15px;
-  color: #444;
-  border-top: 1px solid #f4c9b0;
+  background-color: #fffdfc;
 }
 
-.destinations-table tr:hover {
-  background-color: #fff0e9;
+.destinations-table tr:hover td {
+  background-color: #fff2ea;
 }
 
-/* === ACTIONS : MODIFIER / SUPPRIMER === */
-.destinations-table a,
-.destinations-table button {
-  font-size: 14px;
-  color: #f25c1e;
-  font-weight: 500;
-  border: none;
-  background: none;
-  cursor: pointer;
-  text-decoration: none;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
-}
-
-.destinations-table a:hover,
-.destinations-table button:hover {
-  background-color: #ffe6da;
-}
-
-/* Pour bien aligner les actions */
-.destinations-table td form {
-  display: inline;
-}
-
-/* === MESSAGE SI VIDE === */
-.destinations-table td[colspan="3"] {
-  text-align: center;
-  color: #999;
-  font-style: italic;
-  padding: 30px;
-}
-
-/* ===== GRILLE STATISTIQUES ===== */
+/* --- CARTES DE STATISTIQUES --- */
 .admin-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-bottom: 40px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-/* ===== CARTE STATS ===== */
 .stat-card {
+  background: linear-gradient(to bottom right, #fff3e9, #ffd0b4);
+  border-radius: 15px;
+  padding: 1.5rem;
   display: flex;
   align-items: center;
-  background: #fff4ef;
-  border-left: 6px solid #f25c1e;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: transform 0.2s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
+  transform: scale(1.02);
 }
 
-/* ===== ICÔNE ===== */
 .stat-icon {
-  font-size: 32px;
-  margin-right: 16px;
-  color: #f25c1e;
+  font-size: 2rem;
+  color: #ff6d2e;
 }
 
-/* ===== CONTENU ===== */
-.stat-info .stat-number {
-  font-size: 24px;
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 1.6rem;
   font-weight: bold;
-  color: #222;
+  color: #792f1d;
 }
 
-.stat-info .stat-label {
-  font-size: 14px;
-  color: #666;
-  margin-top: 4px;
+.stat-label {
+  font-size: 0.9rem;
+  color: #555;
 }
 
+/* --- ANIMATION --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* RESPONSIVE : cacher sidebar sur petits écrans */
-@media screen and (max-width: 768px) {
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
+
   .admin-sidebar {
-    display: none;
+    width: 100%;
+    height: auto;
+    position: relative;
   }
 
   .admin-main-content {
-    padding: 20px;
+    padding: 1.5rem 1rem;
+  }
+
+  .sidebar-nav a {
+    padding: 0.6rem 0.8rem;
   }
 }

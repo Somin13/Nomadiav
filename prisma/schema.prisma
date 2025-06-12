@@ -50,6 +50,7 @@ model Section {
   destination     Destination         @relation(fields: [destinationId], references: [id])
 }
 
+
 model BulletPoint {
   id         String   @id @default(cuid())
   contenu    String

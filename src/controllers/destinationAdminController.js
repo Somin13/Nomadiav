@@ -228,9 +228,9 @@ export async function renderEditDestination(req, res) {
         sections: {
           include: {
             images: true,
-            groupedBulletPoints: {
+            groupedPoints: {
               include: {
-                bulletPoints: true
+                contents: true
               }
             }
           }
@@ -249,17 +249,50 @@ export async function renderEditDestination(req, res) {
 // ✅ Traite la mise à jour d'une destination
 export async function handleEditDestination(req, res) {
   const id = req.params.id;
-  const { titre, pays, continent, description } = req.body;
-  const imagePrincipaleFile = req.files?.find(f => f.fieldname === 'imagePrincipale');
-  const imagePrincipale = imagePrincipaleFile ? '/uploads/' + imagePrincipaleFile.filename : null;
 
   try {
+    const { titre, pays, continent, description, deleted = {} } = req.body;
+
+    const imagePrincipaleFile = req.files?.find(f => f.fieldname === 'imagePrincipale');
+    const imagePrincipale = imagePrincipaleFile ? '/uploads/' + imagePrincipaleFile.filename : null;
+
+    // ✅ Mise à jour de la destination
     const updateData = { titre, pays, continent, description };
     if (imagePrincipale) updateData.imagePrincipale = imagePrincipale;
-    await prisma.destination.update({ where: { id }, data: updateData });
 
+    await prisma.destination.update({
+      where: { id },
+      data: updateData,
+    });
+
+    // ✅ Sécurise les champs deleted
+    const forceArray = (data) => {
+      if (!data) return [];
+      return Array.isArray(data) ? data : [data];
+    };
+
+    const deletedSections = forceArray(deleted.deletedSections);
+    const deletedGroups = forceArray(deleted.deletedGroups);
+    const deletedBulletPoints = forceArray(deleted.deletedBulletPoints);
+    const deletedImages = forceArray(deleted.deletedImages);
+
+    if (deletedSections.length)
+      await prisma.section.deleteMany({ where: { id: { in: deletedSections } } });
+
+    if (deletedGroups.length)
+      await prisma.groupedBulletPoint.deleteMany({ where: { id: { in: deletedGroups } } });
+
+    if (deletedBulletPoints.length)
+      await prisma.bulletPointContent.deleteMany({ where: { id: { in: deletedBulletPoints } } });
+
+    if (deletedImages.length)
+      await prisma.image.deleteMany({ where: { id: { in: deletedImages } } });
+
+    // ✅ Traitement des sections restantes
     const sectionsRaw = req.body.sections || [];
-    const sections = Array.isArray(sectionsRaw) ? sectionsRaw : Object.values(sectionsRaw);
+    const sections = Array.isArray(sectionsRaw)
+      ? sectionsRaw
+      : Object.values(sectionsRaw);
 
     for (let i = 0; i < sections.length; i++) {
       const sectionData = sections[i];
@@ -272,7 +305,7 @@ export async function handleEditDestination(req, res) {
             titre: sectionData.titre,
             contenu: sectionData.contenu || '',
             ordre: i,
-            type: sectionData.type,
+            type: sectionData.type || 'Autre',
           },
         });
       } else {
@@ -281,39 +314,59 @@ export async function handleEditDestination(req, res) {
             titre: sectionData.titre,
             contenu: sectionData.contenu || '',
             ordre: i,
-            type: sectionData.type,
+            type: sectionData.type || 'Autre',
             destinationId: id,
           },
         });
       }
 
+      // ✅ Traitement des groupes
       const groups = sectionData.groups || [];
       for (let j = 0; j < groups.length; j++) {
-        const group = await prisma.groupedBulletPoint.create({
-          data: {
-            titre: groups[j].titre,
-            ordre: j,
-            sectionId: section.id,
-          },
-        });
+        let groupId;
 
+        // ✅ Si le groupe existe déjà → update + suppression des anciens bullet points
+        if (groups[j].id) {
+          await prisma.groupedBulletPoint.update({
+            where: { id: groups[j].id },
+            data: { titre: groups[j].titre, ordre: j },
+          });
+
+          await prisma.bulletPointContent.deleteMany({
+            where: { groupId: groups[j].id },
+          });
+
+          groupId = groups[j].id;
+        } else {
+          const group = await prisma.groupedBulletPoint.create({
+            data: {
+              titre: groups[j].titre,
+              ordre: j,
+              sectionId: section.id,
+            },
+          });
+          groupId = group.id;
+        }
+
+        // ✅ Ajout des bullet points
         const contents = groups[j].contenus || [];
         for (let k = 0; k < contents.length; k++) {
           await prisma.bulletPointContent.create({
             data: {
               contenu: contents[k],
               ordre: k,
-              groupedBulletPointId: group.id,
+              groupId,
             },
           });
         }
       }
 
-      const imagesFiles = req.files?.filter(file => file.fieldname === `sections[${i}][images][]`);
-      for (const file of imagesFiles) {
+      // ✅ Ajout des nouvelles images (si existantes)
+      const imageFiles = req.files?.filter(file => file.fieldname === `sections[${i}][images][]`) || [];
+      for (const img of imageFiles) {
         await prisma.image.create({
           data: {
-            url: '/uploads/' + file.filename,
+            url: '/uploads/' + img.filename,
             sectionId: section.id,
           },
         });
@@ -326,3 +379,4 @@ export async function handleEditDestination(req, res) {
     res.status(500).send('Erreur lors de la mise à jour');
   }
 }
+
