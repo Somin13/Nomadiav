@@ -1,13 +1,12 @@
 import prisma from '../config/prisma.js'; // ✅ À ne déclarer qu'une seule fois
 
-// Affiche la vue du formulaire d'ajout
+
+// ✅ Affiche le formulaire
 export function renderAddDestination(req, res) {
   res.render('admin/addDestination');
 }
 
-// Contrôleur pour traiter l’ajout complet (structure simplifiée avec grouped bullet points)
-
-
+// ✅ Traite l’ajout complet d’une destination
 export async function handleAddDestination(req, res) {
   try {
     const { titre, pays, continent, description } = req.body;
@@ -25,26 +24,40 @@ export async function handleAddDestination(req, res) {
       },
     });
 
+    const parseField = (field) => {
+      try {
+        return typeof field === 'string' ? JSON.parse(field) : field;
+      } catch {
+        return field;
+      }
+    };
+
     const sectionsRaw = req.body.sections || [];
     const sections = Array.isArray(sectionsRaw)
-      ? sectionsRaw.map(section => (typeof section === 'string' ? JSON.parse(section) : section))
-      : [typeof sectionsRaw === 'string' ? JSON.parse(sectionsRaw) : sectionsRaw];
+      ? sectionsRaw.map(parseField)
+      : [parseField(sectionsRaw)];
+
+    // ✅ Enum Prisma : Types valides
+    const allowedTypes = ['GUIDE', 'PRESENTATION', 'ACCES', 'FORMALITES', 'CONSEILS', 'POURQUOI'];
 
     for (let i = 0; i < sections.length; i++) {
       const sectionData = sections[i];
 
-      // ✅ Création de la section
+      const formattedType = (sectionData.type || 'GUIDE').toUpperCase();
+      const finalType = allowedTypes.includes(formattedType) ? formattedType : 'GUIDE';
+
+      // ✅ Création section
       const newSection = await prisma.section.create({
         data: {
           titre: sectionData.titre,
           contenu: sectionData.contenu || '',
           ordre: i,
-          type: sectionData.type || 'Autre',
+          type: finalType,
           destinationId: destination.id,
         },
       });
 
-      // ✅ Création des bullet points simples
+      // ✅ Bullet points simples
       const bulletPoints = sectionData.bulletPoints || [];
       for (let b = 0; b < bulletPoints.length; b++) {
         await prisma.bulletPoint.create({
@@ -56,7 +69,7 @@ export async function handleAddDestination(req, res) {
         });
       }
 
-      // ✅ Création des groupes de bullet points
+      // ✅ Groupes de bullet points
       const groups = sectionData.groups || [];
       for (let j = 0; j < groups.length; j++) {
         const group = await prisma.groupedBulletPoint.create({
@@ -73,7 +86,7 @@ export async function handleAddDestination(req, res) {
             data: {
               contenu: contents[k],
               ordre: k,
-              groupId: group.id, // ✅ CORRECTION
+              groupId: group.id,
             },
           });
         }
@@ -97,6 +110,8 @@ export async function handleAddDestination(req, res) {
     res.status(500).send("Erreur lors de l’ajout de la destination");
   }
 }
+
+
 
 
 // ✅ Contrôleur : Affiche une destination complète pour l'utilisateur

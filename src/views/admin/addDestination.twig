@@ -1,7 +1,3 @@
-[media pointer="file-service://file-Pf4kk3osrVjuKchsUDnrjR"]
-[media pointer="file-service://file-4dfKZkZUNr28w97SnRM4BM"]
-[media pointer="file-service://file-5sTn1nNiTgZCgwELsrJQy1"]
-[media pointer="file-service://file-9qkPtcn8xLwSvUCTgauLBH"]
 {% extends "base.twig" %}
 
 {% block style %}
@@ -61,10 +57,22 @@
       <input type="text" name="sections[${sectionIndex}][titre]" required>
 
       <label>Type de section :</label>
-      <input type="text" name="sections[${sectionIndex}][type]" placeholder="ex: GUIDE, POURQUOI_Y_ALLER…" required>
+      <select name="sections[${sectionIndex}][type]" required>
+        <option value="">-- Sélectionner un type --</option>
+        <option value="GUIDE">📘 GUIDE</option>
+        <option value="PRESENTATION">📄 PRÉSENTATION</option>
+        <option value="ACCES">🚪 ACCÈS</option>
+        <option value="FORMALITES">📝 FORMALITÉS</option>
+        <option value="CONSEILS">💡 CONSEILS</option>
+        <option value="POURQUOI">❓ POURQUOI Y ALLER</option>
+      </select>
 
       <label>Contenu de la section (texte libre) :</label>
-      <textarea name="sections[${sectionIndex}][contenu]" rows="4" placeholder="Texte long (non bullet pointé)" required></textarea>
+      <textarea name="sections[${sectionIndex}][contenu]" rows="4" required></textarea>
+
+      <label>Bullet points simples :</label>
+      <div class="simple-bullets-wrapper" id="simple-bullets-${sectionIndex}"></div>
+      <button type="button" onclick="addSimpleBulletPoint(${sectionIndex})">➕ Ajouter bullet point</button>
 
       <div class="grouped-bullets-wrapper" id="grouped-${sectionIndex}">
         <h4>Groupes de bullet points</h4>
@@ -84,13 +92,14 @@
     sectionIndex++;
   }
 
-  function addImage(sectionId) {
-    const imageContainer = document.getElementById(`images-${sectionId}`);
+  function addSimpleBulletPoint(sectionId) {
+    const wrapper = document.getElementById(`simple-bullets-${sectionId}`);
     const input = document.createElement('input');
-    input.type = 'file';
-    input.name = `sections[${sectionId}][images][]`;
-    input.accept = 'image/*';
-    imageContainer.appendChild(input);
+    input.type = 'text';
+    input.name = `sections[${sectionId}][bulletPoints][]`;
+    input.placeholder = "• Texte du bullet point";
+    input.required = true;
+    wrapper.appendChild(input);
   }
 
   function addGroupedBulletPoint(sectionId) {
@@ -121,6 +130,15 @@
     input.placeholder = "• Texte du bullet point";
     input.required = true;
     container.appendChild(input);
+  }
+
+  function addImage(sectionId) {
+    const imageContainer = document.getElementById(`images-${sectionId}`);
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.name = `sections[${sectionId}][images][]`;
+    input.accept = 'image/*';
+    imageContainer.appendChild(input);
   }
 </script>
 {% endblock %}

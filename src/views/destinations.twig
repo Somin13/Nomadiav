@@ -20,36 +20,36 @@
     </div>
   </div>
 
-  <div class="destination-sections">
-  
-    {% for section in destination.sections %}
-      <section class="section">
-        <h2>{{ section.titre }}</h2>
-        <p>{{ section.contenu }}</p>
+<div class="destination-sections">
+  {% for section in destination.sections %}
+    <section class="section section-{{ section.type | lower }}">
+      <h2>{{ section.titre }}</h2>
+      <p>{{ section.contenu }}</p>
 
-        {# ✅ Liste simple de bullet points #}
-        {% if section.bulletPoints.length > 0 %}
-          <ul class="bullet-list">
-            {% for bullet in section.bulletPoints %}
-              <li>• {{ bullet.contenu }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
+      {# ✅ Liste simple de bullet points #}
+      {% if section.bulletPoints.length > 0 %}
+        <ul class="bullet-list">
+          {% for bullet in section.bulletPoints %}
+            <li>{{ bullet.contenu }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
 
-        {# ✅ Groupes de bullet points #}
-        {% if section.groupedPoints.length > 0 %}
-          <div class="grouped-bullets">
-            {% for group in section.groupedPoints %}
-              <h4>{{ group.titre }}</h4>
-              <ul>
-                {% for point in group.contents %}
-                  <li>• {{ point.contenu }}</li>
-                {% endfor %}
-              </ul>
-            {% endfor %}
-          </div>
-        {% endif %}
-      </section>
-    {% endfor %}
-  </div>
+      {# ✅ Groupes de bullet points #}
+      {% if section.groupedPoints.length > 0 %}
+        <div class="grouped-bullets">
+          {% for group in section.groupedPoints %}
+            <h4>{{ group.titre }}</h4>
+            <ul>
+              {% for point in group.contents %}
+                <li>{{ point.contenu }}</li>
+              {% endfor %}
+            </ul>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+  {% endfor %}
+</div>
+
 {% endblock %}

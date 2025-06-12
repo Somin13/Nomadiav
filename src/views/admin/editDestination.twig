@@ -47,7 +47,15 @@
         <input type="text" name="sections[{{ loop.index0 }}][titre]" value="{{ section.titre }}" required>
 
         <label>Type :</label>
-        <input type="text" name="sections[{{ loop.index0 }}][type]" value="{{ section.type }}" required>
+        <select name="sections[{{ loop.index0 }}][type]" required>
+          <option value="">-- Sélectionner un type --</option>
+          <option value="GUIDE" {{ section.type == 'GUIDE' ? 'selected' : '' }}>📘 GUIDE</option>
+          <option value="PRESENTATION" {{ section.type == 'PRESENTATION' ? 'selected' : '' }}>📄 PRÉSENTATION</option>
+          <option value="ACCES" {{ section.type == 'ACCES' ? 'selected' : '' }}>🚪 ACCÈS</option>
+          <option value="FORMALITES" {{ section.type == 'FORMALITES' ? 'selected' : '' }}>📝 FORMALITÉS</option>
+          <option value="CONSEILS" {{ section.type == 'CONSEILS' ? 'selected' : '' }}>💡 CONSEILS</option>
+          <option value="POURQUOI" {{ section.type == 'POURQUOI' ? 'selected' : '' }}>❓ POURQUOI Y ALLER</option>
+        </select>
 
         <label>Contenu :</label>
         <textarea name="sections[{{ loop.index0 }}][contenu]" required>{{ section.contenu }}</textarea>
@@ -120,7 +128,15 @@
       <input type="text" name="sections[${sectionIndex}][titre]" required>
 
       <label>Type :</label>
-      <input type="text" name="sections[${sectionIndex}][type]" required>
+      <select name="sections[${sectionIndex}][type]" required>
+        <option value="">-- Sélectionner un type --</option>
+        <option value="GUIDE">📘 GUIDE</option>
+        <option value="PRESENTATION">📄 PRÉSENTATION</option>
+        <option value="ACCES">🚪 ACCÈS</option>
+        <option value="FORMALITES">📝 FORMALITÉS</option>
+        <option value="CONSEILS">💡 CONSEILS</option>
+        <option value="POURQUOI">❓ POURQUOI Y ALLER</option>
+      </select>
 
       <label>Contenu :</label>
       <textarea name="sections[${sectionIndex}][contenu]" required></textarea>

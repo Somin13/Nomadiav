@@ -60,11 +60,27 @@ export namespace $Enums {
 
 export type Role = (typeof Role)[keyof typeof Role]
 
+
+export const SectionType: {
+  GUIDE: 'GUIDE',
+  PRESENTATION: 'PRESENTATION',
+  ACCES: 'ACCES',
+  FORMALITES: 'FORMALITES',
+  CONSEILS: 'CONSEILS',
+  POURQUOI: 'POURQUOI'
+};
+
+export type SectionType = (typeof SectionType)[keyof typeof SectionType]
+
 }
 
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type SectionType = $Enums.SectionType
+
+export const SectionType: typeof $Enums.SectionType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -318,8 +334,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -3437,7 +3453,7 @@ export namespace Prisma {
     titre: string | null
     contenu: string | null
     ordre: number | null
-    type: string | null
+    type: $Enums.SectionType | null
     destinationId: string | null
     updatedAt: Date | null
   }
@@ -3447,7 +3463,7 @@ export namespace Prisma {
     titre: string | null
     contenu: string | null
     ordre: number | null
-    type: string | null
+    type: $Enums.SectionType | null
     destinationId: string | null
     updatedAt: Date | null
   }
@@ -3594,7 +3610,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     destinationId: string
     updatedAt: Date
     _count: SectionCountAggregateOutputType | null
@@ -3667,7 +3683,7 @@ export namespace Prisma {
       titre: string
       contenu: string
       ordre: number
-      type: string
+      type: $Enums.SectionType
       destinationId: string
       updatedAt: Date
     }, ExtArgs["result"]["section"]>
@@ -4047,7 +4063,7 @@ export namespace Prisma {
     readonly titre: FieldRef<"Section", 'String'>
     readonly contenu: FieldRef<"Section", 'String'>
     readonly ordre: FieldRef<"Section", 'Int'>
-    readonly type: FieldRef<"Section", 'String'>
+    readonly type: FieldRef<"Section", 'SectionType'>
     readonly destinationId: FieldRef<"Section", 'String'>
     readonly updatedAt: FieldRef<"Section", 'DateTime'>
   }
@@ -8423,7 +8439,6 @@ export namespace Prisma {
     id: 'id',
     titre: 'titre',
     contenu: 'contenu',
-    type: 'type',
     destinationId: 'destinationId'
   };
 
@@ -8497,6 +8512,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'SectionType'
+   */
+  export type EnumSectionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SectionType'>
     
 
 
@@ -8654,7 +8676,7 @@ export namespace Prisma {
     titre?: StringFilter<"Section"> | string
     contenu?: StringFilter<"Section"> | string
     ordre?: IntFilter<"Section"> | number
-    type?: StringFilter<"Section"> | string
+    type?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     destinationId?: StringFilter<"Section"> | string
     updatedAt?: DateTimeFilter<"Section"> | Date | string
     bulletPoints?: BulletPointListRelationFilter
@@ -8686,7 +8708,7 @@ export namespace Prisma {
     titre?: StringFilter<"Section"> | string
     contenu?: StringFilter<"Section"> | string
     ordre?: IntFilter<"Section"> | number
-    type?: StringFilter<"Section"> | string
+    type?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     destinationId?: StringFilter<"Section"> | string
     updatedAt?: DateTimeFilter<"Section"> | Date | string
     bulletPoints?: BulletPointListRelationFilter
@@ -8718,7 +8740,7 @@ export namespace Prisma {
     titre?: StringWithAggregatesFilter<"Section"> | string
     contenu?: StringWithAggregatesFilter<"Section"> | string
     ordre?: IntWithAggregatesFilter<"Section"> | number
-    type?: StringWithAggregatesFilter<"Section"> | string
+    type?: EnumSectionTypeWithAggregatesFilter<"Section"> | $Enums.SectionType
     destinationId?: StringWithAggregatesFilter<"Section"> | string
     updatedAt?: DateTimeWithAggregatesFilter<"Section"> | Date | string
   }
@@ -9089,7 +9111,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     updatedAt?: Date | string
     bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
     groupedPoints?: GroupedBulletPointCreateNestedManyWithoutSectionInput
@@ -9102,7 +9124,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     destinationId: string
     updatedAt?: Date | string
     bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
@@ -9115,7 +9137,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
     groupedPoints?: GroupedBulletPointUpdateManyWithoutSectionNestedInput
@@ -9128,7 +9150,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     destinationId?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
@@ -9141,7 +9163,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     destinationId: string
     updatedAt?: Date | string
   }
@@ -9151,7 +9173,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9160,7 +9182,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     destinationId?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9594,6 +9616,13 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type EnumSectionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[]
+    notIn?: $Enums.SectionType[]
+    not?: NestedEnumSectionTypeFilter<$PrismaModel> | $Enums.SectionType
+  }
+
   export type BulletPointListRelationFilter = {
     every?: BulletPointWhereInput
     some?: BulletPointWhereInput
@@ -9671,6 +9700,16 @@ export namespace Prisma {
 
   export type SectionSumOrderByAggregateInput = {
     ordre?: SortOrder
+  }
+
+  export type EnumSectionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[]
+    notIn?: $Enums.SectionType[]
+    not?: NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SectionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSectionTypeFilter<$PrismaModel>
+    _max?: NestedEnumSectionTypeFilter<$PrismaModel>
   }
 
   export type SectionScalarRelationFilter = {
@@ -9937,6 +9976,10 @@ export namespace Prisma {
     connectOrCreate?: ImageCreateOrConnectWithoutSectionInput | ImageCreateOrConnectWithoutSectionInput[]
     createMany?: ImageCreateManySectionInputEnvelope
     connect?: ImageWhereUniqueInput | ImageWhereUniqueInput[]
+  }
+
+  export type EnumSectionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.SectionType
   }
 
   export type BulletPointUpdateManyWithoutSectionNestedInput = {
@@ -10286,12 +10329,29 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumSectionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[]
+    notIn?: $Enums.SectionType[]
+    not?: NestedEnumSectionTypeFilter<$PrismaModel> | $Enums.SectionType
+  }
+
+  export type NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.SectionType[]
+    notIn?: $Enums.SectionType[]
+    not?: NestedEnumSectionTypeWithAggregatesFilter<$PrismaModel> | $Enums.SectionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSectionTypeFilter<$PrismaModel>
+    _max?: NestedEnumSectionTypeFilter<$PrismaModel>
+  }
+
   export type SectionCreateWithoutDestinationInput = {
     id?: string
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     updatedAt?: Date | string
     bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
     groupedPoints?: GroupedBulletPointCreateNestedManyWithoutSectionInput
@@ -10303,7 +10363,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     updatedAt?: Date | string
     bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
     groupedPoints?: GroupedBulletPointUncheckedCreateNestedManyWithoutSectionInput
@@ -10344,7 +10404,7 @@ export namespace Prisma {
     titre?: StringFilter<"Section"> | string
     contenu?: StringFilter<"Section"> | string
     ordre?: IntFilter<"Section"> | number
-    type?: StringFilter<"Section"> | string
+    type?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     destinationId?: StringFilter<"Section"> | string
     updatedAt?: DateTimeFilter<"Section"> | Date | string
   }
@@ -10560,7 +10620,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     updatedAt?: Date | string
     groupedPoints?: GroupedBulletPointCreateNestedManyWithoutSectionInput
     images?: ImageCreateNestedManyWithoutSectionInput
@@ -10572,7 +10632,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     destinationId: string
     updatedAt?: Date | string
     groupedPoints?: GroupedBulletPointUncheckedCreateNestedManyWithoutSectionInput
@@ -10600,7 +10660,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groupedPoints?: GroupedBulletPointUpdateManyWithoutSectionNestedInput
     images?: ImageUpdateManyWithoutSectionNestedInput
@@ -10612,7 +10672,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     destinationId?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groupedPoints?: GroupedBulletPointUncheckedUpdateManyWithoutSectionNestedInput
@@ -10624,7 +10684,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     updatedAt?: Date | string
     bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
     images?: ImageCreateNestedManyWithoutSectionInput
@@ -10636,7 +10696,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     destinationId: string
     updatedAt?: Date | string
     bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
@@ -10686,7 +10746,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
     images?: ImageUpdateManyWithoutSectionNestedInput
@@ -10698,7 +10758,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     destinationId?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
@@ -10780,7 +10840,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     updatedAt?: Date | string
     bulletPoints?: BulletPointCreateNestedManyWithoutSectionInput
     groupedPoints?: GroupedBulletPointCreateNestedManyWithoutSectionInput
@@ -10792,7 +10852,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     destinationId: string
     updatedAt?: Date | string
     bulletPoints?: BulletPointUncheckedCreateNestedManyWithoutSectionInput
@@ -10820,7 +10880,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
     groupedPoints?: GroupedBulletPointUpdateManyWithoutSectionNestedInput
@@ -10832,7 +10892,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     destinationId?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
@@ -10844,7 +10904,7 @@ export namespace Prisma {
     titre: string
     contenu: string
     ordre: number
-    type: string
+    type: $Enums.SectionType
     updatedAt?: Date | string
   }
 
@@ -10853,7 +10913,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUpdateManyWithoutSectionNestedInput
     groupedPoints?: GroupedBulletPointUpdateManyWithoutSectionNestedInput
@@ -10865,7 +10925,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
     groupedPoints?: GroupedBulletPointUncheckedUpdateManyWithoutSectionNestedInput
@@ -10877,7 +10937,7 @@ export namespace Prisma {
     titre?: StringFieldUpdateOperationsInput | string
     contenu?: StringFieldUpdateOperationsInput | string
     ordre?: IntFieldUpdateOperationsInput | number
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

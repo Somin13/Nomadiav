@@ -40,13 +40,22 @@ model Section {
   titre         String
   contenu       String               @db.Text
   ordre         Int
-  type          String
+  type          SectionType
   destinationId String
   bulletPoints  BulletPoint[]
   groupedPoints GroupedBulletPoint[]
   images        Image[]
   updatedAt     DateTime             @updatedAt
   destination   Destination          @relation(fields: [destinationId], references: [id])
+}
+
+enum SectionType {
+  GUIDE
+  PRESENTATION
+  ACCES
+  FORMALITES
+  CONSEILS
+  POURQUOI
 }
 
 model BulletPoint {
