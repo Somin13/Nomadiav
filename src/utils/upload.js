@@ -1,10 +1,10 @@
 import multer from 'multer';
 import path from 'path';
 
-// Configuration du stockage des images uploadées
+// 📁 Dossier de destination des fichiers
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/uploads/'); 
+    cb(null, './public/uploads/');
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   }
 });
 
-// Export du middleware multer prêt à l’emploi
+// ✅ Middleware prêt à accepter tous les fichiers
 const upload = multer({ storage });
 
 export default upload;
