@@ -4,62 +4,65 @@
 
 {% block style %}
   <link rel="stylesheet" href="/assets/css/destinations.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block main %}
-  {# ✅ Corrige le chemin de l'image principale #}
-  {% set mainImagePath = destination.imagePrincipale starts with '/uploads/' ? destination.imagePrincipale : '/uploads/' ~ destination.imagePrincipale %}
 
-  <div class="banner">
-    <img src="{{ mainImagePath }}" alt="Image de {{ destination.titre }}">
-    <div class="banner-overlay">
-      <div class="banner-content">
-        <h1 class="destination-title">{{ destination.titre }}</h1>
-        <p class="destination-country">{{ destination.pays }}</p>
-        <button class="add-trip-btn">Ajouter ce voyage</button>
-      </div>
+{# ✅ Corrige le chemin de l'image principale #}
+{% set mainImagePath = destination.imagePrincipale starts with '/uploads/' ? destination.imagePrincipale : '/uploads/' ~ destination.imagePrincipale %}
+
+<div class="banner">
+  <img src="{{ mainImagePath }}" alt="Image de {{ destination.titre }}">
+  <div class="banner-overlay">
+    <div class="banner-content">
+      <h1 class="destination-title">{{ destination.titre }}</h1>
+      <p class="destination-country">{{ destination.pays }}</p>
+      <button class="add-trip-btn">Ajouter ce voyage</button>
     </div>
   </div>
+</div>
 
-  <div class="destination-sections">
-    {% for section in destination.sections %}
-      <section class="section section-{{ section.type | lower }}">
-        <h2>{{ section.titre }}</h2>
-        <p>{{ section.contenu }}</p>
+<div class="destination-sections">
+  {% for section in destination.sections %}
+    <section class="section section-{{ section.type | lower }}">
+      <h2>{{ section.titre }}</h2>
+      <p>{{ section.contenu }}</p>
 
-        {# ✅ Affichage des images liées à cette section #}
-        {% if section.images.length > 0 %}
-          <div class="section-images">
-            {% for image in section.images %}
-              {% set imgPath = image.url starts with '/uploads/' ? image.url : '/uploads/' ~ image.url %}
-              <img src="{{ imgPath }}" alt="Image de la section {{ section.titre }}">
-            {% endfor %}
-          </div>
-        {% endif %}
+      {# ✅ Affichage des images liées à cette section #}
+      {% if section.images.length > 0 %}
+        <div class="section-images">
+          {% for image in section.images %}
+            {% set imgPath = image.url starts with '/uploads/' ? image.url : '/uploads/' ~ image.url %}
+            <img src="{{ imgPath }}" alt="Image de la section {{ section.titre }}">
+          {% endfor %}
+        </div>
+      {% endif %}
 
-        {# ✅ Liste simple de bullet points #}
-        {% if section.bulletPoints.length > 0 %}
-          <ul class="bullet-list">
-            {% for bullet in section.bulletPoints %}
-              <li>{{ bullet.contenu }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
+      {# ✅ Liste simple de bullet points #}
+      {% if section.bulletPoints.length > 0 %}
+        <ul class="bullet-list">
+          {% for bullet in section.bulletPoints %}
+            <li>{{ bullet.contenu }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
 
-        {# ✅ Groupes de bullet points #}
-        {% if section.groupedPoints.length > 0 %}
-          <div class="grouped-bullets">
-            {% for group in section.groupedPoints %}
-              <h4>{{ group.titre }}</h4>
-              <ul>
-                {% for point in group.contents %}
-                  <li>{{ point.contenu }}</li>
-                {% endfor %}
-              </ul>
-            {% endfor %}
-          </div>
-        {% endif %}
-      </section>
-    {% endfor %}
-  </div>
+      {# ✅ Groupes de bullet points #}
+      {% if section.groupedPoints.length > 0 %}
+        <div class="grouped-bullets">
+          {% for group in section.groupedPoints %}
+            <h4>{{ group.titre }}</h4>
+            <ul>
+              {% for point in group.contents %}
+                <li>{{ point.contenu }}</li>
+              {% endfor %}
+            </ul>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+  {% endfor %}
+</div>
+
 {% endblock %}

@@ -6,23 +6,23 @@
     background-size: cover;
     background-position: center;
     display: flex;
-    align-items: center;        /* Centré verticalement */
-    padding-left: 60px;         /* Aligné à gauche */
+    align-items: center;        /* Centré verticalement /
+    padding-left: 60px;         / Aligné à gauche */
     color: white;
   }
-  
+
   .hero-content {
     max-width: 600px;
     z-index: 2;
   }
-  
+
   .hero-content h1 {
     font-size: 36px;
     font-weight: bold;
     margin-bottom: 30px;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
   }
-  
+
   .cta-button {
     display: inline-block;
     background-color: #f25c1e;
@@ -35,11 +35,11 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     transition: background-color 0.3s ease;
   }
-  
+
   .cta-button:hover {
     background-color: #e14a0c;
   }
-  
+
   .logo {
     position: absolute;
     top: 20px;
@@ -48,4 +48,3 @@
     height: auto;
     z-index: 2;
   }
-  

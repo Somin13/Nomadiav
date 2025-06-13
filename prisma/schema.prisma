@@ -39,7 +39,7 @@ model Destination {
 model Section {
   id              String              @id @default(cuid())
   titre           String
-  contenu         String              @db.Text
+  contenu         String?              @db.Text
   ordre           Int
   type            SectionType
   destinationId   String
@@ -60,7 +60,7 @@ enum SectionType {
 
 model BulletPoint {
   id         String   @id @default(cuid())
-  contenu    String
+  contenu    String?
   ordre      Int
   sectionId  String
   section    Section  @relation(fields: [sectionId], references: [id])
@@ -77,7 +77,7 @@ model GroupedBulletPoint {
 
 model BulletPointContent {
   id         String              @id @default(cuid())
-  contenu    String
+  contenu    String?
   ordre      Int
   groupId    String
   group      GroupedBulletPoint @relation(fields: [groupId], references: [id])

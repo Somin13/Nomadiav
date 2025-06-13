@@ -70,3 +70,13 @@ export async function handleLogin(req, res) {
 
 }
 
+// Déconnecte l'utilisateur en détruisant la session
+export function logoutUser(req, res) {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('❌ Erreur de déconnexion :', err);
+      return res.redirect('/'); // ou gérer une page d'erreur
+    }
+    res.redirect('/login'); // ✅ Redirige vers la page de connexion
+  });
+}
