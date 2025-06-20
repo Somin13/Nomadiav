@@ -3,6 +3,7 @@ import prisma from '../config/prisma.js'
 // ✅ Affiche une destination complète avec groupedBulletPoints
 export async function getDestinationDetails(req, res) {
   const { id } = req.params;
+  const userId = req.session.user?.id; // 🔐 Récupère l'utilisateur connecté
 
   try {
     const destination = await prisma.destination.findUnique({
@@ -12,15 +13,15 @@ export async function getDestinationDetails(req, res) {
           orderBy: { ordre: 'asc' },
           include: {
             images: true,
-            groupedPoints: { // ✅ Nom correct d'après ton modèle Prisma
+            groupedPoints: {
               orderBy: { ordre: 'asc' },
               include: {
-                contents: { // ✅ Le nom du champ dans GroupedBulletPoint
+                contents: {
                   orderBy: { ordre: 'asc' }
                 }
               }
             },
-            bulletPoints: { // ✅ Pour les bullet points normaux
+            bulletPoints: {
               orderBy: { ordre: 'asc' }
             }
           }
@@ -32,11 +33,31 @@ export async function getDestinationDetails(req, res) {
       return res.status(404).render('404.twig', { message: 'Destination non trouvée' });
     }
 
+    // ✅ Vérifie si l'utilisateur a déjà ce voyage
+    let alreadyPlanned = false;
+
+    if (userId) {
+      const existingVoyage = await prisma.voyage.findFirst({
+        where: {
+          userId: userId,
+          destinationId: id,
+        }
+      });
+
+      alreadyPlanned = !!existingVoyage;
+    }
+
     const mainImagePath = destination.imagePrincipale?.startsWith('/uploads/')
       ? destination.imagePrincipale
       : '/uploads/' + destination.imagePrincipale;
 
-    res.render('destinations.twig', { destination, mainImagePath });
+    // ✅ On passe les infos à la vue
+    res.render('destinations.twig', {
+      destination,
+      mainImagePath,
+      alreadyPlanned,
+      user: req.session.user,
+    });
   } catch (err) {
     console.error('❌ Erreur getDestinationDetails :', err);
     res.status(500).render('error.twig', { message: 'Erreur serveur' });

@@ -28,7 +28,8 @@ model User {
   avatar     String? // ex: "user123.jpg"
   coverImage String? // ex: "cover_abc.jpg"
 
-  voyages Destination[] @relation("VoyagesUtilisateur")
+  voyages    Destination[] @relation("VoyagesUtilisateur")
+  checklists Checklist[]
 }
 
 enum Role {
@@ -49,7 +50,8 @@ model Destination {
 
   // ➕ Ajout de la relation inverse si tu veux associer une destination à un utilisateur
   utilisateurId Int? // optionnel si certains voyages ne sont pas liés
-  utilisateur   User? @relation("VoyagesUtilisateur", fields: [utilisateurId], references: [id])
+  utilisateur   User?       @relation("VoyagesUtilisateur", fields: [utilisateurId], references: [id])
+  checklists    Checklist[]
 }
 
 model Section {
@@ -106,4 +108,40 @@ model Image {
   alt       String?
   sectionId String
   section   Section @relation(fields: [sectionId], references: [id])
+}
+
+// Check-List 
+
+model Checklist {
+  id         String              @id @default(cuid())
+  titre      String
+  userId     Int // FK vers User (utilisateur)
+  voyageId   String // FK vers Destination (voyage)
+  categories ChecklistCategory[]
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+
+  user   User        @relation(fields: [userId], references: [id])
+  voyage Destination @relation(fields: [voyageId], references: [id])
+}
+
+model ChecklistCategory {
+  id          String          @id @default(cuid())
+  titre       String
+  icone       String?
+  checklistId String
+  items       ChecklistItem[]
+
+  checklist Checklist @relation(fields: [checklistId], references: [id])
+}
+
+model ChecklistItem {
+  id           String    @id @default(cuid())
+  titre        String
+  description  String?
+  isChecked    Boolean   @default(false)
+  reminderDate DateTime?
+  categoryId   String
+
+  category ChecklistCategory @relation(fields: [categoryId], references: [id])
 }

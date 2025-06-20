@@ -102,34 +102,82 @@ export async function uploadCover(req, res) {
 
 
 // ✏️ Met à jour les infos du profil
+// export async function updateUserProfile(req, res) {
+//   try {
+//     const userId = req.user.id
+//     const { nom, prenom, bio, instagram, facebook, youtube } = req.body
+
+//     const avatarFile = req.files?.avatar?.[0]
+//     const coverFile = req.files?.coverImage?.[0]
+
+//     const avatar = avatarFile ? '/uploads/' + avatarFile.filename : undefined
+//     const coverImage = coverFile ? '/uploads/' + coverFile.filename : undefined
+
+//     await updateUserInfo(userId, {
+//       nom,
+//       prenom,
+//       bio,
+//       instagram,
+//       facebook,
+//       youtube,
+//       avatar,
+//       coverImage
+//     })
+
+//     res.redirect('/profil')
+//   } catch (err) {
+//     console.error("❌ Erreur updateUserProfile :", err)
+//     res.status(400).send("Erreur lors de la mise à jour du profil")
+//   }
+// }
+
 export async function updateUserProfile(req, res) {
   try {
-    const userId = req.user.id
-    const { nom, prenom, bio, instagram, facebook, youtube } = req.body
+    const userId = req.session.userId;
 
-    const avatarFile = req.files?.avatar?.[0]
-    const coverFile = req.files?.coverImage?.[0]
+    // 🧼 Si un champ doit être effacé (ex: clearField=instagram)
+    if (req.body.clearField) {
+      const fieldToClear = req.body.clearField;
 
-    const avatar = avatarFile ? '/uploads/' + avatarFile.filename : undefined
-    const coverImage = coverFile ? '/uploads/' + coverFile.filename : undefined
+      if (['instagram', 'facebook', 'youtube'].includes(fieldToClear)) {
+        await prisma.user.update({
+          where: { id: userId },
+          data: {
+            [fieldToClear]: null
+          }
+        });
+      }
 
-    await updateUserInfo(userId, {
-      nom,
-      prenom,
-      bio,
-      instagram,
-      facebook,
-      youtube,
-      avatar,
-      coverImage
-    })
+      return res.redirect('/profil');
+    }
 
-    res.redirect('/profil')
+    // ✅ Traitement normal de mise à jour du profil
+    const { prenom, nom, bio, instagram, facebook, youtube } = req.body;
+
+    const avatarFile = req.files?.avatar?.[0];
+    const coverFile = req.files?.coverImage?.[0];
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        prenom,
+        nom,
+        bio,
+        instagram,
+        facebook,
+        youtube,
+        avatar: avatarFile ? '/uploads/' + avatarFile.filename : undefined,
+        coverImage: coverFile ? '/uploads/' + coverFile.filename : undefined,
+      },
+    });
+
+    res.redirect('/profil');
   } catch (err) {
-    console.error("❌ Erreur updateUserProfile :", err)
-    res.status(400).send("Erreur lors de la mise à jour du profil")
+    console.error("❌ Erreur updateUserProfile :", err);
+    res.status(500).send("Erreur lors de la mise à jour du profil");
   }
 }
+
 
 // 🔐 Change le mot de passe
 export async function changePassword(req, res) {

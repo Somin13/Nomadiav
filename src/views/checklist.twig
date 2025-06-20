@@ -1,0 +1,91 @@
+{% extends "base.twig" %}
+
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/checklist.css">
+{% endblock %}
+
+{% block title %}Check-list – {{ checklist.voyage.titre }}{% endblock %}
+
+{% block main %}
+<div class="checklist-header">
+  <h1>Check-list pour <span>{{ checklist.voyage.titre }}</span></h1>
+
+  {# Barre de progression #}
+  {% set total = 0 %}
+  {% set checked = 0 %}
+  {% for cat in checklist.categories %}
+    {% set total = total + cat.items|length %}
+    {% for item in cat.items %}
+      {% if item.isChecked %}
+        {% set checked = checked + 1 %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+  {% set percent = total > 0 ? (checked / total * 100) | round : 0 %}
+
+  <div class="progress-bar">
+    <div class="progress-bar-inner" style="width: {{ percent }}%"></div>
+  </div>
+  <div class="progress-label">
+    {{ percent|round(0, 'floor') }} % complété ({{ checked }}/{{ total }})
+  </div>
+
+  <div class="checklist-actions">
+    <form action="/checklist/{{ checklist.id }}/toggle-all" method="POST" style="display:inline;">
+      <input type="hidden" name="check" value="true">
+      <button type="submit" class="btn">Tout cocher</button>
+    </form>
+    <form action="/checklist/{{ checklist.id }}/toggle-all" method="POST" style="display:inline;">
+      <input type="hidden" name="check" value="false">
+      <button type="submit" class="btn">Tout décocher</button>
+    </form>
+    <form action="/checklist/{{ checklist.id }}/reset" method="POST" style="display:inline;">
+      <button type="submit" class="btn btn-secondary">Réinitialiser</button>
+    </form>
+    <button onclick="window.print()" class="btn btn-print">Imprimer / Exporter PDF</button>
+    <a href="/destination/{{ checklist.voyage.id }}" class="btn btn-link">Voir la destination</a>
+  </div>
+</div>
+
+<div class="checklist-categories">
+  {% for cat in checklist.categories %}
+    <div class="checklist-category-card">
+      <div class="category-header">
+        {% if cat.icone %}
+          <span class="category-icon">{{ cat.icone }}</span>
+        {% endif %}
+        <h2>{{ cat.titre }}</h2>
+      </div>
+      <ul class="category-items">
+        {% for item in cat.items %}
+          <li class="category-item">
+            <form action="/checklist/item/{{ item.id }}/toggle" method="POST" class="item-form" style="display:inline;">
+              <input type="checkbox"
+                     onchange="this.form.submit()"
+                     {% if item.isChecked %}checked{% endif %}
+              >
+              <span class="item-title {% if item.isChecked %}checked{% endif %}">
+                {{ item.titre }}
+              </span>
+              {% if item.description %}
+                <span class="item-desc">{{ item.description }}</span>
+              {% endif %}
+            </form>
+            <form action="/checklist/item/{{ item.id }}/delete" method="POST" style="display:inline;">
+              <button type="submit" class="btn-delete" title="Supprimer">&#10060;</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="category-item empty">Aucun item.</li>
+        {% endfor %}
+      </ul>
+      <form action="/checklist/{{ checklist.id }}/category/{{ cat.id }}/item/add" method="POST" class="add-item-form">
+        <input type="text" name="titre" placeholder="Nouvel item..." required>
+        <input type="text" name="description" placeholder="Description (optionnel)">
+        <button type="submit" class="btn-add">Ajouter</button>
+      </form>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -8,13 +8,11 @@
 {% endblock %}
 
 {% block main %}
-	<div
-		class="profile-wrapper">
+	<div class="profile-wrapper">
 
 		<!-- === EN-TÊTE === -->
 		<div class="profile-banner">
-			<img
-			src="{{ user.coverImage ?? '/uploads/default-cover.jpg' }}" alt="Couverture" class="cover-img">
+			<img src="{{ user.coverImage ?? '/uploads/default-cover.jpg' }}" alt="Couverture" class="cover-img">
 
 			<!-- Icône de modification de couverture -->
 			<button id="editCoverBtn" class="edit-icon cover-icon">✏️</button>
@@ -29,34 +27,42 @@
 			<button id="openDrawerBtn" class="edit-icon drawer-icon">Modifier ⚙️</button>
 		</div>
 
+		<div class="info-bio">
+		  <h1 class="profile-name">{{ user.prenom }} {{ user.nom }}</h1>
+		  <p class="bio">{{ user.bio }}</p>
 
-<div class="info-bio">
-  <h1 class="profile-name">{{ user.prenom }} {{ user.nom }}</h1>
-  <p class="bio">{{ user.bio }}</p>
+		  {% if user.instagram or user.youtube or user.facebook %}
+			<div class="social-grid">
+			  {% if user.instagram %}
+				<a href="{{ user.instagram }}" target="_blank" aria-label="Instagram">
+				  <img src="/image/instagram.webp" alt="Instagram">
+				</a>
+			  {% endif %}
+			  {% if user.youtube %}
+				<a href="{{ user.youtube }}" target="_blank" aria-label="YouTube">
+				  <img src="/image/youtube-play(1).png" alt="YouTube">
+				</a>
+			  {% endif %}
+			  {% if user.facebook %}
+				<a href="{{ user.facebook }}" target="_blank" aria-label="Facebook">
+				  <img src="/image/facebook-new(1).png" alt="Facebook">
+				</a>
+			  {% endif %}
+			</div>
+		  {% endif %}
+		</div>
 
-  {% if user.instagram or user.youtube or user.facebook %}
-    <div class="social-grid">
-      {% if user.instagram %}
-        <a href="{{ user.instagram }}" target="_blank" aria-label="Instagram">
-          <i class="fab fa-instagram">
-          <img src="/image/instagram.webp" alt=""></i>
-          i
-        </a>
-      {% endif %}
-      {% if user.youtube %}
-        <a href="{{ user.youtube }}" target="_blank" aria-label="YouTube">
-          <i class="fab fa-youtube"><img src="/image/youtube-play(1).png" alt=""></i>
-        </a>
-      {% endif %}
-      {% if user.facebook %}
-        <a href="{{ user.facebook }}" target="_blank" aria-label="Facebook">
-          <i class="fab fa-facebook"><img src="/image/facebook-new(1).png" alt=""></i>
-        </a>
-      {% endif %}
-    </div>
-  {% endif %}
-</div>
-
+		<!-- === STATS PROFIL === -->
+		<div class="profile-stats">
+		  <div class="stat-block">
+			<div class="stat-label">{{ user.adventurerType ?? 'Aventurier' }}</div>
+		  </div>
+		  <div class="divider"></div>
+		  <div class="stat-block">
+			<div class="stat-value">{{ user.voyages | length }}</div>
+			<div class="stat-label">Voyages</div>
+		  </div>
+		</div>
 
 		<!-- === SECTION VOYAGES === -->
 		<section class="profile-section">
@@ -64,70 +70,63 @@
 			<div class="voyage-list">
 				{% for voyage in user.voyages %}
 					{% set imagePath = voyage.imagePrincipale starts with '/uploads/' ? voyage.imagePrincipale : '/uploads/' ~ voyage.imagePrincipale %}
-
-					<a href="/destinations/{{ voyage.slug }}" class="voyage-card" style="background-image: url('{{ imagePath }}')">
+					<a href="/destination/{{ voyage.id}}" class="voyage-card" style="background-image: url('{{ imagePath }}')">
 						<div class="overlay">
 							<h3>{{ voyage.titre }}</h3>
 							<p>{{ voyage.pays }}</p>
 						</div>
 					</a>
-
 				{% else %}
 					<p>Aucun voyage prévu pour le moment.</p>
 				{% endfor %}
 			</div>
 		</section>
-
-
 	</div>
 
-	<!-- === MODALE CHANGEMENT AVATAR === -->
-	<div id="avatarModal" class="modal hidden">
-		<div class="modal-content">
-			<h3>Changer l’avatar</h3>
-			<form method="POST" action="/profil/update" enctype="multipart/form-data">
-				<input type="file" name="avatar" accept="image/*" required>
-				<button type="submit">Mettre à jour</button>
-			</form>
-			<button class="close-modal">Fermer</button>
-		</div>
-	</div>
+<!-- === MODALE CHANGEMENT AVATAR === -->
+<div id="avatarModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Changer l’avatar</h3>
+    <form method="POST" action="/profil/update" enctype="multipart/form-data">
+      <label for="avatar">Nouvel avatar</label>
+      <input type="file" id="avatar" name="avatar" accept="image/*" required>
+      <button type="submit">Mettre à jour</button>
+    </form>
+    <button class="close-modal">Fermer</button>
+  </div>
+</div>
 
-	<!-- === MODALE CHANGEMENT COUVERTURE === -->
-	<div id="coverModal" class="modal hidden">
-		<div class="modal-content">
-			<h3>Changer la couverture</h3>
-			<form method="POST" action="/profil/update" enctype="multipart/form-data">
-				<input type="file" name="coverImage" accept="image/*" required>
-				<button type="submit">Mettre à jour</button>
-			</form>
-			<button class="close-modal">Fermer</button>
-		</div>
-	</div>
+<!-- === MODALE CHANGEMENT COUVERTURE === -->
+<div id="coverModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Changer l’image de couverture</h3>
+    <form method="POST" action="/profil/update" enctype="multipart/form-data">
+      <label for="coverImage">Nouvelle couverture</label>
+      <input type="file" id="coverImage" name="coverImage" accept="image/*" required>
+      <button type="submit">Mettre à jour</button>
+    </form>
+    <button class="close-modal">Fermer</button>
+  </div>
+</div>
 
 	<!-- === MENU LATERAL === -->
 	<div id="drawer" class="profile-drawer">
 		<button id="closeDrawerBtn" class="close-btn">×</button>
-
 		<h3>Modifier mon profil</h3>
 		<form method="POST" action="/profil/update" enctype="multipart/form-data">
-			<input name="prenom" placeholder="Prénom" value="{{ user.prenom }}">
-			<input name="nom" placeholder="Nom" value="{{ user.nom }}">
-			<input name="bio" placeholder="Bio" value="{{ user.bio }}">
-			<input name="instagram" placeholder="Instagram" value="{{ user.instagram }}">
-			<input name="facebook" placeholder="Facebook" value="{{ user.facebook }}">
-			<input
-			name="youtube" placeholder="YouTube" value="{{ user.youtube }}">
+			<div class="input-group"><input name="prenom" placeholder="Prénom" value="{{ user.prenom }}"></div>
+			<div class="input-group"><input name="nom" placeholder="Nom" value="{{ user.nom }}"></div>
+			<div class="input-group"><input name="bio" placeholder="Bio" value="{{ user.bio }}"></div>
+			<div class="input-group"><input name="instagram" placeholder="Instagram" value="{{ user.instagram }}"><button type="submit" name="clearField" value="instagram" class="clear-btn">❌</button></div>
+			<div class="input-group"><input name="facebook" placeholder="Facebook" value="{{ user.facebook }}"><button type="submit" name="clearField" value="facebook" class="clear-btn">❌</button></div>
+			<div class="input-group"><input name="youtube" placeholder="YouTube" value="{{ user.youtube }}"><button type="submit" name="clearField" value="youtube" class="clear-btn">❌</button></div>
 
-			<!-- Champs facultatifs pour images depuis le drawer -->
 			<input type="file" name="avatar" accept="image/*">
 			<input type="file" name="coverImage" accept="image/*">
-
 			<button type="submit">Enregistrer</button>
 		</form>
 
 		<hr>
-
 		<h3>Changer mot de passe</h3>
 		<form method="POST" action="/profil/password">
 			<input type="password" name="currentPassword" placeholder="Mot de passe actuel">
@@ -136,18 +135,13 @@
 		</form>
 
 		<hr>
-
 		<h3>Profil public</h3>
 		<form method="POST" action="/profil/privacy">
-			<label>
-				<input type="checkbox" name="isPublic" {% if user.isPublic %} checked {% endif %}>
-				Profil visible aux autres membres
-			</label>
+			<label><input type="checkbox" name="isPublic" {% if user.isPublic %} checked {% endif %}> Profil visible aux autres membres</label>
 			<button type="submit">Enregistrer</button>
 		</form>
 
 		<hr>
-
 		<h3>Type d'aventurier</h3>
 		<form method="POST" action="/profil/adventurer-type">
 			<select name="type">
@@ -159,31 +153,29 @@
 		</form>
 
 		<hr>
-
 		<h3 class="danger-title">Supprimer mon compte</h3>
 		<form method="POST" action="/profil/delete" onsubmit="return confirm('Confirmer la suppression ?')">
 			<button type="submit" class="danger">Supprimer mon compte</button>
 		</form>
 	</div>
 
-	<!-- === JS INTERACTION === -->
 	<script>
 		const drawer = document.getElementById('drawer')
-document.getElementById('openDrawerBtn') ?. addEventListener('click', () => drawer.classList.add('show'))
-document.getElementById('closeDrawerBtn') ?. addEventListener('click', () => drawer.classList.remove('show'))
+		document.getElementById('openDrawerBtn')?.addEventListener('click', () => drawer.classList.add('show'))
+		document.getElementById('closeDrawerBtn')?.addEventListener('click', () => drawer.classList.remove('show'))
 
-const avatarModal = document.getElementById('avatarModal')
-const coverModal = document.getElementById('coverModal')
-const closeButtons = document.querySelectorAll('.close-modal')
+		const avatarModal = document.getElementById('avatarModal')
+		const coverModal = document.getElementById('coverModal')
+		const closeButtons = document.querySelectorAll('.close-modal')
 
-document.getElementById('editAvatarBtn') ?. addEventListener('click', () => avatarModal.classList.remove('hidden'))
-document.getElementById('editCoverBtn') ?. addEventListener('click', () => coverModal.classList.remove('hidden'))
+		document.getElementById('editAvatarBtn')?.addEventListener('click', () => avatarModal.classList.remove('hidden'))
+		document.getElementById('editCoverBtn')?.addEventListener('click', () => coverModal.classList.remove('hidden'))
 
-closeButtons.forEach(btn => {
-btn.addEventListener('click', () => {
-avatarModal.classList.add('hidden')
-coverModal.classList.add('hidden')
-})
-})
+		closeButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				avatarModal.classList.add('hidden')
+				coverModal.classList.add('hidden')
+			})
+		})
 	</script>
 {% endblock %}

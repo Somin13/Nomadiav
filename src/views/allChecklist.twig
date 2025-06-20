@@ -1,0 +1,33 @@
+{% extends "base.twig" %}
+
+{% block title %}Toutes mes check-lists{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/checklist.css">
+{% endblock %}
+
+{% block main %}
+  <h1>📝 Mes check-lists</h1>
+
+  {% if checklists|length == 0 %}
+    <p>Aucune check-list trouvée.</p>
+  {% else %}
+    <div class="checklist-list">
+      {% for checklist in checklists %}
+        <div class="checklist-card">
+          <h2>{{ checklist.voyage.titre }}</h2>
+          <p>
+            <strong>Catégories :</strong> {{ checklist.categories|length }}<br>
+            {# Calcul du total d'items #}
+            {% set totalItems = 0 %}
+            {% for cat in checklist.categories %}
+              {% set totalItems = totalItems + cat.items|length %}
+            {% endfor %}
+            <strong>Items totaux :</strong> {{ totalItems }}
+          </p>
+          <a href="/checklist/{{ checklist.id }}" class="btn">Voir la check-list</a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

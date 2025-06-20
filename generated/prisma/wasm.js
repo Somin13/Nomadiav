@@ -188,6 +188,31 @@ exports.Prisma.ImageScalarFieldEnum = {
   sectionId: 'sectionId'
 };
 
+exports.Prisma.ChecklistScalarFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  userId: 'userId',
+  voyageId: 'voyageId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ChecklistCategoryScalarFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  icone: 'icone',
+  checklistId: 'checklistId'
+};
+
+exports.Prisma.ChecklistItemScalarFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  description: 'description',
+  isChecked: 'isChecked',
+  reminderDate: 'reminderDate',
+  categoryId: 'categoryId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -252,6 +277,26 @@ exports.Prisma.ImageOrderByRelevanceFieldEnum = {
   alt: 'alt',
   sectionId: 'sectionId'
 };
+
+exports.Prisma.ChecklistOrderByRelevanceFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  voyageId: 'voyageId'
+};
+
+exports.Prisma.ChecklistCategoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  icone: 'icone',
+  checklistId: 'checklistId'
+};
+
+exports.Prisma.ChecklistItemOrderByRelevanceFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  description: 'description',
+  categoryId: 'categoryId'
+};
 exports.Role = exports.$Enums.Role = {
   user: 'user',
   admin: 'admin'
@@ -273,7 +318,10 @@ exports.Prisma.ModelName = {
   BulletPoint: 'BulletPoint',
   GroupedBulletPoint: 'GroupedBulletPoint',
   BulletPointContent: 'BulletPointContent',
-  Image: 'Image'
+  Image: 'Image',
+  Checklist: 'Checklist',
+  ChecklistCategory: 'ChecklistCategory',
+  ChecklistItem: 'ChecklistItem'
 };
 
 /**

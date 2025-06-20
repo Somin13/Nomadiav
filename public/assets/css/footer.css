@@ -1,4 +1,8 @@
 /* === FOOTER GLASSMORPHISME === */
+.body{
+  margin: 0;
+}
+
 .footer-glass {
   margin-top: 4rem;
   padding: 2rem 1.5rem;

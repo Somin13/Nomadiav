@@ -11,6 +11,7 @@ import adminRoutes from './src/routes/dashAdmRoutes.js'; // ou ton fichier route
 import destinationAdminRoutes from './src/routes/destinationAdminRoutes.js';
 import userRoutes from './src/routes/userRoutes.js'
 import { attachUser } from './src/middlewares/authMiddleware.js'
+import checklistRoutes from './src/routes/checklistRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -63,6 +64,7 @@ app.use('/', destinationRoutes);
 app.use('/', adminRoutes);
 app.use('/', destinationAdminRoutes);
 app.use('/', userRoutes)
+app.use('/', checklistRoutes);
 
 // Lancement du serveur
 app.listen(3016, () => {
