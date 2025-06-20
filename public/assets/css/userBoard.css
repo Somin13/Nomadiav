@@ -6,6 +6,7 @@ body {
   background-color: #fff;
   color: #111;
 }
+
 /* ----------- Bannière Hero ----------- */
 .hero-banner {
   position: relative;
@@ -21,13 +22,12 @@ body {
   display: block;
 }
 
-/* Texte posé en bas à gauche de la bannière */
 .hero-text {
   position: absolute;
   bottom: 2rem;
   left: 2rem;
   color: white;
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
 }
 
 .site-title {
@@ -40,7 +40,6 @@ body {
   font-size: 1.25rem;
   margin-top: 0.3rem;
 }
-
 
 /* ----------- Continent Section ----------- */
 .continent-group {
@@ -61,7 +60,7 @@ body {
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
-  background-color: #ffeae2; /* rose clair comme sur ta maquette */
+  background-color: #ffeae2;
   padding: 2rem;
   border-radius: 1.5rem;
 }
@@ -69,14 +68,15 @@ body {
 /* ----------- Carte Individuelle ----------- */
 .destination-card {
   display: block;
-  width: 190px;
-  height: 270px;
+  width: 220px;
+  height: 300px;
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
   text-decoration: none;
   background-color: #000;
   transition: transform 0.3s ease;
+  color: white;
 }
 
 .destination-card:hover {
@@ -90,37 +90,53 @@ body {
   display: block;
 }
 
-/* ----------- Texte sur l’image ----------- */
+/* ----------- Contenu texte (titre + description) ----------- */
 .destination-card .info {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   padding: 1rem;
-  color: white;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 80%);
+  box-sizing: border-box;
+  transition: transform 0.4s ease;
+  z-index: 2;
 }
 
 .destination-card .info h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
 }
 
+/* Description cachée par défaut */
 .destination-card .info p {
-  margin: 0.25rem 0 0;
-  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s ease;
 }
 
-/* ----------- Bouton flèche orange (style décoratif) ----------- */
+/* Hover : on glisse le bloc info vers le haut et on révèle le texte */
+.destination-card:hover .info {
+  transform: translateY(-2rem);
+}
+
+.destination-card:hover .info p {
+  max-height: 100px;
+  opacity: 1;
+}
+
+/* ----------- Bouton flèche orange ----------- */
 .destination-card::after {
   content: "➜";
   position: absolute;
   bottom: 1rem;
   right: 1rem;
   font-size: 1.3rem;
-  color: #ff5f2e; /* orange bouton */
-  background-color: white;
+  color: #ffffff;
+  background-color: #ff5f2e;
   border-radius: 999px;
   width: 30px;
   height: 30px;

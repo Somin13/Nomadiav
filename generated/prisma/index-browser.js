@@ -127,7 +127,15 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  bio: 'bio',
+  instagram: 'instagram',
+  facebook: 'facebook',
+  youtube: 'youtube',
+  isPublic: 'isPublic',
+  adventurerType: 'adventurerType',
+  avatar: 'avatar',
+  coverImage: 'coverImage'
 };
 
 exports.Prisma.DestinationScalarFieldEnum = {
@@ -138,7 +146,8 @@ exports.Prisma.DestinationScalarFieldEnum = {
   description: 'description',
   imagePrincipale: 'imagePrincipale',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  utilisateurId: 'utilisateurId'
 };
 
 exports.Prisma.SectionScalarFieldEnum = {
@@ -184,16 +193,23 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
   nom: 'nom',
   prenom: 'prenom',
   email: 'email',
-  password: 'password'
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
+  password: 'password',
+  bio: 'bio',
+  instagram: 'instagram',
+  facebook: 'facebook',
+  youtube: 'youtube',
+  adventurerType: 'adventurerType',
+  avatar: 'avatar',
+  coverImage: 'coverImage'
 };
 
 exports.Prisma.DestinationOrderByRelevanceFieldEnum = {

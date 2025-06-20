@@ -166,6 +166,44 @@ img {
   content: '🎯';
 }
 
+/* ✅ Bloc de description caché par défaut */
+.description-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 245, 240, 0.92);
+  color: #111;
+  font-size: 0.9rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+}
+
+/* ✅ Apparition au hover */
+.destination-card:hover .description-hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ✅ Ajuste l'info texte pour qu’elle disparaisse derrière */
+.destination-card .info {
+  z-index: 1;
+  transition: opacity 0.2s ease;
+}
+
+.destination-card:hover .info {
+  opacity: 0;
+}
+
+
 /* ===== ANIMATION ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }

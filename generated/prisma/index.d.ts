@@ -1388,6 +1388,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    voyages: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    voyages?: boolean | UserCountOutputTypeCountVoyagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVoyagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DestinationWhereInput
+  }
+
+
+  /**
    * Count Type DestinationCountOutputType
    */
 
@@ -1530,6 +1561,14 @@ export namespace Prisma {
     password: string | null
     role: $Enums.Role | null
     createdAt: Date | null
+    bio: string | null
+    instagram: string | null
+    facebook: string | null
+    youtube: string | null
+    isPublic: boolean | null
+    adventurerType: string | null
+    avatar: string | null
+    coverImage: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1540,6 +1579,14 @@ export namespace Prisma {
     password: string | null
     role: $Enums.Role | null
     createdAt: Date | null
+    bio: string | null
+    instagram: string | null
+    facebook: string | null
+    youtube: string | null
+    isPublic: boolean | null
+    adventurerType: string | null
+    avatar: string | null
+    coverImage: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1550,6 +1597,14 @@ export namespace Prisma {
     password: number
     role: number
     createdAt: number
+    bio: number
+    instagram: number
+    facebook: number
+    youtube: number
+    isPublic: number
+    adventurerType: number
+    avatar: number
+    coverImage: number
     _all: number
   }
 
@@ -1570,6 +1625,14 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    bio?: true
+    instagram?: true
+    facebook?: true
+    youtube?: true
+    isPublic?: true
+    adventurerType?: true
+    avatar?: true
+    coverImage?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1580,6 +1643,14 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    bio?: true
+    instagram?: true
+    facebook?: true
+    youtube?: true
+    isPublic?: true
+    adventurerType?: true
+    avatar?: true
+    coverImage?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1590,6 +1661,14 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    bio?: true
+    instagram?: true
+    facebook?: true
+    youtube?: true
+    isPublic?: true
+    adventurerType?: true
+    avatar?: true
+    coverImage?: true
     _all?: true
   }
 
@@ -1687,6 +1766,14 @@ export namespace Prisma {
     password: string
     role: $Enums.Role
     createdAt: Date
+    bio: string | null
+    instagram: string | null
+    facebook: string | null
+    youtube: string | null
+    isPublic: boolean
+    adventurerType: string | null
+    avatar: string | null
+    coverImage: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1716,6 +1803,16 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    bio?: boolean
+    instagram?: boolean
+    facebook?: boolean
+    youtube?: boolean
+    isPublic?: boolean
+    adventurerType?: boolean
+    avatar?: boolean
+    coverImage?: boolean
+    voyages?: boolean | User$voyagesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
 
@@ -1728,13 +1825,27 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    bio?: boolean
+    instagram?: boolean
+    facebook?: boolean
+    youtube?: boolean
+    isPublic?: boolean
+    adventurerType?: boolean
+    avatar?: boolean
+    coverImage?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nom" | "prenom" | "email" | "password" | "role" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nom" | "prenom" | "email" | "password" | "role" | "createdAt" | "bio" | "instagram" | "facebook" | "youtube" | "isPublic" | "adventurerType" | "avatar" | "coverImage", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    voyages?: boolean | User$voyagesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      voyages: Prisma.$DestinationPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nom: string
@@ -1743,6 +1854,14 @@ export namespace Prisma {
       password: string
       role: $Enums.Role
       createdAt: Date
+      bio: string | null
+      instagram: string | null
+      facebook: string | null
+      youtube: string | null
+      isPublic: boolean
+      adventurerType: string | null
+      avatar: string | null
+      coverImage: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2083,6 +2202,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    voyages<T extends User$voyagesArgs<ExtArgs> = {}>(args?: Subset<T, User$voyagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DestinationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2119,6 +2239,14 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly bio: FieldRef<"User", 'String'>
+    readonly instagram: FieldRef<"User", 'String'>
+    readonly facebook: FieldRef<"User", 'String'>
+    readonly youtube: FieldRef<"User", 'String'>
+    readonly isPublic: FieldRef<"User", 'Boolean'>
+    readonly adventurerType: FieldRef<"User", 'String'>
+    readonly avatar: FieldRef<"User", 'String'>
+    readonly coverImage: FieldRef<"User", 'String'>
   }
     
 
@@ -2135,6 +2263,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -2154,6 +2286,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -2171,6 +2307,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -2220,6 +2360,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -2268,6 +2412,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -2311,6 +2459,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -2339,6 +2491,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -2380,6 +2536,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -2406,6 +2566,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -2426,6 +2590,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.voyages
+   */
+  export type User$voyagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Destination
+     */
+    select?: DestinationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Destination
+     */
+    omit?: DestinationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DestinationInclude<ExtArgs> | null
+    where?: DestinationWhereInput
+    orderBy?: DestinationOrderByWithRelationInput | DestinationOrderByWithRelationInput[]
+    cursor?: DestinationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DestinationScalarFieldEnum | DestinationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2437,6 +2625,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -2446,8 +2638,18 @@ export namespace Prisma {
 
   export type AggregateDestination = {
     _count: DestinationCountAggregateOutputType | null
+    _avg: DestinationAvgAggregateOutputType | null
+    _sum: DestinationSumAggregateOutputType | null
     _min: DestinationMinAggregateOutputType | null
     _max: DestinationMaxAggregateOutputType | null
+  }
+
+  export type DestinationAvgAggregateOutputType = {
+    utilisateurId: number | null
+  }
+
+  export type DestinationSumAggregateOutputType = {
+    utilisateurId: number | null
   }
 
   export type DestinationMinAggregateOutputType = {
@@ -2459,6 +2661,7 @@ export namespace Prisma {
     imagePrincipale: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    utilisateurId: number | null
   }
 
   export type DestinationMaxAggregateOutputType = {
@@ -2470,6 +2673,7 @@ export namespace Prisma {
     imagePrincipale: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    utilisateurId: number | null
   }
 
   export type DestinationCountAggregateOutputType = {
@@ -2481,9 +2685,18 @@ export namespace Prisma {
     imagePrincipale: number
     createdAt: number
     updatedAt: number
+    utilisateurId: number
     _all: number
   }
 
+
+  export type DestinationAvgAggregateInputType = {
+    utilisateurId?: true
+  }
+
+  export type DestinationSumAggregateInputType = {
+    utilisateurId?: true
+  }
 
   export type DestinationMinAggregateInputType = {
     id?: true
@@ -2494,6 +2707,7 @@ export namespace Prisma {
     imagePrincipale?: true
     createdAt?: true
     updatedAt?: true
+    utilisateurId?: true
   }
 
   export type DestinationMaxAggregateInputType = {
@@ -2505,6 +2719,7 @@ export namespace Prisma {
     imagePrincipale?: true
     createdAt?: true
     updatedAt?: true
+    utilisateurId?: true
   }
 
   export type DestinationCountAggregateInputType = {
@@ -2516,6 +2731,7 @@ export namespace Prisma {
     imagePrincipale?: true
     createdAt?: true
     updatedAt?: true
+    utilisateurId?: true
     _all?: true
   }
 
@@ -2557,6 +2773,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: DestinationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DestinationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: DestinationMinAggregateInputType
@@ -2587,6 +2815,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: DestinationCountAggregateInputType | true
+    _avg?: DestinationAvgAggregateInputType
+    _sum?: DestinationSumAggregateInputType
     _min?: DestinationMinAggregateInputType
     _max?: DestinationMaxAggregateInputType
   }
@@ -2600,7 +2830,10 @@ export namespace Prisma {
     imagePrincipale: string | null
     createdAt: Date
     updatedAt: Date
+    utilisateurId: number | null
     _count: DestinationCountAggregateOutputType | null
+    _avg: DestinationAvgAggregateOutputType | null
+    _sum: DestinationSumAggregateOutputType | null
     _min: DestinationMinAggregateOutputType | null
     _max: DestinationMaxAggregateOutputType | null
   }
@@ -2628,7 +2861,9 @@ export namespace Prisma {
     imagePrincipale?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    utilisateurId?: boolean
     sections?: boolean | Destination$sectionsArgs<ExtArgs>
+    utilisateur?: boolean | Destination$utilisateurArgs<ExtArgs>
     _count?: boolean | DestinationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["destination"]>
 
@@ -2643,11 +2878,13 @@ export namespace Prisma {
     imagePrincipale?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    utilisateurId?: boolean
   }
 
-  export type DestinationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "pays" | "continent" | "description" | "imagePrincipale" | "createdAt" | "updatedAt", ExtArgs["result"]["destination"]>
+  export type DestinationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "pays" | "continent" | "description" | "imagePrincipale" | "createdAt" | "updatedAt" | "utilisateurId", ExtArgs["result"]["destination"]>
   export type DestinationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sections?: boolean | Destination$sectionsArgs<ExtArgs>
+    utilisateur?: boolean | Destination$utilisateurArgs<ExtArgs>
     _count?: boolean | DestinationCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2655,6 +2892,7 @@ export namespace Prisma {
     name: "Destination"
     objects: {
       sections: Prisma.$SectionPayload<ExtArgs>[]
+      utilisateur: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2665,6 +2903,7 @@ export namespace Prisma {
       imagePrincipale: string | null
       createdAt: Date
       updatedAt: Date
+      utilisateurId: number | null
     }, ExtArgs["result"]["destination"]>
     composites: {}
   }
@@ -3006,6 +3245,7 @@ export namespace Prisma {
   export interface Prisma__DestinationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sections<T extends Destination$sectionsArgs<ExtArgs> = {}>(args?: Subset<T, Destination$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    utilisateur<T extends Destination$utilisateurArgs<ExtArgs> = {}>(args?: Subset<T, Destination$utilisateurArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3043,6 +3283,7 @@ export namespace Prisma {
     readonly imagePrincipale: FieldRef<"Destination", 'String'>
     readonly createdAt: FieldRef<"Destination", 'DateTime'>
     readonly updatedAt: FieldRef<"Destination", 'DateTime'>
+    readonly utilisateurId: FieldRef<"Destination", 'Int'>
   }
     
 
@@ -3407,6 +3648,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SectionScalarFieldEnum | SectionScalarFieldEnum[]
+  }
+
+  /**
+   * Destination.utilisateur
+   */
+  export type Destination$utilisateurArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -8324,7 +8584,15 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     role: 'role',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    bio: 'bio',
+    instagram: 'instagram',
+    facebook: 'facebook',
+    youtube: 'youtube',
+    isPublic: 'isPublic',
+    adventurerType: 'adventurerType',
+    avatar: 'avatar',
+    coverImage: 'coverImage'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -8338,7 +8606,8 @@ export namespace Prisma {
     description: 'description',
     imagePrincipale: 'imagePrincipale',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    utilisateurId: 'utilisateurId'
   };
 
   export type DestinationScalarFieldEnum = (typeof DestinationScalarFieldEnum)[keyof typeof DestinationScalarFieldEnum]
@@ -8405,22 +8674,29 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-  export const UserOrderByRelevanceFieldEnum: {
-    nom: 'nom',
-    prenom: 'prenom',
-    email: 'email',
-    password: 'password'
-  };
-
-  export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
-
-
   export const NullsOrder: {
     first: 'first',
     last: 'last'
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const UserOrderByRelevanceFieldEnum: {
+    nom: 'nom',
+    prenom: 'prenom',
+    email: 'email',
+    password: 'password',
+    bio: 'bio',
+    instagram: 'instagram',
+    facebook: 'facebook',
+    youtube: 'youtube',
+    adventurerType: 'adventurerType',
+    avatar: 'avatar',
+    coverImage: 'coverImage'
+  };
+
+  export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
 
 
   export const DestinationOrderByRelevanceFieldEnum: {
@@ -8516,6 +8792,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'SectionType'
    */
   export type EnumSectionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SectionType'>
@@ -8543,6 +8826,15 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
+    bio?: StringNullableFilter<"User"> | string | null
+    instagram?: StringNullableFilter<"User"> | string | null
+    facebook?: StringNullableFilter<"User"> | string | null
+    youtube?: StringNullableFilter<"User"> | string | null
+    isPublic?: BoolFilter<"User"> | boolean
+    adventurerType?: StringNullableFilter<"User"> | string | null
+    avatar?: StringNullableFilter<"User"> | string | null
+    coverImage?: StringNullableFilter<"User"> | string | null
+    voyages?: DestinationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8553,6 +8845,15 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    facebook?: SortOrderInput | SortOrder
+    youtube?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    adventurerType?: SortOrderInput | SortOrder
+    avatar?: SortOrderInput | SortOrder
+    coverImage?: SortOrderInput | SortOrder
+    voyages?: DestinationOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -8567,6 +8868,15 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
+    bio?: StringNullableFilter<"User"> | string | null
+    instagram?: StringNullableFilter<"User"> | string | null
+    facebook?: StringNullableFilter<"User"> | string | null
+    youtube?: StringNullableFilter<"User"> | string | null
+    isPublic?: BoolFilter<"User"> | boolean
+    adventurerType?: StringNullableFilter<"User"> | string | null
+    avatar?: StringNullableFilter<"User"> | string | null
+    coverImage?: StringNullableFilter<"User"> | string | null
+    voyages?: DestinationListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8577,6 +8887,14 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    facebook?: SortOrderInput | SortOrder
+    youtube?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    adventurerType?: SortOrderInput | SortOrder
+    avatar?: SortOrderInput | SortOrder
+    coverImage?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -8595,6 +8913,14 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    instagram?: StringNullableWithAggregatesFilter<"User"> | string | null
+    facebook?: StringNullableWithAggregatesFilter<"User"> | string | null
+    youtube?: StringNullableWithAggregatesFilter<"User"> | string | null
+    isPublic?: BoolWithAggregatesFilter<"User"> | boolean
+    adventurerType?: StringNullableWithAggregatesFilter<"User"> | string | null
+    avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
+    coverImage?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type DestinationWhereInput = {
@@ -8609,7 +8935,9 @@ export namespace Prisma {
     imagePrincipale?: StringNullableFilter<"Destination"> | string | null
     createdAt?: DateTimeFilter<"Destination"> | Date | string
     updatedAt?: DateTimeFilter<"Destination"> | Date | string
+    utilisateurId?: IntNullableFilter<"Destination"> | number | null
     sections?: SectionListRelationFilter
+    utilisateur?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type DestinationOrderByWithRelationInput = {
@@ -8621,7 +8949,9 @@ export namespace Prisma {
     imagePrincipale?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    utilisateurId?: SortOrderInput | SortOrder
     sections?: SectionOrderByRelationAggregateInput
+    utilisateur?: UserOrderByWithRelationInput
     _relevance?: DestinationOrderByRelevanceInput
   }
 
@@ -8637,7 +8967,9 @@ export namespace Prisma {
     imagePrincipale?: StringNullableFilter<"Destination"> | string | null
     createdAt?: DateTimeFilter<"Destination"> | Date | string
     updatedAt?: DateTimeFilter<"Destination"> | Date | string
+    utilisateurId?: IntNullableFilter<"Destination"> | number | null
     sections?: SectionListRelationFilter
+    utilisateur?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type DestinationOrderByWithAggregationInput = {
@@ -8649,9 +8981,12 @@ export namespace Prisma {
     imagePrincipale?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    utilisateurId?: SortOrderInput | SortOrder
     _count?: DestinationCountOrderByAggregateInput
+    _avg?: DestinationAvgOrderByAggregateInput
     _max?: DestinationMaxOrderByAggregateInput
     _min?: DestinationMinOrderByAggregateInput
+    _sum?: DestinationSumOrderByAggregateInput
   }
 
   export type DestinationScalarWhereWithAggregatesInput = {
@@ -8666,6 +9001,7 @@ export namespace Prisma {
     imagePrincipale?: StringNullableWithAggregatesFilter<"Destination"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Destination"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Destination"> | Date | string
+    utilisateurId?: IntNullableWithAggregatesFilter<"Destination"> | number | null
   }
 
   export type SectionWhereInput = {
@@ -8965,6 +9301,15 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8975,6 +9320,15 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
   }
 
   export type UserUpdateInput = {
@@ -8984,6 +9338,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8994,6 +9357,15 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9004,6 +9376,14 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -9013,6 +9393,14 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -9023,6 +9411,14 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DestinationCreateInput = {
@@ -9035,6 +9431,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sections?: SectionCreateNestedManyWithoutDestinationInput
+    utilisateur?: UserCreateNestedOneWithoutVoyagesInput
   }
 
   export type DestinationUncheckedCreateInput = {
@@ -9046,6 +9443,7 @@ export namespace Prisma {
     imagePrincipale?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    utilisateurId?: number | null
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
   }
 
@@ -9059,6 +9457,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sections?: SectionUpdateManyWithoutDestinationNestedInput
+    utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
   }
 
   export type DestinationUncheckedUpdateInput = {
@@ -9070,6 +9469,7 @@ export namespace Prisma {
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
@@ -9082,6 +9482,7 @@ export namespace Prisma {
     imagePrincipale?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    utilisateurId?: number | null
   }
 
   export type DestinationUpdateManyMutationInput = {
@@ -9104,6 +9505,7 @@ export namespace Prisma {
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type SectionCreateInput = {
@@ -9427,6 +9829,41 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DestinationListRelationFilter = {
+    every?: DestinationWhereInput
+    some?: DestinationWhereInput
+    none?: DestinationWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type DestinationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserOrderByRelevanceInput = {
     fields: UserOrderByRelevanceFieldEnum | UserOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -9441,6 +9878,14 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    bio?: SortOrder
+    instagram?: SortOrder
+    facebook?: SortOrder
+    youtube?: SortOrder
+    isPublic?: SortOrder
+    adventurerType?: SortOrder
+    avatar?: SortOrder
+    coverImage?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -9455,6 +9900,14 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    bio?: SortOrder
+    instagram?: SortOrder
+    facebook?: SortOrder
+    youtube?: SortOrder
+    isPublic?: SortOrder
+    adventurerType?: SortOrder
+    avatar?: SortOrder
+    coverImage?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -9465,6 +9918,14 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    bio?: SortOrder
+    instagram?: SortOrder
+    facebook?: SortOrder
+    youtube?: SortOrder
+    isPublic?: SortOrder
+    adventurerType?: SortOrder
+    avatar?: SortOrder
+    coverImage?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -9529,7 +9990,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -9541,7 +10002,29 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     search?: string
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type SectionListRelationFilter = {
@@ -9550,9 +10033,9 @@ export namespace Prisma {
     none?: SectionWhereInput
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
   }
 
   export type SectionOrderByRelationAggregateInput = {
@@ -9574,6 +10057,11 @@ export namespace Prisma {
     imagePrincipale?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    utilisateurId?: SortOrder
+  }
+
+  export type DestinationAvgOrderByAggregateInput = {
+    utilisateurId?: SortOrder
   }
 
   export type DestinationMaxOrderByAggregateInput = {
@@ -9585,6 +10073,7 @@ export namespace Prisma {
     imagePrincipale?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    utilisateurId?: SortOrder
   }
 
   export type DestinationMinOrderByAggregateInput = {
@@ -9596,24 +10085,27 @@ export namespace Prisma {
     imagePrincipale?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    utilisateurId?: SortOrder
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+  export type DestinationSumOrderByAggregateInput = {
+    utilisateurId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EnumSectionTypeFilter<$PrismaModel = never> = {
@@ -9864,6 +10356,20 @@ export namespace Prisma {
     sectionId?: SortOrder
   }
 
+  export type DestinationCreateNestedManyWithoutUtilisateurInput = {
+    create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
+    connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
+    createMany?: DestinationCreateManyUtilisateurInputEnvelope
+    connect?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+  }
+
+  export type DestinationUncheckedCreateNestedManyWithoutUtilisateurInput = {
+    create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
+    connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
+    createMany?: DestinationCreateManyUtilisateurInputEnvelope
+    connect?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -9876,12 +10382,48 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type DestinationUpdateManyWithoutUtilisateurNestedInput = {
+    create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
+    connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
+    upsert?: DestinationUpsertWithWhereUniqueWithoutUtilisateurInput | DestinationUpsertWithWhereUniqueWithoutUtilisateurInput[]
+    createMany?: DestinationCreateManyUtilisateurInputEnvelope
+    set?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    disconnect?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    delete?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    connect?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    update?: DestinationUpdateWithWhereUniqueWithoutUtilisateurInput | DestinationUpdateWithWhereUniqueWithoutUtilisateurInput[]
+    updateMany?: DestinationUpdateManyWithWhereWithoutUtilisateurInput | DestinationUpdateManyWithWhereWithoutUtilisateurInput[]
+    deleteMany?: DestinationScalarWhereInput | DestinationScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput = {
+    create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
+    connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
+    upsert?: DestinationUpsertWithWhereUniqueWithoutUtilisateurInput | DestinationUpsertWithWhereUniqueWithoutUtilisateurInput[]
+    createMany?: DestinationCreateManyUtilisateurInputEnvelope
+    set?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    disconnect?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    delete?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    connect?: DestinationWhereUniqueInput | DestinationWhereUniqueInput[]
+    update?: DestinationUpdateWithWhereUniqueWithoutUtilisateurInput | DestinationUpdateWithWhereUniqueWithoutUtilisateurInput[]
+    updateMany?: DestinationUpdateManyWithWhereWithoutUtilisateurInput | DestinationUpdateManyWithWhereWithoutUtilisateurInput[]
+    deleteMany?: DestinationScalarWhereInput | DestinationScalarWhereInput[]
   }
 
   export type SectionCreateNestedManyWithoutDestinationInput = {
@@ -9891,15 +10433,17 @@ export namespace Prisma {
     connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutVoyagesInput = {
+    create?: XOR<UserCreateWithoutVoyagesInput, UserUncheckedCreateWithoutVoyagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVoyagesInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type SectionUncheckedCreateNestedManyWithoutDestinationInput = {
     create?: XOR<SectionCreateWithoutDestinationInput, SectionUncheckedCreateWithoutDestinationInput> | SectionCreateWithoutDestinationInput[] | SectionUncheckedCreateWithoutDestinationInput[]
     connectOrCreate?: SectionCreateOrConnectWithoutDestinationInput | SectionCreateOrConnectWithoutDestinationInput[]
     createMany?: SectionCreateManyDestinationInputEnvelope
     connect?: SectionWhereUniqueInput | SectionWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type SectionUpdateManyWithoutDestinationNestedInput = {
@@ -9914,6 +10458,24 @@ export namespace Prisma {
     update?: SectionUpdateWithWhereUniqueWithoutDestinationInput | SectionUpdateWithWhereUniqueWithoutDestinationInput[]
     updateMany?: SectionUpdateManyWithWhereWithoutDestinationInput | SectionUpdateManyWithWhereWithoutDestinationInput[]
     deleteMany?: SectionScalarWhereInput | SectionScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutVoyagesNestedInput = {
+    create?: XOR<UserCreateWithoutVoyagesInput, UserUncheckedCreateWithoutVoyagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVoyagesInput
+    upsert?: UserUpsertWithoutVoyagesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVoyagesInput, UserUpdateWithoutVoyagesInput>, UserUncheckedUpdateWithoutVoyagesInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type SectionUncheckedUpdateManyWithoutDestinationNestedInput = {
@@ -10216,6 +10778,26 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -10285,21 +10867,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    search?: string
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -10329,6 +10896,41 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumSectionTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.SectionType | EnumSectionTypeFieldRefInput<$PrismaModel>
     in?: $Enums.SectionType[]
@@ -10344,6 +10946,71 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSectionTypeFilter<$PrismaModel>
     _max?: NestedEnumSectionTypeFilter<$PrismaModel>
+  }
+
+  export type DestinationCreateWithoutUtilisateurInput = {
+    id?: string
+    titre: string
+    pays: string
+    continent?: string | null
+    description?: string | null
+    imagePrincipale?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sections?: SectionCreateNestedManyWithoutDestinationInput
+  }
+
+  export type DestinationUncheckedCreateWithoutUtilisateurInput = {
+    id?: string
+    titre: string
+    pays: string
+    continent?: string | null
+    description?: string | null
+    imagePrincipale?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
+  }
+
+  export type DestinationCreateOrConnectWithoutUtilisateurInput = {
+    where: DestinationWhereUniqueInput
+    create: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput>
+  }
+
+  export type DestinationCreateManyUtilisateurInputEnvelope = {
+    data: DestinationCreateManyUtilisateurInput | DestinationCreateManyUtilisateurInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DestinationUpsertWithWhereUniqueWithoutUtilisateurInput = {
+    where: DestinationWhereUniqueInput
+    update: XOR<DestinationUpdateWithoutUtilisateurInput, DestinationUncheckedUpdateWithoutUtilisateurInput>
+    create: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput>
+  }
+
+  export type DestinationUpdateWithWhereUniqueWithoutUtilisateurInput = {
+    where: DestinationWhereUniqueInput
+    data: XOR<DestinationUpdateWithoutUtilisateurInput, DestinationUncheckedUpdateWithoutUtilisateurInput>
+  }
+
+  export type DestinationUpdateManyWithWhereWithoutUtilisateurInput = {
+    where: DestinationScalarWhereInput
+    data: XOR<DestinationUpdateManyMutationInput, DestinationUncheckedUpdateManyWithoutUtilisateurInput>
+  }
+
+  export type DestinationScalarWhereInput = {
+    AND?: DestinationScalarWhereInput | DestinationScalarWhereInput[]
+    OR?: DestinationScalarWhereInput[]
+    NOT?: DestinationScalarWhereInput | DestinationScalarWhereInput[]
+    id?: StringFilter<"Destination"> | string
+    titre?: StringFilter<"Destination"> | string
+    pays?: StringFilter<"Destination"> | string
+    continent?: StringNullableFilter<"Destination"> | string | null
+    description?: StringNullableFilter<"Destination"> | string | null
+    imagePrincipale?: StringNullableFilter<"Destination"> | string | null
+    createdAt?: DateTimeFilter<"Destination"> | Date | string
+    updatedAt?: DateTimeFilter<"Destination"> | Date | string
+    utilisateurId?: IntNullableFilter<"Destination"> | number | null
   }
 
   export type SectionCreateWithoutDestinationInput = {
@@ -10380,6 +11047,46 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutVoyagesInput = {
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+  }
+
+  export type UserUncheckedCreateWithoutVoyagesInput = {
+    id?: number
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+  }
+
+  export type UserCreateOrConnectWithoutVoyagesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVoyagesInput, UserUncheckedCreateWithoutVoyagesInput>
+  }
+
   export type SectionUpsertWithWhereUniqueWithoutDestinationInput = {
     where: SectionWhereUniqueInput
     update: XOR<SectionUpdateWithoutDestinationInput, SectionUncheckedUpdateWithoutDestinationInput>
@@ -10407,6 +11114,52 @@ export namespace Prisma {
     type?: EnumSectionTypeFilter<"Section"> | $Enums.SectionType
     destinationId?: StringFilter<"Section"> | string
     updatedAt?: DateTimeFilter<"Section"> | Date | string
+  }
+
+  export type UserUpsertWithoutVoyagesInput = {
+    update: XOR<UserUpdateWithoutVoyagesInput, UserUncheckedUpdateWithoutVoyagesInput>
+    create: XOR<UserCreateWithoutVoyagesInput, UserUncheckedCreateWithoutVoyagesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVoyagesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVoyagesInput, UserUncheckedUpdateWithoutVoyagesInput>
+  }
+
+  export type UserUpdateWithoutVoyagesInput = {
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUncheckedUpdateWithoutVoyagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BulletPointCreateWithoutSectionInput = {
@@ -10486,6 +11239,7 @@ export namespace Prisma {
     imagePrincipale?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    utilisateur?: UserCreateNestedOneWithoutVoyagesInput
   }
 
   export type DestinationUncheckedCreateWithoutSectionsInput = {
@@ -10497,6 +11251,7 @@ export namespace Prisma {
     imagePrincipale?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    utilisateurId?: number | null
   }
 
   export type DestinationCreateOrConnectWithoutSectionsInput = {
@@ -10602,6 +11357,7 @@ export namespace Prisma {
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutSectionsInput = {
@@ -10613,6 +11369,7 @@ export namespace Prisma {
     imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type SectionCreateWithoutBulletPointsInput = {
@@ -10897,6 +11654,52 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bulletPoints?: BulletPointUncheckedUpdateManyWithoutSectionNestedInput
     groupedPoints?: GroupedBulletPointUncheckedUpdateManyWithoutSectionNestedInput
+  }
+
+  export type DestinationCreateManyUtilisateurInput = {
+    id?: string
+    titre: string
+    pays: string
+    continent?: string | null
+    description?: string | null
+    imagePrincipale?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DestinationUpdateWithoutUtilisateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: SectionUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type DestinationUncheckedUpdateWithoutUtilisateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type DestinationUncheckedUpdateManyWithoutUtilisateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SectionCreateManyDestinationInput = {

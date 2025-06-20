@@ -1,50 +1,126 @@
-.hero-section {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    background-image: url('/assets/image/108ff4_33f8b8d36a5b433f80eda0f8188c0432~mv2.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;        /* Centré verticalement /
-    padding-left: 60px;         / Aligné à gauche */
-    color: white;
-  }
+/* === RESET === */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-  .hero-content {
-    max-width: 600px;
-    z-index: 2;
-  }
+/* === NAVBAR GLASSMORPHISME === */
+.navbar-glass {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 100;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
 
-  .hero-content h1 {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-  }
+/* === CONTENU INTÉRIEUR === */
+.navbar-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .cta-button {
-    display: inline-block;
-    background-color: #f25c1e;
-    color: white;
-    font-size: 18px;
-    padding: 14px 28px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-    transition: background-color 0.3s ease;
-  }
+/* === LIENS === */
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-  .cta-button:hover {
-    background-color: #e14a0c;
-  }
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 0 transparent;
+}
 
-  .logo {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    width: 50px;
-    height: auto;
-    z-index: 2;
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* === LOGO === */
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffb84c;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* === TABBAR MOBILE === */
+.tabbar-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.6rem 0.3rem;
+  z-index: 100;
+}
+
+/* Icônes normales */
+.tab-item img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.tab-item:hover img {
+  transform: scale(1.1);
+}
+
+/* Icône centrale (profil) stylisée */
+.circle-icon {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  backdrop-filter: blur(8px);
+  transform: translateY(-15%);
+}
+
+.profile-icon {
+  margin: 0 -0.2rem;
+}
+
+/* === RESPONSIVE : cache NAVBAR desktop sur mobile === */
+@media (max-width: 768px) {
+  .navbar-glass {
+    display: none;
   }
+}
+
+/* === RESPONSIVE : cache TABBAR mobile sur desktop === */
+@media (min-width: 769px) {
+  .tabbar-mobile {
+    display: none;
+  }
+}

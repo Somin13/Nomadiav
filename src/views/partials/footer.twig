@@ -1,5 +1,15 @@
-{% block style %}
-    <link rel="stylesheet" href="/assets/css/footer.css">
-{% endblock %}
+<footer class="footer-glass">
+  <div class="footer-content">
+    <div class="footer-logo">MONSITE</div>
 
+    <nav class="footer-links">
+      <a href="/" class="footer-link">Accueil</a>
+      <a href="/a-propos" class="footer-link">À propos</a>
+      <a href="/contact" class="footer-link">Contact</a>
+      <a href="/mentions-legales" class="footer-link">Mentions légales</a>
+    </nav>
+
+    <div class="footer-copy">© {{ "now"|date("Y") }} MONSITE. Tous droits réservés.</div>
+  </div>
+</footer>
 

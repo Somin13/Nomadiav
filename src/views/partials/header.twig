@@ -1,1 +1,42 @@
-<h1>TEEESSSSSTTTT</h1>
+{% if user %}
+  <!-- ✅ NAVBAR DESKTOP -->
+  <header class="navbar-glass">
+    <nav class="navbar-content">
+      <ul class="nav-links">
+        <li><a href="/userBoard"><i class="icon"><img src="/icone/avion.svg" alt=""></i>Destinations</a></li>
+        <li><a href="/profil"><i class="icon"><img src="/icone/profil.svg" alt=""></i>Profils</a></li>
+        <li><a href="/ma-liste"><i class="icon"><img src="/icone/list.svg" alt=""></i>Ma liste</a></li>
+        <li><a href="/films"><i class="icon"><img src="/icone/agenda.svg" alt=""></i>Mon agenda</a></li>
+        <li><a href="/logout"><i class="icon"><img src="/icone/orangeicone.svg" alt=""></i>Déconnexion</a></li>
+      </ul>
+      <div class="logo">
+      <img src="/image/logo.png" alt=""></div>
+    </nav>
+  </header>
+<!-- ✅ TABBAR MOBILE FIXÉE EN BAS -->
+<nav class="tabbar-mobile">
+  <a href="/userBoard" class="tab-item">
+    <img src="/icone/avion.svg" alt="Home">
+  </a>
+
+  <a href="/ma-liste" class="tab-item">
+    <img src="/icone/list.svg" alt="Liste">
+  </a>
+
+  <a href="/profil" class="tab-item profile-icon">
+    <div class="circle-icon">
+      <img src="/icone/profil.svg" alt="Profil">
+    </div>
+  </a>
+
+  <a href="/films" class="tab-item">
+    <img src="/icone/agenda.svg" alt="Agenda">
+  </a>
+
+  <a href="/logout" class="tab-item">
+    <img src="/icone/orangeicone.svg" alt="Déco">
+  </a>
+</nav>
+
+
+{% endif %}

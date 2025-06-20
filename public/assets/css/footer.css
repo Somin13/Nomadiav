@@ -1,0 +1,59 @@
+/* === FOOTER GLASSMORPHISME === */
+.footer-glass {
+  margin-top: 4rem;
+  padding: 2rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #ffb84c;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+/* === LIENS DU FOOTER === */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  color: #f5f5f5;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #ffb84c;
+}
+
+/* === COPYRIGHT === */
+.footer-copy {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .footer-links {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}
