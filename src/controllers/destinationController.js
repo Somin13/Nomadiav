@@ -1,6 +1,6 @@
 import prisma from '../config/prisma.js'
 
-// ✅ Affiche une destination complète avec groupedBulletPoints
+// ✅ Affiche une destination complète avec groupedBulletPoints et 2 derniers avis
 export async function getDestinationDetails(req, res) {
   const { id } = req.params;
   const userId = req.session.user?.id; // 🔐 Récupère l'utilisateur connecté
@@ -47,15 +47,29 @@ export async function getDestinationDetails(req, res) {
       alreadyPlanned = !!existingVoyage;
     }
 
+    // --- NOUVEAU : récupère les 2 derniers avis ---
+    const lastTwoReviews = await prisma.review.findMany({
+      where: { destinationId: id },
+      orderBy: { createdAt: 'desc' },
+      take: 2,
+      include: {
+        user: {
+          select: { id: true, nom: true, prenom: true, avatar: true }
+        },
+        likes: true,
+      }
+    });
+
     const mainImagePath = destination.imagePrincipale?.startsWith('/uploads/')
       ? destination.imagePrincipale
       : '/uploads/' + destination.imagePrincipale;
 
-    // ✅ On passe les infos à la vue
+    // ✅ On passe les infos à la vue, y compris les 2 derniers avis
     res.render('destinations.twig', {
       destination,
       mainImagePath,
       alreadyPlanned,
+      lastTwoReviews,  // <-- Ajouté ici
       user: req.session.user,
     });
   } catch (err) {
@@ -63,6 +77,7 @@ export async function getDestinationDetails(req, res) {
     res.status(500).render('error.twig', { message: 'Erreur serveur' });
   }
 }
+
 
 
 // ✅ Affiche toutes les destinations groupées par continent POUR L'UTILISATEUR CONNECTÉ

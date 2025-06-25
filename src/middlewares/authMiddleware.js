@@ -24,4 +24,13 @@ export function requireAuth(req, res, next) {
   next()
 }
 
+// Middleware à utiliser dans les routes API REST (retourne JSON 401 si pas connecté)
+export function isAuthenticated(req, res, next) {
+  if (req.user) {
+    return next();
+  }
+  return res.status(401).json({ message: 'Non autorisé' });
+}
+
+
 export default requireAuth

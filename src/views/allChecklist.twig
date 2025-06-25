@@ -14,19 +14,22 @@
   {% else %}
     <div class="checklist-list">
       {% for checklist in checklists %}
-        <div class="checklist-card">
-          <h2>{{ checklist.voyage.titre }}</h2>
-          <p>
-            <strong>Catégories :</strong> {{ checklist.categories|length }}<br>
-            {# Calcul du total d'items #}
-            {% set totalItems = 0 %}
-            {% for cat in checklist.categories %}
-              {% set totalItems = totalItems + cat.items|length %}
-            {% endfor %}
-            <strong>Items totaux :</strong> {{ totalItems }}
-          </p>
-          <a href="/checklist/{{ checklist.id }}" class="btn">Voir la check-list</a>
-        </div>
+       <div class="checklist-card">
+  <h2>{{ checklist.voyage.titre }}</h2>
+  <p>
+    <strong>Catégories :</strong> {{ checklist.categories|length }}<br>
+    {% set totalItems = 0 %}
+    {% for cat in checklist.categories %}
+      {% set totalItems = totalItems + cat.items|length %}
+    {% endfor %}
+    <strong>Items totaux :</strong> {{ totalItems }}
+  </p>
+  <a href="/checklist/{{ checklist.id }}" class="btn">Voir la check-list</a>
+  <form action="/checklist/{{ checklist.id }}/delete" method="POST" style="display:inline;">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer cette check-list ?')">Supprimer</button>
+  </form>
+</div>
+
       {% endfor %}
     </div>
   {% endif %}

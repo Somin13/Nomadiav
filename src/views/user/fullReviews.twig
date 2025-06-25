@@ -1,0 +1,93 @@
+{% extends "base.twig" %}
+
+{% block title %}Avis pour la destination{% endblock %}
+
+{% block main %}
+  <h1>Avis pour la destination</h1>
+
+  {% if reviews|length == 0 %}
+    <p>Aucun avis pour cette destination.</p>
+  {% else %}
+    <ul>
+      {% for review in reviews %}
+        <li style="border: 1px solid #ccc; padding: 1em; margin-bottom: 1em;">
+          <div style="display: flex; align-items: center; gap: 1em; margin-bottom: 0.5em;">
+            <img
+              src="/uploads/{{ review.user.avatar ?: 'default-avatar.png' }}"
+              alt="{{ review.user.prenom }} {{ review.user.nom }}"
+              width="50" height="50"
+              style="border-radius: 50%; object-fit: cover;"
+            />
+            <strong>{{ review.user.prenom }} {{ review.user.nom }}</strong>
+            <span> - Note : {{ review.rating }} / 5</span>
+          </div>
+          <p>{{ review.content }}</p>
+          <button
+  class="like-btn"
+  data-review-id="{{ review.id }}"
+  type="button"
+>
+  👍 {{ review.likes|length }} like{{ review.likes|length > 1 ? 's' : '' }}
+</button>
+
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <hr>
+
+  <h2>Ajouter un avis</h2>
+
+  <form method="POST" action="/reviews/add">
+    <input type="hidden" name="destinationId" value="{{ destinationId }}" />
+
+    <label for="rating">Note (1 à 5) :</label>
+    <select name="rating" id="rating" required>
+      <option value="">-- Choisir --</option>
+      {% for i in 1..5 %}
+        <option value="{{ i }}">{{ i }}</option>
+      {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label for="content">Commentaire :</label><br>
+    <textarea name="content" id="content" rows="4" required></textarea>
+
+    <br><br>
+
+    <button type="submit">Envoyer</button>
+  </form>
+  <script>
+  document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const reviewId = btn.dataset.reviewId;
+      try {
+        const response = await fetch(`/api/reviews/${reviewId}/like`, {  // <-- sans /api
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const currentLikesText = btn.textContent;
+          const currentLikesCount = parseInt(currentLikesText.match(/\d+/)[0]);
+          if (data.liked) {
+            btn.textContent = `👍 ${currentLikesCount + 1} likes`;
+          } else {
+            btn.textContent = `👍 ${currentLikesCount - 1} like${currentLikesCount - 1 !== 1 ? 's' : ''}`;
+          }
+        } else {
+          const errorData = await response.json();
+          alert(errorData.message || 'Erreur lors du like');
+        }
+      } catch (err) {
+        alert('Erreur réseau');
+      }
+    });
+  });
+</script>
+
+
+{% endblock %}

@@ -59,21 +59,22 @@
       <ul class="category-items">
         {% for item in cat.items %}
           <li class="category-item">
-            <form action="/checklist/item/{{ item.id }}/toggle" method="POST" class="item-form" style="display:inline;">
-              <input type="checkbox"
-                     onchange="this.form.submit()"
-                     {% if item.isChecked %}checked{% endif %}
-              >
-              <span class="item-title {% if item.isChecked %}checked{% endif %}">
-                {{ item.titre }}
-              </span>
-              {% if item.description %}
-                <span class="item-desc">{{ item.description }}</span>
-              {% endif %}
-            </form>
-            <form action="/checklist/item/{{ item.id }}/delete" method="POST" style="display:inline;">
-              <button type="submit" class="btn-delete" title="Supprimer">&#10060;</button>
-            </form>
+           <form action="/checklist/{{ checklist.id }}/item/{{ item.id }}/toggle" method="POST" class="item-form" style="display:inline;">
+  <input type="checkbox"
+         onchange="this.form.submit()"
+         {% if item.isChecked %}checked{% endif %}
+  >
+  <span class="item-title {% if item.isChecked %}checked{% endif %}">
+    {{ item.titre }}
+  </span>
+  {% if item.description %}
+    <span class="item-desc">{{ item.description }}</span>
+  {% endif %}
+</form>
+<form action="/checklist/{{ checklist.id }}/item/{{ item.id }}/delete" method="POST" style="display:inline;">
+  <button type="submit" class="btn-delete" title="Supprimer">&#10060;</button>
+</form>
+
           </li>
         {% else %}
           <li class="category-item empty">Aucun item.</li>

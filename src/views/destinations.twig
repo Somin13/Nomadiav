@@ -74,5 +74,45 @@
     </section>
   {% endfor %}
 </div>
+<hr style="margin-top: 3rem; margin-bottom: 2rem;">
+
+<section class="last-reviews">
+  <h2>Derniers avis</h2>
+
+  <a href="/destination/{{ destination.id }}/reviews" 
+     style="display: inline-block; margin-bottom: 1em; padding: 0.5em 1em; background:#28a745; color:white; border-radius:4px; text-decoration:none;">
+    Ajouter un commentaire
+  </a>
+
+  {% if lastTwoReviews is empty %}
+    <p>Aucun avis pour cette destination.</p>
+  {% else %}
+    <ul>
+      {% for review in lastTwoReviews %}
+        <li style="border: 1px solid #ccc; padding: 1em; margin-bottom: 1em;">
+          <div style="display: flex; align-items: center; gap: 1em; margin-bottom: 0.5em;">
+            <img
+              src="/uploads/{{ review.user.avatar ?: 'default-avatar.png' }}"
+              alt="{{ review.user.prenom }} {{ review.user.nom }}"
+              width="40" height="40"
+              style="border-radius: 50%; object-fit: cover;"
+            />
+            <strong>{{ review.user.prenom }} {{ review.user.nom }}</strong>
+            <span> - Note : {{ review.rating }} / 5</span>
+          </div>
+          <p>{{ review.content }}</p>
+          <p>👍 {{ review.likes|length }} like{{ review.likes|length > 1 ? 's' : '' }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <a href="/destination/{{ destination.id }}/reviews" style="font-weight: bold;">
+      Voir tous les avis &rarr;
+    </a>
+  {% endif %}
+</section>
+
+
+
 
 {% endblock %}

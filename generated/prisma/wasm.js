@@ -213,6 +213,22 @@ exports.Prisma.ChecklistItemScalarFieldEnum = {
   categoryId: 'categoryId'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  destinationId: 'destinationId',
+  rating: 'rating',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ReviewLikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  reviewId: 'reviewId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -297,6 +313,17 @@ exports.Prisma.ChecklistItemOrderByRelevanceFieldEnum = {
   description: 'description',
   categoryId: 'categoryId'
 };
+
+exports.Prisma.ReviewOrderByRelevanceFieldEnum = {
+  id: 'id',
+  destinationId: 'destinationId',
+  content: 'content'
+};
+
+exports.Prisma.ReviewLikeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  reviewId: 'reviewId'
+};
 exports.Role = exports.$Enums.Role = {
   user: 'user',
   admin: 'admin'
@@ -321,7 +348,9 @@ exports.Prisma.ModelName = {
   Image: 'Image',
   Checklist: 'Checklist',
   ChecklistCategory: 'ChecklistCategory',
-  ChecklistItem: 'ChecklistItem'
+  ChecklistItem: 'ChecklistItem',
+  Review: 'Review',
+  ReviewLike: 'ReviewLike'
 };
 
 /**

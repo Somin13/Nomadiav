@@ -2,10 +2,9 @@ import prisma from '../config/prisma.js';
 
 // 1. Création automatique de la checklist lors de l'ajout d'un voyage
 export async function createChecklistOnAddTrip(req, res) {
-  const userId = req.session.userId;         // Assure-toi que ta session est bien gérée
+  const userId = req.session.userId;
   const voyageId = req.params.id;
   try {
-    // Vérifie si la checklist existe déjà (évite les doublons)
     let checklist = await prisma.checklist.findFirst({
       where: { userId, voyageId }
     });
@@ -27,13 +26,49 @@ export async function createChecklistOnAddTrip(req, res) {
           }
         }
       });
+      req.flash('success', '✅ Check-list créée pour ce voyage !');
+    } else {
+      req.flash('info', 'ℹ️ Une check-list existe déjà pour ce voyage.');
     }
 
-    // Redirige directement vers la liste des checklists ou là où tu veux
     res.redirect('/allChecklist');
   } catch (err) {
     console.error('Erreur création checklist:', err);
-    res.status(500).send('Erreur serveur');
+    res.redirect('/allChecklist');
+  }
+}
+
+// 9. Supprimer une checklist complète
+export async function deleteChecklist(req, res) {
+  const checklistId = req.params.id;
+  try {
+    // 1. Supprimer tous les items liés à chaque catégorie de la checklist
+    const categories = await prisma.checklistCategory.findMany({
+      where: { checklistId },
+      select: { id: true }
+    });
+
+    // Pour chaque catégorie, supprimer tous ses items
+    for (const cat of categories) {
+      await prisma.checklistItem.deleteMany({
+        where: { categoryId: cat.id }
+      });
+    }
+
+    // 2. Supprimer toutes les catégories de la checklist
+    await prisma.checklistCategory.deleteMany({
+      where: { checklistId }
+    });
+
+    // 3. Supprimer la checklist elle-même
+    await prisma.checklist.delete({
+      where: { id: checklistId },
+    });
+    res.redirect('/allChecklist');
+  } catch (err) {
+    console.error('Erreur suppression checklist:', err);
+    // req.flash('error', '❌ Erreur lors de la suppression.');
+    res.redirect('/allChecklist');
   }
 }
 
@@ -55,32 +90,36 @@ export async function getChecklistDetails(req, res) {
       }
     });
     if (!checklist) {
-      return res.status(404).send("Check-list introuvable");
+      return res.redirect('/allChecklist');
     }
     res.render('checklist', { checklist });
   } catch (err) {
     console.error('Erreur affichage checklist:', err);
-    res.status(500).send('Erreur serveur');
+
+    res.redirect('/allChecklist');
   }
 }
 
 // 4. Cocher/décocher un item
-export async function updateChecklistItem(req, res) {
-  const itemId = req.params.itemId;
+ export async function updateChecklistItem(req, res) {
+  const { checklistId, itemId } = req.params; // récupère bien les deux !
   try {
-    // Récupérer l'état actuel
     const item = await prisma.checklistItem.findUnique({ where: { id: itemId } });
+    if (!item) {
+      return res.redirect(`/checklist/${checklistId}`);
+    }
     const newState = !item.isChecked;
     await prisma.checklistItem.update({
       where: { id: itemId },
       data: { isChecked: newState }
     });
-    res.json({ success: true, isChecked: newState });
+    res.redirect(`/checklist/${checklistId}`); // Reviens sur la page courante
   } catch (err) {
     console.error('Erreur toggle item:', err);
-    res.status(500).json({ success: false });
+    res.redirect(`/checklist/${checklistId}`);
   }
 }
+
 
 // 5. Ajouter un item personnalisé à une catégorie
 export async function addChecklistItem(req, res) {
@@ -98,28 +137,33 @@ export async function addChecklistItem(req, res) {
     res.redirect(`/checklist/${checklistId}`);
   } catch (err) {
     console.error('Erreur ajout item:', err);
-    res.status(500).send('Erreur serveur');
+    res.redirect(`/checklist/${checklistId}`);
   }
 }
 
 // 6. Supprimer un item
+// 6. Supprimer un item
 export async function deleteChecklistItem(req, res) {
-  const itemId = req.params.itemId;
+  const { checklistId, itemId } = req.params; // <-- récupère bien les deux
   try {
+    const item = await prisma.checklistItem.findUnique({ where: { id: itemId } });
+    if (!item) {
+      return res.redirect(`/checklist/${checklistId}`);
+    }
     await prisma.checklistItem.delete({ where: { id: itemId } });
-    res.json({ success: true });
+    res.redirect(`/checklist/${checklistId}`);
   } catch (err) {
     console.error('Erreur suppression item:', err);
-    res.status(500).json({ success: false });
+    res.redirect(`/checklist/${checklistId}`);
   }
 }
+
 
 // 7. Tout cocher/décocher dans la checklist
 export async function toggleAllChecklistItems(req, res) {
   const { checklistId } = req.params;
-  const { check } = req.body; // true/false
+  const check = req.body.check === 'true'; // Parse la valeur reçue
   try {
-    // Récupère tous les items de la checklist
     const categories = await prisma.checklistCategory.findMany({
       where: { checklistId },
       include: { items: true }
@@ -132,10 +176,11 @@ export async function toggleAllChecklistItems(req, res) {
         });
       }
     }
-    res.json({ success: true });
+
+    res.redirect(`/checklist/${checklistId}`);
   } catch (err) {
     console.error('Erreur tout cocher/décocher:', err);
-    res.status(500).json({ success: false });
+    res.redirect(`/checklist/${checklistId}`);
   }
 }
 
@@ -153,15 +198,14 @@ export async function resetChecklist(req, res) {
           where: { id: item.id },
           data: { isChecked: false }
         });
-      }
+       }
     }
     res.redirect(`/checklist/${checklistId}`);
   } catch (err) {
     console.error('Erreur reset checklist:', err);
-    res.status(500).send('Erreur serveur');
+    res.redirect(`/checklist/${checklistId}`);
   }
 }
-
 
 // Pour la page /allChecklist (NOUVEAU)
 export async function getAllUserChecklists(req, res) {
