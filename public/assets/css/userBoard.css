@@ -144,3 +144,67 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.carousel-arrow {
+  background: #ff5f2e;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  width: 950px; /* 4 cards * 220px + gap */
+}
+
+.carousel-track .destination-card {
+  flex: 0 0 220px;
+}
+
+.carousel-arrow.plus {
+  background: #fff;
+  color: #ff5f2e;
+  font-size: 2rem;
+  border: 2px solid #ff5f2e;
+}
+
+@media (max-width: 1000px) {
+  .carousel-track { width: 470px; }
+}
+@media (max-width: 600px) {
+  .carousel-track { width: 220px; }
+}
+
+.carousel-track {
+  width: 950px; /* 4 * 220px + gaps (desktop) */
+}
+
+@media (max-width: 900px) {
+  .carousel-track {
+    width: 470px; /* 2 * 220px + gap (mobile/tablette) */
+  }
+}

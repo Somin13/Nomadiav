@@ -1,93 +1,107 @@
 {% extends "base.twig" %}
 
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/fullReviews.css">
+{% endblock %}
+
 {% block title %}Avis pour la destination{% endblock %}
 
 {% block main %}
-  <h1>Avis pour la destination</h1>
+ <section class="full-reviews">
+  <div class="reviews-header">
+    <h1><span class="reviews-title">Avis pour la destination</span></h1>
+  </div>
 
   {% if reviews|length == 0 %}
-    <p>Aucun avis pour cette destination.</p>
+    <p style="text-align:center; margin: 2em 0;">Aucun avis pour cette destination.</p>
   {% else %}
-    <ul>
+    <div class="testimonial-list">
       {% for review in reviews %}
-        <li style="border: 1px solid #ccc; padding: 1em; margin-bottom: 1em;">
-          <div style="display: flex; align-items: center; gap: 1em; margin-bottom: 0.5em;">
-            <img
-              src="/uploads/{{ review.user.avatar ?: 'default-avatar.png' }}"
-              alt="{{ review.user.prenom }} {{ review.user.nom }}"
-              width="50" height="50"
-              style="border-radius: 50%; object-fit: cover;"
-            />
-            <strong>{{ review.user.prenom }} {{ review.user.nom }}</strong>
-            <span> - Note : {{ review.rating }} / 5</span>
+        {% set avatarPath = review.user.avatar starts with '/uploads/' 
+            ? review.user.avatar 
+            : '/uploads/' ~ (review.user.avatar ?: 'default-avatar.png') %}
+        <div class="testimonial-card">
+          <img
+            class="avatar"
+            src="{{ avatarPath }}"
+            alt="{{ review.user.prenom }} {{ review.user.nom }}"
+          />
+          <div class="testimonial-content">
+            <span class="testimonial-name">
+              {{ review.user.prenom }}
+              <span class="stars">
+                {% for i in 1..review.rating %}★{% endfor %}
+                {% for i in review.rating+1..5 %}<span style="opacity:.2;">★</span>{% endfor %}
+              </span>
+            </span>
+            <div class="testimonial-text">
+              {{ review.content }}
+            </div>
+            <div class="testimonial-likes">
+              <button
+                class="like-btn"
+                data-review-id="{{ review.id }}"
+                type="button"
+              >👍 {{ review.likes|length }} like{{ review.likes|length > 1 ? 's' : '' }}</button>
+            </div>
           </div>
-          <p>{{ review.content }}</p>
-          <button
-  class="like-btn"
-  data-review-id="{{ review.id }}"
-  type="button"
->
-  👍 {{ review.likes|length }} like{{ review.likes|length > 1 ? 's' : '' }}
-</button>
-
-        </li>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% endif %}
 
-  <hr>
+  <hr class="reviews-separator">
 
-  <h2>Ajouter un avis</h2>
+  <div class="add-review-section">
+    <h2 class="add-review-title">Ajouter un avis</h2>
+    <form method="POST" action="/api/reviews/add" class="add-review-form">
 
-  <form method="POST" action="/reviews/add">
-    <input type="hidden" name="destinationId" value="{{ destinationId }}" />
+      <input type="hidden" name="destinationId" value="{{ destinationId }}" />
 
-    <label for="rating">Note (1 à 5) :</label>
-    <select name="rating" id="rating" required>
-      <option value="">-- Choisir --</option>
-      {% for i in 1..5 %}
-        <option value="{{ i }}">{{ i }}</option>
-      {% endfor %}
-    </select>
+      <label for="rating">Note (1 à 5)</label>
+      <select name="rating" id="rating" required>
+        <option value="">-- Choisir --</option>
+        {% for i in 1..5 %}
+          <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+      </select>
 
-    <br><br>
+      <label for="content">Commentaire</label>
+      <textarea name="content" id="content" rows="4" required placeholder="Votre avis..."></textarea>
 
-    <label for="content">Commentaire :</label><br>
-    <textarea name="content" id="content" rows="4" required></textarea>
+      <button type="submit" class="add-review-btn">Envoyer</button>
+    </form>
+  </div>
+</section>
 
-    <br><br>
 
-    <button type="submit">Envoyer</button>
-  </form>
   <script>
-  document.querySelectorAll('.like-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const reviewId = btn.dataset.reviewId;
-      try {
-        const response = await fetch(`/api/reviews/${reviewId}/like`, {  // <-- sans /api
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          const currentLikesText = btn.textContent;
-          const currentLikesCount = parseInt(currentLikesText.match(/\d+/)[0]);
-          if (data.liked) {
-            btn.textContent = `👍 ${currentLikesCount + 1} likes`;
+    document.querySelectorAll('.like-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const reviewId = btn.dataset.reviewId;
+        try {
+          const response = await fetch(`/api/reviews/${reviewId}/like`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            const currentLikesText = btn.textContent;
+            const currentLikesCount = parseInt(currentLikesText.match(/\d+/)[0]);
+            if (data.liked) {
+              btn.textContent = `👍 ${currentLikesCount + 1} likes`;
+            } else {
+              btn.textContent = `👍 ${currentLikesCount - 1} like${currentLikesCount - 1 !== 1 ? 's' : ''}`;
+            }
           } else {
-            btn.textContent = `👍 ${currentLikesCount - 1} like${currentLikesCount - 1 !== 1 ? 's' : ''}`;
+            const errorData = await response.json();
+            alert(errorData.message || 'Erreur lors du like');
           }
-        } else {
-          const errorData = await response.json();
-          alert(errorData.message || 'Erreur lors du like');
+        } catch (err) {
+          alert('Erreur réseau');
         }
-      } catch (err) {
-        alert('Erreur réseau');
-      }
+      });
     });
-  });
-</script>
-
-
+  </script>
 {% endblock %}

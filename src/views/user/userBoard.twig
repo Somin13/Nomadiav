@@ -15,26 +15,104 @@
     </div>
   </div>
 
-  {% for continent, destinations in groupedDestinations %}
-    <div class="continent-group">
-      <h2 class="continent-title">{{ continent }}</h2>
-      <div class="destination-grid">
+{% for continent, destinations in groupedDestinations %}
+  <div class="continent-group">
+    <h2 class="continent-title">{{ continent }}</h2>
+    <div class="carousel-container">
+      <button class="carousel-arrow left" aria-label="Précédent">‹</button>
+      <div class="carousel-track" id="carousel-{{ loop.index }}">
         {% for dest in destinations %}
           <a href="/destination/{{ dest.id }}" class="destination-card">
-  {% set imagePath = dest.imagePrincipale starts with '/uploads/' ? dest.imagePrincipale : '/uploads/' ~ dest.imagePrincipale %}
-  <img src="{{ imagePath }}" alt="Image de {{ dest.titre }}">
-
-  <div class="info">
-    <h3>{{ dest.titre }}</h3>
-    {% if dest.description %}
-      <p>{{ dest.description|truncate(140, true, '...') }}</p>
-    {% endif %}
-  </div>
-</a>
-
-
+            {% set imagePath = dest.imagePrincipale starts with '/uploads/' ? dest.imagePrincipale : '/uploads/' ~ dest.imagePrincipale %}
+            <img src="{{ imagePath }}" alt="Image de {{ dest.titre }}">
+            <div class="info">
+              <h3>{{ dest.titre }}</h3>
+              {% if dest.description %}
+                <p>{{ dest.description|truncate(140, true, '...') }}</p>
+              {% endif %}
+            </div>
+          </a>
         {% endfor %}
       </div>
+      <button class="carousel-arrow right" aria-label="Suivant" data-continent="{{ continent }}">›</button>
     </div>
-  {% endfor %}
+  </div>
+{% endfor %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('.carousel-container').forEach(function (container, i) {
+    const track = container.querySelector('.carousel-track');
+    const cards = track.querySelectorAll('.destination-card');
+    const prevBtn = container.querySelector('.carousel-arrow.left');
+    const nextBtn = container.querySelector('.carousel-arrow.right');
+    let currentIndex = 0;
+
+    function getStep() {
+      // 2 sur mobile/tablette, 4 sur desktop
+      return window.innerWidth <= 900 ? 2 : 4;
+    }
+
+    function updateButtons() {
+      prevBtn.disabled = currentIndex === 0;
+      let step = getStep();
+      // Si on est au dernier slide, transformer la flèche en +
+      if (currentIndex + step >= cards.length) {
+        nextBtn.innerHTML = "+";
+        nextBtn.classList.add("plus");
+      } else {
+        nextBtn.innerHTML = "›";
+        nextBtn.classList.remove("plus");
+      }
+    }
+
+    function scrollToIndex(index) {
+      // Calcul largeur carte + gap
+      const cardWidth = cards[0].offsetWidth;
+      const gap = parseInt(getComputedStyle(track).gap) || 24;
+      const step = getStep();
+      // Offset = index * (cardWidth + gap)
+      const offset = index * (cardWidth + gap);
+      track.scrollTo({ left: offset, behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', function () {
+      const step = getStep();
+      if (currentIndex > 0) {
+        currentIndex -= step;
+        if (currentIndex < 0) currentIndex = 0;
+        scrollToIndex(currentIndex);
+        updateButtons();
+      }
+    });
+
+    nextBtn.addEventListener('click', function () {
+      const step = getStep();
+      if (currentIndex + step >= cards.length) {
+        // Aller à la page continent complète
+        const continent = nextBtn.getAttribute('data-continent');
+        window.location.href = "/continent/" + encodeURIComponent(continent);
+      } else {
+        currentIndex += step;
+        // Empêche d’aller trop loin à droite
+        if (currentIndex > cards.length - step) currentIndex = cards.length - step;
+        scrollToIndex(currentIndex);
+        updateButtons();
+      }
+    });
+
+    // Update quand on redimensionne l’écran (important sur mobile)
+    window.addEventListener('resize', function() {
+      // Ramène à la première slide au resize pour éviter les bugs d’alignement
+      currentIndex = 0;
+      scrollToIndex(currentIndex);
+      updateButtons();
+    });
+
+    // Init state
+    updateButtons();
+  });
+});
+</script>
+
+
 {% endblock %}
