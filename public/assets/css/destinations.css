@@ -30,9 +30,9 @@ img {
 /* ===== BANNIÈRE PRINCIPALE ===== */
 .banner {
   position: relative;
-  height: 320px;
+  height: 250px;
   overflow: hidden;
-}
+  }
 
 .banner img {
   width: 100%;

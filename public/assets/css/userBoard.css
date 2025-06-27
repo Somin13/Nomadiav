@@ -1,4 +1,15 @@
 /* ----------- Base ----------- */
+.container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2vw;
+  box-sizing: border-box;
+}
+
+
+
+
 body {
   font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
@@ -41,43 +52,125 @@ body {
   margin-top: 0.3rem;
 }
 
-/* ----------- Continent Section ----------- */
+/* ----------- Bloc de chaque continent ----------- */
 .continent-group {
-  margin-bottom: 4rem;
-  padding: 0 2rem;
+  background-color: #ffe3d6;
+  border-radius: 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  margin: 2.5rem 0;
+  padding: 2rem 0 2.5rem 0;
+  width: 100%;
+  max-width: 1100px;     /* max un peu plus large que le carousel-track */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
+
+
+/* ----------- Titre du continent ----------- */
 .continent-title {
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   padding-left: 1rem;
+  background: none; /* plus de fond blanc ici */
 }
 
-/* ----------- Grid de Cartes ----------- */
-.destination-grid {
+/* ----------- Carousel ----------- */
+.carousel-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  background-color: #ffeae2;
-  padding: 2rem;
-  border-radius: 1.5rem;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  padding: 0; /* plus de padding latéral ici ! */
+  width: 100%;
 }
+
+/* ----------- Flèches ----------- */
+.carousel-arrow {
+  background: #ff5f2e;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.carousel-arrow:disabled,
+.carousel-arrow[aria-hidden="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel-arrow.plus {
+  background: #fff;
+  color: #ff5f2e;
+  font-size: 2rem;
+  border: 2px solid #ff5f2e;
+}
+
+/* ----------- Carousel track ----------- */
+.carousel-track {
+  display: flex;
+  gap: 1.2rem;   /* un peu moins que 1.5rem pour alléger */
+  overflow: hidden;
+  scroll-behavior: smooth;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 260px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+  .carousel-track { max-width: 800px; }
+}
+@media (max-width: 900px) {
+  .carousel-track { max-width: 470px; }
+}
+@media (max-width: 600px) {
+  .carousel-track { max-width: 220px; }
+}
+
 
 /* ----------- Carte Individuelle ----------- */
 .destination-card {
   display: block;
-  width: 220px;
-  height: 300px;
+  width: 180px;
+  height: 260px;
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
   text-decoration: none;
   background-color: #000;
   transition: transform 0.3s ease;
-  color: white;
+  color: white;  
+  flex: 0 0 180px;      /* Taille fixe, jamais étirée ! */ 
+  margin: 0;
 }
+
+.rose-clair {
+  background-color: #ffe3d6;
+}
+
+.rose-fonce {
+  background-color: #ffd2bd;
+}
+
+/* Optionnel, tu peux adoucir encore plus si besoin : */
+/* .rose-clair { background: #fff3ee; }
+   .rose-fonce { background: #ffd8ca; } */
 
 .destination-card:hover {
   transform: scale(1.03);
@@ -90,7 +183,7 @@ body {
   display: block;
 }
 
-/* ----------- Contenu texte (titre + description) ----------- */
+/* ----------- Info ----------- */
 .destination-card .info {
   position: absolute;
   bottom: 0;
@@ -122,13 +215,12 @@ body {
 .destination-card:hover .info {
   transform: translateY(-2rem);
 }
-
 .destination-card:hover .info p {
   max-height: 100px;
   opacity: 1;
 }
 
-/* ----------- Bouton flèche orange ----------- */
+/* ----------- Bouton flèche orange sur la carte ----------- */
 .destination-card::after {
   content: "➜";
   position: absolute;
@@ -143,68 +235,4 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.carousel-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-}
-
-.carousel-arrow {
-  background: #ff5f2e;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 2rem;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  transition: background 0.2s;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel-arrow:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.carousel-track {
-  display: flex;
-  gap: 1.5rem;
-  overflow: hidden;
-  scroll-behavior: smooth;
-  width: 950px; /* 4 cards * 220px + gap */
-}
-
-.carousel-track .destination-card {
-  flex: 0 0 220px;
-}
-
-.carousel-arrow.plus {
-  background: #fff;
-  color: #ff5f2e;
-  font-size: 2rem;
-  border: 2px solid #ff5f2e;
-}
-
-@media (max-width: 1000px) {
-  .carousel-track { width: 470px; }
-}
-@media (max-width: 600px) {
-  .carousel-track { width: 220px; }
-}
-
-.carousel-track {
-  width: 950px; /* 4 * 220px + gaps (desktop) */
-}
-
-@media (max-width: 900px) {
-  .carousel-track {
-    width: 470px; /* 2 * 220px + gap (mobile/tablette) */
-  }
 }

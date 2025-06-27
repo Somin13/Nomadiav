@@ -66,18 +66,10 @@ main {
 
 /* Catégories en grille de 2 */
 .checklist-categories {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  justify-content: center;
   margin-bottom: 2rem;
-}
-
-@media (max-width: 900px) {
-  .checklist-categories {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-  }
 }
 
 /* Cartes catégories pastel */

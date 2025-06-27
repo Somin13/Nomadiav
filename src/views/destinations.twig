@@ -1,11 +1,5 @@
-{% if user %}
-  <p style="color: green">✔ Utilisateur connecté : {{ user.name ?? 'Inconnu' }}</p>
-{% else %}
-  <p style="color: red">❌ Aucun utilisateur connecté</p>
-{% endif %}
-
-
 {% extends "base.twig" %}
+
 
 {% block title %}{{ destination.titre }} - {{ destination.pays }}{% endblock %}
 
