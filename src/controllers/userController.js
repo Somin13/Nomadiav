@@ -13,10 +13,16 @@ import {
 // ✅ Affiche la page userBoard avec l'utilisateur connecté ET les destinations groupées par continent
 export async function renderUserBoard(req, res) {
   try {
+    console.log('DEBUG renderUserBoard - req.user:', req.user);
+    if (!req.user) {
+      console.log('DEBUG renderUserBoard - req.user est undefined !');
+    }
     const userId = req.user.id;
+    console.log('DEBUG renderUserBoard - userId:', userId);
 
     // 🔍 Récupère les données utilisateur (nom, voyages, etc.)
     const user = await fetchUserProfile(userId);
+    console.log('DEBUG renderUserBoard - user profile:', user);
 
     // 🌍 Récupère toutes les destinations pour les afficher par continent
     const destinations = await prisma.destination.findMany({
@@ -30,6 +36,7 @@ export async function renderUserBoard(req, res) {
         description: true
       },
     });
+    console.log('DEBUG renderUserBoard - destinations:', destinations.length);
 
     // 📦 Regroupe les destinations par continent
     const grouped = {};
@@ -133,7 +140,7 @@ export async function uploadCover(req, res) {
 
 export async function updateUserProfile(req, res) {
   try {
-    const userId = req.session.userId;
+    const userId = req.user.id;
 
     // 🧼 Si un champ doit être effacé (ex: clearField=instagram)
     if (req.body.clearField) {
@@ -214,7 +221,7 @@ export async function updatePrivacy(req, res) {
   }
 }
 
-// 🌍 Change le type d’aventurier
+// 🌍 Change le type d'aventurier
 export async function updateAdventurerType(req, res) {
   try {
     const type = req.body.type

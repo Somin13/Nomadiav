@@ -335,7 +335,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Applications/MAMP/htdocs/Nomadiav/generated/prisma",
+      "value": "C:\\Users\\ziane\\Desktop\\Bureau\\Nomadiav\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -344,12 +344,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Applications/MAMP/htdocs/Nomadiav/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\ziane\\Desktop\\Bureau\\Nomadiav\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

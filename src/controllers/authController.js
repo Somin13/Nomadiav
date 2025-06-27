@@ -58,7 +58,7 @@ export async function handleLogin(req, res) {
     return res.status(401).send('Mot de passe incorrect.');
   }
 
-  req.session.userId = user.id;
+  req.session.user = user;
   req.session.role = user.role;
 
   //  Redirection vers /dashAdm

@@ -10,6 +10,8 @@
 
 {% block main %}
 
+
+
 {# ✅ Corrige le chemin de l'image principale #}
 {% set mainImagePath = destination.imagePrincipale starts with '/uploads/' ? destination.imagePrincipale : '/uploads/' ~ destination.imagePrincipale %}
 

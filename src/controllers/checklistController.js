@@ -2,7 +2,7 @@ import prisma from '../config/prisma.js';
 
 // 1. Création automatique de la checklist lors de l'ajout d'un voyage
 export async function createChecklistOnAddTrip(req, res) {
-  const userId = req.session.userId;
+  const userId = req.session.user?.id;
   const voyageId = req.params.id;
   try {
     let checklist = await prisma.checklist.findFirst({
@@ -26,9 +26,7 @@ export async function createChecklistOnAddTrip(req, res) {
           }
         }
       });
-      req.flash('success', '✅ Check-list créée pour ce voyage !');
     } else {
-      req.flash('info', 'ℹ️ Une check-list existe déjà pour ce voyage.');
     }
 
     res.redirect('/allChecklist');
