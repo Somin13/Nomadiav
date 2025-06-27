@@ -58,14 +58,29 @@ export async function deleteChecklist(req, res) {
       where: { checklistId }
     });
 
-    // 3. Supprimer la checklist elle-même
+    // 3. Récupérer la checklist pour avoir userId et voyageId
+    const checklist = await prisma.checklist.findUnique({ where: { id: checklistId } });
+    const userId = checklist?.userId;
+    const voyageId = checklist?.voyageId;
+
+    // 4. Supprimer la checklist elle-même
     await prisma.checklist.delete({
       where: { id: checklistId },
     });
+
+    // 5. Supprimer l'entrée UserVoyage correspondante
+    if (userId && voyageId) {
+      await prisma.userVoyage.deleteMany({
+        where: {
+          userId: userId,
+          destinationId: voyageId
+        }
+      });
+    }
+
     res.redirect('/allChecklist');
   } catch (err) {
     console.error('Erreur suppression checklist:', err);
-    // req.flash('error', '❌ Erreur lors de la suppression.');
     res.redirect('/allChecklist');
   }
 }
@@ -221,5 +236,53 @@ export async function getAllUserChecklists(req, res) {
   } catch (err) {
     console.error('Erreur chargement checklists:', err);
     res.status(500).send('Erreur serveur');
+  }
+}
+
+export async function addChecklistAndUserVoyage(req, res) {
+  const userId = req.user.id;
+  const voyageId = req.params.id;
+  try {
+    // Ajoute dans UserVoyage (pivot)
+    try {
+      await prisma.userVoyage.create({
+        data: {
+          userId,
+          destinationId: voyageId,
+        }
+      });
+    } catch (err) {
+      if (err.code !== 'P2002') {
+        console.error('Erreur ajout UserVoyage:', err);
+        return res.status(500).send("Erreur lors de l'ajout du voyage au profil");
+      }
+    }
+
+    // Ajoute la checklist si elle n'existe pas déjà
+    let checklist = await prisma.checklist.findFirst({
+      where: { userId, voyageId }
+    });
+    if (!checklist) {
+      checklist = await prisma.checklist.create({
+        data: {
+          titre: `Check-list pour ce voyage`,
+          user: { connect: { id: userId } },
+          voyage: { connect: { id: voyageId } },
+          categories: {
+            create: [
+              { titre: 'Formalités administratives', icone: 'id-card' },
+              { titre: 'Santé / médical', icone: 'stethoscope' },
+              { titre: 'Bagages Essentiels', icone: 'suitcase' },
+              { titre: 'Finance et documents', icone: 'credit-card' },
+              { titre: 'Rappels personnalisés', icone: 'bell' }
+            ]
+          }
+        }
+      });
+    }
+    res.redirect('/profil');
+  } catch (err) {
+    console.error('Erreur ajout checklist + UserVoyage:', err);
+    res.redirect('/profil');
   }
 }

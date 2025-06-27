@@ -21,13 +21,19 @@
     <div class="banner-content">
       <h1 class="destination-title">{{ destination.titre }}</h1>
       <p class="destination-country">{{ destination.pays }}</p>
-      <form method="POST" action="/checklist/{{ destination.id }}">
-  <button class="add-trip-btn" type="submit">Ajouter ce voyage</button>
-</form>
+
+      <!-- Nouveau conteneur flex pour aligner les boutons -->
+      <div style="display: flex; gap: 1rem; margin-top: 1.2rem;">
+        <form method="POST" action="/add-checklist-and-voyage/{{ destination.id }}">
+          <button class="add-trip-btn" type="submit">Ajouter ce voyage</button>
+        </form>
+       
+      </div>
 
     </div>
   </div>
 </div>
+
 
 <div class="destination-sections">
   {% for section in destination.sections %}

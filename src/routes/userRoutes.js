@@ -6,7 +6,8 @@ import {
   changePassword,
   deleteAccount,
   updatePrivacy,
-  updateAdventurerType
+  updateAdventurerType,
+  addVoyageAndChecklist
 } from '../controllers/userController.js'
 
 import { requireAuth, attachUser } from '../middlewares/authMiddleware.js'
@@ -47,4 +48,7 @@ router.post('/profil/privacy', attachUser, requireAuth, updatePrivacy)
 router.post('/profil/adventurer-type', attachUser, requireAuth, updateAdventurerType)
 
 router.post('/add-trip/:destinationId', attachUser, requireAuth, addTripToUser);
+
+router.post('/add-voyage/:destinationId', attachUser, requireAuth, addVoyageAndChecklist);
+
 export default router

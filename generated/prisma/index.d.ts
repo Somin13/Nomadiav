@@ -73,6 +73,11 @@ export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
  * 
  */
 export type ReviewLike = $Result.DefaultSelection<Prisma.$ReviewLikePayload>
+/**
+ * Model UserVoyage
+ * 
+ */
+export type UserVoyage = $Result.DefaultSelection<Prisma.$UserVoyagePayload>
 
 /**
  * Enums
@@ -351,6 +356,16 @@ export class PrismaClient<
     * ```
     */
   get reviewLike(): Prisma.ReviewLikeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userVoyage`: Exposes CRUD operations for the **UserVoyage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserVoyages
+    * const userVoyages = await prisma.userVoyage.findMany()
+    * ```
+    */
+  get userVoyage(): Prisma.UserVoyageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -802,7 +817,8 @@ export namespace Prisma {
     ChecklistCategory: 'ChecklistCategory',
     ChecklistItem: 'ChecklistItem',
     Review: 'Review',
-    ReviewLike: 'ReviewLike'
+    ReviewLike: 'ReviewLike',
+    UserVoyage: 'UserVoyage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -821,7 +837,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "destination" | "section" | "bulletPoint" | "groupedBulletPoint" | "bulletPointContent" | "image" | "checklist" | "checklistCategory" | "checklistItem" | "review" | "reviewLike"
+      modelProps: "user" | "destination" | "section" | "bulletPoint" | "groupedBulletPoint" | "bulletPointContent" | "image" | "checklist" | "checklistCategory" | "checklistItem" | "review" | "reviewLike" | "userVoyage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1617,6 +1633,72 @@ export namespace Prisma {
           }
         }
       }
+      UserVoyage: {
+        payload: Prisma.$UserVoyagePayload<ExtArgs>
+        fields: Prisma.UserVoyageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserVoyageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserVoyageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload>
+          }
+          findFirst: {
+            args: Prisma.UserVoyageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserVoyageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload>
+          }
+          findMany: {
+            args: Prisma.UserVoyageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload>[]
+          }
+          create: {
+            args: Prisma.UserVoyageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload>
+          }
+          createMany: {
+            args: Prisma.UserVoyageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.UserVoyageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload>
+          }
+          update: {
+            args: Prisma.UserVoyageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserVoyageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserVoyageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserVoyageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserVoyagePayload>
+          }
+          aggregate: {
+            args: Prisma.UserVoyageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserVoyage>
+          }
+          groupBy: {
+            args: Prisma.UserVoyageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserVoyageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserVoyageCountArgs<ExtArgs>
+            result: $Utils.Optional<UserVoyageCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1713,6 +1795,7 @@ export namespace Prisma {
     checklistItem?: ChecklistItemOmit
     review?: ReviewOmit
     reviewLike?: ReviewLikeOmit
+    userVoyage?: UserVoyageOmit
   }
 
   /* Types for Logging */
@@ -1811,6 +1894,7 @@ export namespace Prisma {
     checklists: number
     reviews: number
     reviewLikes: number
+    userVoyages: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1818,6 +1902,7 @@ export namespace Prisma {
     checklists?: boolean | UserCountOutputTypeCountChecklistsArgs
     reviews?: boolean | UserCountOutputTypeCountReviewsArgs
     reviewLikes?: boolean | UserCountOutputTypeCountReviewLikesArgs
+    userVoyages?: boolean | UserCountOutputTypeCountUserVoyagesArgs
   }
 
   // Custom InputTypes
@@ -1859,6 +1944,13 @@ export namespace Prisma {
     where?: ReviewLikeWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserVoyagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserVoyageWhereInput
+  }
+
 
   /**
    * Count Type DestinationCountOutputType
@@ -1868,12 +1960,14 @@ export namespace Prisma {
     sections: number
     checklists: number
     reviews: number
+    userVoyages: number
   }
 
   export type DestinationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sections?: boolean | DestinationCountOutputTypeCountSectionsArgs
     checklists?: boolean | DestinationCountOutputTypeCountChecklistsArgs
     reviews?: boolean | DestinationCountOutputTypeCountReviewsArgs
+    userVoyages?: boolean | DestinationCountOutputTypeCountUserVoyagesArgs
   }
 
   // Custom InputTypes
@@ -1906,6 +2000,13 @@ export namespace Prisma {
    */
   export type DestinationCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * DestinationCountOutputType without action
+   */
+  export type DestinationCountOutputTypeCountUserVoyagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserVoyageWhereInput
   }
 
 
@@ -2368,6 +2469,7 @@ export namespace Prisma {
     checklists?: boolean | User$checklistsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
     reviewLikes?: boolean | User$reviewLikesArgs<ExtArgs>
+    userVoyages?: boolean | User$userVoyagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2397,6 +2499,7 @@ export namespace Prisma {
     checklists?: boolean | User$checklistsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
     reviewLikes?: boolean | User$reviewLikesArgs<ExtArgs>
+    userVoyages?: boolean | User$userVoyagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2407,6 +2510,7 @@ export namespace Prisma {
       checklists: Prisma.$ChecklistPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       reviewLikes: Prisma.$ReviewLikePayload<ExtArgs>[]
+      userVoyages: Prisma.$UserVoyagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2768,6 +2872,7 @@ export namespace Prisma {
     checklists<T extends User$checklistsArgs<ExtArgs> = {}>(args?: Subset<T, User$checklistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviewLikes<T extends User$reviewLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userVoyages<T extends User$userVoyagesArgs<ExtArgs> = {}>(args?: Subset<T, User$userVoyagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3251,6 +3356,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.userVoyages
+   */
+  export type User$userVoyagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    where?: UserVoyageWhereInput
+    orderBy?: UserVoyageOrderByWithRelationInput | UserVoyageOrderByWithRelationInput[]
+    cursor?: UserVoyageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserVoyageScalarFieldEnum | UserVoyageScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3503,6 +3632,7 @@ export namespace Prisma {
     utilisateur?: boolean | Destination$utilisateurArgs<ExtArgs>
     checklists?: boolean | Destination$checklistsArgs<ExtArgs>
     reviews?: boolean | Destination$reviewsArgs<ExtArgs>
+    userVoyages?: boolean | Destination$userVoyagesArgs<ExtArgs>
     _count?: boolean | DestinationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["destination"]>
 
@@ -3526,6 +3656,7 @@ export namespace Prisma {
     utilisateur?: boolean | Destination$utilisateurArgs<ExtArgs>
     checklists?: boolean | Destination$checklistsArgs<ExtArgs>
     reviews?: boolean | Destination$reviewsArgs<ExtArgs>
+    userVoyages?: boolean | Destination$userVoyagesArgs<ExtArgs>
     _count?: boolean | DestinationCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3536,6 +3667,7 @@ export namespace Prisma {
       utilisateur: Prisma.$UserPayload<ExtArgs> | null
       checklists: Prisma.$ChecklistPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      userVoyages: Prisma.$UserVoyagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3891,6 +4023,7 @@ export namespace Prisma {
     utilisateur<T extends Destination$utilisateurArgs<ExtArgs> = {}>(args?: Subset<T, Destination$utilisateurArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     checklists<T extends Destination$checklistsArgs<ExtArgs> = {}>(args?: Subset<T, Destination$checklistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Destination$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Destination$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userVoyages<T extends Destination$userVoyagesArgs<ExtArgs> = {}>(args?: Subset<T, Destination$userVoyagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4360,6 +4493,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * Destination.userVoyages
+   */
+  export type Destination$userVoyagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    where?: UserVoyageWhereInput
+    orderBy?: UserVoyageOrderByWithRelationInput | UserVoyageOrderByWithRelationInput[]
+    cursor?: UserVoyageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserVoyageScalarFieldEnum | UserVoyageScalarFieldEnum[]
   }
 
   /**
@@ -14121,6 +14278,966 @@ export namespace Prisma {
 
 
   /**
+   * Model UserVoyage
+   */
+
+  export type AggregateUserVoyage = {
+    _count: UserVoyageCountAggregateOutputType | null
+    _avg: UserVoyageAvgAggregateOutputType | null
+    _sum: UserVoyageSumAggregateOutputType | null
+    _min: UserVoyageMinAggregateOutputType | null
+    _max: UserVoyageMaxAggregateOutputType | null
+  }
+
+  export type UserVoyageAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type UserVoyageSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type UserVoyageMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    destinationId: string | null
+    createdAt: Date | null
+  }
+
+  export type UserVoyageMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    destinationId: string | null
+    createdAt: Date | null
+  }
+
+  export type UserVoyageCountAggregateOutputType = {
+    id: number
+    userId: number
+    destinationId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UserVoyageAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type UserVoyageSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type UserVoyageMinAggregateInputType = {
+    id?: true
+    userId?: true
+    destinationId?: true
+    createdAt?: true
+  }
+
+  export type UserVoyageMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    destinationId?: true
+    createdAt?: true
+  }
+
+  export type UserVoyageCountAggregateInputType = {
+    id?: true
+    userId?: true
+    destinationId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UserVoyageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserVoyage to aggregate.
+     */
+    where?: UserVoyageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserVoyages to fetch.
+     */
+    orderBy?: UserVoyageOrderByWithRelationInput | UserVoyageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserVoyageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserVoyages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserVoyages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserVoyages
+    **/
+    _count?: true | UserVoyageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserVoyageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserVoyageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserVoyageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserVoyageMaxAggregateInputType
+  }
+
+  export type GetUserVoyageAggregateType<T extends UserVoyageAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserVoyage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserVoyage[P]>
+      : GetScalarType<T[P], AggregateUserVoyage[P]>
+  }
+
+
+
+
+  export type UserVoyageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserVoyageWhereInput
+    orderBy?: UserVoyageOrderByWithAggregationInput | UserVoyageOrderByWithAggregationInput[]
+    by: UserVoyageScalarFieldEnum[] | UserVoyageScalarFieldEnum
+    having?: UserVoyageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserVoyageCountAggregateInputType | true
+    _avg?: UserVoyageAvgAggregateInputType
+    _sum?: UserVoyageSumAggregateInputType
+    _min?: UserVoyageMinAggregateInputType
+    _max?: UserVoyageMaxAggregateInputType
+  }
+
+  export type UserVoyageGroupByOutputType = {
+    id: number
+    userId: number
+    destinationId: string
+    createdAt: Date
+    _count: UserVoyageCountAggregateOutputType | null
+    _avg: UserVoyageAvgAggregateOutputType | null
+    _sum: UserVoyageSumAggregateOutputType | null
+    _min: UserVoyageMinAggregateOutputType | null
+    _max: UserVoyageMaxAggregateOutputType | null
+  }
+
+  type GetUserVoyageGroupByPayload<T extends UserVoyageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserVoyageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserVoyageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserVoyageGroupByOutputType[P]>
+            : GetScalarType<T[P], UserVoyageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserVoyageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    destinationId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    destination?: boolean | DestinationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userVoyage"]>
+
+
+
+  export type UserVoyageSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    destinationId?: boolean
+    createdAt?: boolean
+  }
+
+  export type UserVoyageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "destinationId" | "createdAt", ExtArgs["result"]["userVoyage"]>
+  export type UserVoyageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    destination?: boolean | DestinationDefaultArgs<ExtArgs>
+  }
+
+  export type $UserVoyagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserVoyage"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      destination: Prisma.$DestinationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      destinationId: string
+      createdAt: Date
+    }, ExtArgs["result"]["userVoyage"]>
+    composites: {}
+  }
+
+  type UserVoyageGetPayload<S extends boolean | null | undefined | UserVoyageDefaultArgs> = $Result.GetResult<Prisma.$UserVoyagePayload, S>
+
+  type UserVoyageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserVoyageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserVoyageCountAggregateInputType | true
+    }
+
+  export interface UserVoyageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserVoyage'], meta: { name: 'UserVoyage' } }
+    /**
+     * Find zero or one UserVoyage that matches the filter.
+     * @param {UserVoyageFindUniqueArgs} args - Arguments to find a UserVoyage
+     * @example
+     * // Get one UserVoyage
+     * const userVoyage = await prisma.userVoyage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserVoyageFindUniqueArgs>(args: SelectSubset<T, UserVoyageFindUniqueArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserVoyage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserVoyageFindUniqueOrThrowArgs} args - Arguments to find a UserVoyage
+     * @example
+     * // Get one UserVoyage
+     * const userVoyage = await prisma.userVoyage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserVoyageFindUniqueOrThrowArgs>(args: SelectSubset<T, UserVoyageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserVoyage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserVoyageFindFirstArgs} args - Arguments to find a UserVoyage
+     * @example
+     * // Get one UserVoyage
+     * const userVoyage = await prisma.userVoyage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserVoyageFindFirstArgs>(args?: SelectSubset<T, UserVoyageFindFirstArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserVoyage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserVoyageFindFirstOrThrowArgs} args - Arguments to find a UserVoyage
+     * @example
+     * // Get one UserVoyage
+     * const userVoyage = await prisma.userVoyage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserVoyageFindFirstOrThrowArgs>(args?: SelectSubset<T, UserVoyageFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserVoyages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserVoyageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserVoyages
+     * const userVoyages = await prisma.userVoyage.findMany()
+     * 
+     * // Get first 10 UserVoyages
+     * const userVoyages = await prisma.userVoyage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userVoyageWithIdOnly = await prisma.userVoyage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserVoyageFindManyArgs>(args?: SelectSubset<T, UserVoyageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserVoyage.
+     * @param {UserVoyageCreateArgs} args - Arguments to create a UserVoyage.
+     * @example
+     * // Create one UserVoyage
+     * const UserVoyage = await prisma.userVoyage.create({
+     *   data: {
+     *     // ... data to create a UserVoyage
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserVoyageCreateArgs>(args: SelectSubset<T, UserVoyageCreateArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserVoyages.
+     * @param {UserVoyageCreateManyArgs} args - Arguments to create many UserVoyages.
+     * @example
+     * // Create many UserVoyages
+     * const userVoyage = await prisma.userVoyage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserVoyageCreateManyArgs>(args?: SelectSubset<T, UserVoyageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserVoyage.
+     * @param {UserVoyageDeleteArgs} args - Arguments to delete one UserVoyage.
+     * @example
+     * // Delete one UserVoyage
+     * const UserVoyage = await prisma.userVoyage.delete({
+     *   where: {
+     *     // ... filter to delete one UserVoyage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserVoyageDeleteArgs>(args: SelectSubset<T, UserVoyageDeleteArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserVoyage.
+     * @param {UserVoyageUpdateArgs} args - Arguments to update one UserVoyage.
+     * @example
+     * // Update one UserVoyage
+     * const userVoyage = await prisma.userVoyage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserVoyageUpdateArgs>(args: SelectSubset<T, UserVoyageUpdateArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserVoyages.
+     * @param {UserVoyageDeleteManyArgs} args - Arguments to filter UserVoyages to delete.
+     * @example
+     * // Delete a few UserVoyages
+     * const { count } = await prisma.userVoyage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserVoyageDeleteManyArgs>(args?: SelectSubset<T, UserVoyageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserVoyages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserVoyageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserVoyages
+     * const userVoyage = await prisma.userVoyage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserVoyageUpdateManyArgs>(args: SelectSubset<T, UserVoyageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserVoyage.
+     * @param {UserVoyageUpsertArgs} args - Arguments to update or create a UserVoyage.
+     * @example
+     * // Update or create a UserVoyage
+     * const userVoyage = await prisma.userVoyage.upsert({
+     *   create: {
+     *     // ... data to create a UserVoyage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserVoyage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserVoyageUpsertArgs>(args: SelectSubset<T, UserVoyageUpsertArgs<ExtArgs>>): Prisma__UserVoyageClient<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserVoyages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserVoyageCountArgs} args - Arguments to filter UserVoyages to count.
+     * @example
+     * // Count the number of UserVoyages
+     * const count = await prisma.userVoyage.count({
+     *   where: {
+     *     // ... the filter for the UserVoyages we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserVoyageCountArgs>(
+      args?: Subset<T, UserVoyageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserVoyageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserVoyage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserVoyageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserVoyageAggregateArgs>(args: Subset<T, UserVoyageAggregateArgs>): Prisma.PrismaPromise<GetUserVoyageAggregateType<T>>
+
+    /**
+     * Group by UserVoyage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserVoyageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserVoyageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserVoyageGroupByArgs['orderBy'] }
+        : { orderBy?: UserVoyageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserVoyageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserVoyageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserVoyage model
+   */
+  readonly fields: UserVoyageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserVoyage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserVoyageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    destination<T extends DestinationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DestinationDefaultArgs<ExtArgs>>): Prisma__DestinationClient<$Result.GetResult<Prisma.$DestinationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserVoyage model
+   */
+  interface UserVoyageFieldRefs {
+    readonly id: FieldRef<"UserVoyage", 'Int'>
+    readonly userId: FieldRef<"UserVoyage", 'Int'>
+    readonly destinationId: FieldRef<"UserVoyage", 'String'>
+    readonly createdAt: FieldRef<"UserVoyage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserVoyage findUnique
+   */
+  export type UserVoyageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * Filter, which UserVoyage to fetch.
+     */
+    where: UserVoyageWhereUniqueInput
+  }
+
+  /**
+   * UserVoyage findUniqueOrThrow
+   */
+  export type UserVoyageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * Filter, which UserVoyage to fetch.
+     */
+    where: UserVoyageWhereUniqueInput
+  }
+
+  /**
+   * UserVoyage findFirst
+   */
+  export type UserVoyageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * Filter, which UserVoyage to fetch.
+     */
+    where?: UserVoyageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserVoyages to fetch.
+     */
+    orderBy?: UserVoyageOrderByWithRelationInput | UserVoyageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserVoyages.
+     */
+    cursor?: UserVoyageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserVoyages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserVoyages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserVoyages.
+     */
+    distinct?: UserVoyageScalarFieldEnum | UserVoyageScalarFieldEnum[]
+  }
+
+  /**
+   * UserVoyage findFirstOrThrow
+   */
+  export type UserVoyageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * Filter, which UserVoyage to fetch.
+     */
+    where?: UserVoyageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserVoyages to fetch.
+     */
+    orderBy?: UserVoyageOrderByWithRelationInput | UserVoyageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserVoyages.
+     */
+    cursor?: UserVoyageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserVoyages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserVoyages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserVoyages.
+     */
+    distinct?: UserVoyageScalarFieldEnum | UserVoyageScalarFieldEnum[]
+  }
+
+  /**
+   * UserVoyage findMany
+   */
+  export type UserVoyageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * Filter, which UserVoyages to fetch.
+     */
+    where?: UserVoyageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserVoyages to fetch.
+     */
+    orderBy?: UserVoyageOrderByWithRelationInput | UserVoyageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserVoyages.
+     */
+    cursor?: UserVoyageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserVoyages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserVoyages.
+     */
+    skip?: number
+    distinct?: UserVoyageScalarFieldEnum | UserVoyageScalarFieldEnum[]
+  }
+
+  /**
+   * UserVoyage create
+   */
+  export type UserVoyageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserVoyage.
+     */
+    data: XOR<UserVoyageCreateInput, UserVoyageUncheckedCreateInput>
+  }
+
+  /**
+   * UserVoyage createMany
+   */
+  export type UserVoyageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserVoyages.
+     */
+    data: UserVoyageCreateManyInput | UserVoyageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserVoyage update
+   */
+  export type UserVoyageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserVoyage.
+     */
+    data: XOR<UserVoyageUpdateInput, UserVoyageUncheckedUpdateInput>
+    /**
+     * Choose, which UserVoyage to update.
+     */
+    where: UserVoyageWhereUniqueInput
+  }
+
+  /**
+   * UserVoyage updateMany
+   */
+  export type UserVoyageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserVoyages.
+     */
+    data: XOR<UserVoyageUpdateManyMutationInput, UserVoyageUncheckedUpdateManyInput>
+    /**
+     * Filter which UserVoyages to update
+     */
+    where?: UserVoyageWhereInput
+    /**
+     * Limit how many UserVoyages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserVoyage upsert
+   */
+  export type UserVoyageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserVoyage to update in case it exists.
+     */
+    where: UserVoyageWhereUniqueInput
+    /**
+     * In case the UserVoyage found by the `where` argument doesn't exist, create a new UserVoyage with this data.
+     */
+    create: XOR<UserVoyageCreateInput, UserVoyageUncheckedCreateInput>
+    /**
+     * In case the UserVoyage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserVoyageUpdateInput, UserVoyageUncheckedUpdateInput>
+  }
+
+  /**
+   * UserVoyage delete
+   */
+  export type UserVoyageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+    /**
+     * Filter which UserVoyage to delete.
+     */
+    where: UserVoyageWhereUniqueInput
+  }
+
+  /**
+   * UserVoyage deleteMany
+   */
+  export type UserVoyageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserVoyages to delete
+     */
+    where?: UserVoyageWhereInput
+    /**
+     * Limit how many UserVoyages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserVoyage without action
+   */
+  export type UserVoyageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserVoyage
+     */
+    select?: UserVoyageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserVoyage
+     */
+    omit?: UserVoyageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserVoyageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14279,6 +15396,16 @@ export namespace Prisma {
   export type ReviewLikeScalarFieldEnum = (typeof ReviewLikeScalarFieldEnum)[keyof typeof ReviewLikeScalarFieldEnum]
 
 
+  export const UserVoyageScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    destinationId: 'destinationId',
+    createdAt: 'createdAt'
+  };
+
+  export type UserVoyageScalarFieldEnum = (typeof UserVoyageScalarFieldEnum)[keyof typeof UserVoyageScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -14417,6 +15544,13 @@ export namespace Prisma {
   export type ReviewLikeOrderByRelevanceFieldEnum = (typeof ReviewLikeOrderByRelevanceFieldEnum)[keyof typeof ReviewLikeOrderByRelevanceFieldEnum]
 
 
+  export const UserVoyageOrderByRelevanceFieldEnum: {
+    destinationId: 'destinationId'
+  };
+
+  export type UserVoyageOrderByRelevanceFieldEnum = (typeof UserVoyageOrderByRelevanceFieldEnum)[keyof typeof UserVoyageOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -14497,6 +15631,7 @@ export namespace Prisma {
     checklists?: ChecklistListRelationFilter
     reviews?: ReviewListRelationFilter
     reviewLikes?: ReviewLikeListRelationFilter
+    userVoyages?: UserVoyageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -14519,6 +15654,7 @@ export namespace Prisma {
     checklists?: ChecklistOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
     reviewLikes?: ReviewLikeOrderByRelationAggregateInput
+    userVoyages?: UserVoyageOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -14545,6 +15681,7 @@ export namespace Prisma {
     checklists?: ChecklistListRelationFilter
     reviews?: ReviewListRelationFilter
     reviewLikes?: ReviewLikeListRelationFilter
+    userVoyages?: UserVoyageListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -14608,6 +15745,7 @@ export namespace Prisma {
     utilisateur?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     checklists?: ChecklistListRelationFilter
     reviews?: ReviewListRelationFilter
+    userVoyages?: UserVoyageListRelationFilter
   }
 
   export type DestinationOrderByWithRelationInput = {
@@ -14624,6 +15762,7 @@ export namespace Prisma {
     utilisateur?: UserOrderByWithRelationInput
     checklists?: ChecklistOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
+    userVoyages?: UserVoyageOrderByRelationAggregateInput
     _relevance?: DestinationOrderByRelevanceInput
   }
 
@@ -14644,6 +15783,7 @@ export namespace Prisma {
     utilisateur?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     checklists?: ChecklistListRelationFilter
     reviews?: ReviewListRelationFilter
+    userVoyages?: UserVoyageListRelationFilter
   }, "id">
 
   export type DestinationOrderByWithAggregationInput = {
@@ -15278,6 +16418,63 @@ export namespace Prisma {
     reviewId?: StringWithAggregatesFilter<"ReviewLike"> | string
   }
 
+  export type UserVoyageWhereInput = {
+    AND?: UserVoyageWhereInput | UserVoyageWhereInput[]
+    OR?: UserVoyageWhereInput[]
+    NOT?: UserVoyageWhereInput | UserVoyageWhereInput[]
+    id?: IntFilter<"UserVoyage"> | number
+    userId?: IntFilter<"UserVoyage"> | number
+    destinationId?: StringFilter<"UserVoyage"> | string
+    createdAt?: DateTimeFilter<"UserVoyage"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    destination?: XOR<DestinationScalarRelationFilter, DestinationWhereInput>
+  }
+
+  export type UserVoyageOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    destinationId?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    destination?: DestinationOrderByWithRelationInput
+    _relevance?: UserVoyageOrderByRelevanceInput
+  }
+
+  export type UserVoyageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_destinationId?: UserVoyageUserIdDestinationIdCompoundUniqueInput
+    AND?: UserVoyageWhereInput | UserVoyageWhereInput[]
+    OR?: UserVoyageWhereInput[]
+    NOT?: UserVoyageWhereInput | UserVoyageWhereInput[]
+    userId?: IntFilter<"UserVoyage"> | number
+    destinationId?: StringFilter<"UserVoyage"> | string
+    createdAt?: DateTimeFilter<"UserVoyage"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    destination?: XOR<DestinationScalarRelationFilter, DestinationWhereInput>
+  }, "id" | "userId_destinationId">
+
+  export type UserVoyageOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    destinationId?: SortOrder
+    createdAt?: SortOrder
+    _count?: UserVoyageCountOrderByAggregateInput
+    _avg?: UserVoyageAvgOrderByAggregateInput
+    _max?: UserVoyageMaxOrderByAggregateInput
+    _min?: UserVoyageMinOrderByAggregateInput
+    _sum?: UserVoyageSumOrderByAggregateInput
+  }
+
+  export type UserVoyageScalarWhereWithAggregatesInput = {
+    AND?: UserVoyageScalarWhereWithAggregatesInput | UserVoyageScalarWhereWithAggregatesInput[]
+    OR?: UserVoyageScalarWhereWithAggregatesInput[]
+    NOT?: UserVoyageScalarWhereWithAggregatesInput | UserVoyageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserVoyage"> | number
+    userId?: IntWithAggregatesFilter<"UserVoyage"> | number
+    destinationId?: StringWithAggregatesFilter<"UserVoyage"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"UserVoyage"> | Date | string
+  }
+
   export type UserCreateInput = {
     nom: string
     prenom: string
@@ -15297,6 +16494,7 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -15319,6 +16517,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -15340,6 +16539,7 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -15362,6 +16562,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -15430,6 +16631,7 @@ export namespace Prisma {
     utilisateur?: UserCreateNestedOneWithoutVoyagesInput
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateInput = {
@@ -15445,6 +16647,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUpdateInput = {
@@ -15460,6 +16663,7 @@ export namespace Prisma {
     utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateInput = {
@@ -15475,6 +16679,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationCreateManyInput = {
@@ -16080,6 +17285,50 @@ export namespace Prisma {
     reviewId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UserVoyageCreateInput = {
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutUserVoyagesInput
+    destination: DestinationCreateNestedOneWithoutUserVoyagesInput
+  }
+
+  export type UserVoyageUncheckedCreateInput = {
+    id?: number
+    userId: number
+    destinationId: string
+    createdAt?: Date | string
+  }
+
+  export type UserVoyageUpdateInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserVoyagesNestedInput
+    destination?: DestinationUpdateOneRequiredWithoutUserVoyagesNestedInput
+  }
+
+  export type UserVoyageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    destinationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserVoyageCreateManyInput = {
+    id?: number
+    userId: number
+    destinationId: string
+    createdAt?: Date | string
+  }
+
+  export type UserVoyageUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserVoyageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    destinationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -16168,6 +17417,12 @@ export namespace Prisma {
     none?: ReviewLikeWhereInput
   }
 
+  export type UserVoyageListRelationFilter = {
+    every?: UserVoyageWhereInput
+    some?: UserVoyageWhereInput
+    none?: UserVoyageWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -16186,6 +17441,10 @@ export namespace Prisma {
   }
 
   export type ReviewLikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserVoyageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16930,6 +18189,48 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type UserVoyageOrderByRelevanceInput = {
+    fields: UserVoyageOrderByRelevanceFieldEnum | UserVoyageOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type UserVoyageUserIdDestinationIdCompoundUniqueInput = {
+    userId: number
+    destinationId: string
+  }
+
+  export type UserVoyageCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    destinationId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserVoyageAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserVoyageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    destinationId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserVoyageMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    destinationId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserVoyageSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
   export type DestinationCreateNestedManyWithoutUtilisateurInput = {
     create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
     connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
@@ -16958,6 +18259,13 @@ export namespace Prisma {
     connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
   }
 
+  export type UserVoyageCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserVoyageCreateWithoutUserInput, UserVoyageUncheckedCreateWithoutUserInput> | UserVoyageCreateWithoutUserInput[] | UserVoyageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutUserInput | UserVoyageCreateOrConnectWithoutUserInput[]
+    createMany?: UserVoyageCreateManyUserInputEnvelope
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+  }
+
   export type DestinationUncheckedCreateNestedManyWithoutUtilisateurInput = {
     create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
     connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
@@ -16984,6 +18292,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewLikeCreateOrConnectWithoutUserInput | ReviewLikeCreateOrConnectWithoutUserInput[]
     createMany?: ReviewLikeCreateManyUserInputEnvelope
     connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+  }
+
+  export type UserVoyageUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserVoyageCreateWithoutUserInput, UserVoyageUncheckedCreateWithoutUserInput> | UserVoyageCreateWithoutUserInput[] | UserVoyageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutUserInput | UserVoyageCreateOrConnectWithoutUserInput[]
+    createMany?: UserVoyageCreateManyUserInputEnvelope
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -17062,6 +18377,20 @@ export namespace Prisma {
     deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
   }
 
+  export type UserVoyageUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserVoyageCreateWithoutUserInput, UserVoyageUncheckedCreateWithoutUserInput> | UserVoyageCreateWithoutUserInput[] | UserVoyageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutUserInput | UserVoyageCreateOrConnectWithoutUserInput[]
+    upsert?: UserVoyageUpsertWithWhereUniqueWithoutUserInput | UserVoyageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserVoyageCreateManyUserInputEnvelope
+    set?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    disconnect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    delete?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    update?: UserVoyageUpdateWithWhereUniqueWithoutUserInput | UserVoyageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserVoyageUpdateManyWithWhereWithoutUserInput | UserVoyageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -17126,6 +18455,20 @@ export namespace Prisma {
     deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
   }
 
+  export type UserVoyageUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserVoyageCreateWithoutUserInput, UserVoyageUncheckedCreateWithoutUserInput> | UserVoyageCreateWithoutUserInput[] | UserVoyageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutUserInput | UserVoyageCreateOrConnectWithoutUserInput[]
+    upsert?: UserVoyageUpsertWithWhereUniqueWithoutUserInput | UserVoyageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserVoyageCreateManyUserInputEnvelope
+    set?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    disconnect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    delete?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    update?: UserVoyageUpdateWithWhereUniqueWithoutUserInput | UserVoyageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserVoyageUpdateManyWithWhereWithoutUserInput | UserVoyageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
+  }
+
   export type SectionCreateNestedManyWithoutDestinationInput = {
     create?: XOR<SectionCreateWithoutDestinationInput, SectionUncheckedCreateWithoutDestinationInput> | SectionCreateWithoutDestinationInput[] | SectionUncheckedCreateWithoutDestinationInput[]
     connectOrCreate?: SectionCreateOrConnectWithoutDestinationInput | SectionCreateOrConnectWithoutDestinationInput[]
@@ -17153,6 +18496,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type UserVoyageCreateNestedManyWithoutDestinationInput = {
+    create?: XOR<UserVoyageCreateWithoutDestinationInput, UserVoyageUncheckedCreateWithoutDestinationInput> | UserVoyageCreateWithoutDestinationInput[] | UserVoyageUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutDestinationInput | UserVoyageCreateOrConnectWithoutDestinationInput[]
+    createMany?: UserVoyageCreateManyDestinationInputEnvelope
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+  }
+
   export type SectionUncheckedCreateNestedManyWithoutDestinationInput = {
     create?: XOR<SectionCreateWithoutDestinationInput, SectionUncheckedCreateWithoutDestinationInput> | SectionCreateWithoutDestinationInput[] | SectionUncheckedCreateWithoutDestinationInput[]
     connectOrCreate?: SectionCreateOrConnectWithoutDestinationInput | SectionCreateOrConnectWithoutDestinationInput[]
@@ -17172,6 +18522,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutDestinationInput | ReviewCreateOrConnectWithoutDestinationInput[]
     createMany?: ReviewCreateManyDestinationInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type UserVoyageUncheckedCreateNestedManyWithoutDestinationInput = {
+    create?: XOR<UserVoyageCreateWithoutDestinationInput, UserVoyageUncheckedCreateWithoutDestinationInput> | UserVoyageCreateWithoutDestinationInput[] | UserVoyageUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutDestinationInput | UserVoyageCreateOrConnectWithoutDestinationInput[]
+    createMany?: UserVoyageCreateManyDestinationInputEnvelope
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
   }
 
   export type SectionUpdateManyWithoutDestinationNestedInput = {
@@ -17226,6 +18583,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type UserVoyageUpdateManyWithoutDestinationNestedInput = {
+    create?: XOR<UserVoyageCreateWithoutDestinationInput, UserVoyageUncheckedCreateWithoutDestinationInput> | UserVoyageCreateWithoutDestinationInput[] | UserVoyageUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutDestinationInput | UserVoyageCreateOrConnectWithoutDestinationInput[]
+    upsert?: UserVoyageUpsertWithWhereUniqueWithoutDestinationInput | UserVoyageUpsertWithWhereUniqueWithoutDestinationInput[]
+    createMany?: UserVoyageCreateManyDestinationInputEnvelope
+    set?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    disconnect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    delete?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    update?: UserVoyageUpdateWithWhereUniqueWithoutDestinationInput | UserVoyageUpdateWithWhereUniqueWithoutDestinationInput[]
+    updateMany?: UserVoyageUpdateManyWithWhereWithoutDestinationInput | UserVoyageUpdateManyWithWhereWithoutDestinationInput[]
+    deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -17274,6 +18645,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutDestinationInput | ReviewUpdateWithWhereUniqueWithoutDestinationInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutDestinationInput | ReviewUpdateManyWithWhereWithoutDestinationInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput = {
+    create?: XOR<UserVoyageCreateWithoutDestinationInput, UserVoyageUncheckedCreateWithoutDestinationInput> | UserVoyageCreateWithoutDestinationInput[] | UserVoyageUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: UserVoyageCreateOrConnectWithoutDestinationInput | UserVoyageCreateOrConnectWithoutDestinationInput[]
+    upsert?: UserVoyageUpsertWithWhereUniqueWithoutDestinationInput | UserVoyageUpsertWithWhereUniqueWithoutDestinationInput[]
+    createMany?: UserVoyageCreateManyDestinationInputEnvelope
+    set?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    disconnect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    delete?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+    update?: UserVoyageUpdateWithWhereUniqueWithoutDestinationInput | UserVoyageUpdateWithWhereUniqueWithoutDestinationInput[]
+    updateMany?: UserVoyageUpdateManyWithWhereWithoutDestinationInput | UserVoyageUpdateManyWithWhereWithoutDestinationInput[]
+    deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
   }
 
   export type BulletPointCreateNestedManyWithoutSectionInput = {
@@ -17760,6 +19145,34 @@ export namespace Prisma {
     update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutLikesInput, ReviewUpdateWithoutLikesInput>, ReviewUncheckedUpdateWithoutLikesInput>
   }
 
+  export type UserCreateNestedOneWithoutUserVoyagesInput = {
+    create?: XOR<UserCreateWithoutUserVoyagesInput, UserUncheckedCreateWithoutUserVoyagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserVoyagesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DestinationCreateNestedOneWithoutUserVoyagesInput = {
+    create?: XOR<DestinationCreateWithoutUserVoyagesInput, DestinationUncheckedCreateWithoutUserVoyagesInput>
+    connectOrCreate?: DestinationCreateOrConnectWithoutUserVoyagesInput
+    connect?: DestinationWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutUserVoyagesNestedInput = {
+    create?: XOR<UserCreateWithoutUserVoyagesInput, UserUncheckedCreateWithoutUserVoyagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserVoyagesInput
+    upsert?: UserUpsertWithoutUserVoyagesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserVoyagesInput, UserUpdateWithoutUserVoyagesInput>, UserUncheckedUpdateWithoutUserVoyagesInput>
+  }
+
+  export type DestinationUpdateOneRequiredWithoutUserVoyagesNestedInput = {
+    create?: XOR<DestinationCreateWithoutUserVoyagesInput, DestinationUncheckedCreateWithoutUserVoyagesInput>
+    connectOrCreate?: DestinationCreateOrConnectWithoutUserVoyagesInput
+    upsert?: DestinationUpsertWithoutUserVoyagesInput
+    connect?: DestinationWhereUniqueInput
+    update?: XOR<XOR<DestinationUpdateToOneWithWhereWithoutUserVoyagesInput, DestinationUpdateWithoutUserVoyagesInput>, DestinationUncheckedUpdateWithoutUserVoyagesInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -18011,6 +19424,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutDestinationInput
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutUtilisateurInput = {
@@ -18025,6 +19439,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutUtilisateurInput = {
@@ -18112,6 +19527,27 @@ export namespace Prisma {
 
   export type ReviewLikeCreateManyUserInputEnvelope = {
     data: ReviewLikeCreateManyUserInput | ReviewLikeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserVoyageCreateWithoutUserInput = {
+    createdAt?: Date | string
+    destination: DestinationCreateNestedOneWithoutUserVoyagesInput
+  }
+
+  export type UserVoyageUncheckedCreateWithoutUserInput = {
+    id?: number
+    destinationId: string
+    createdAt?: Date | string
+  }
+
+  export type UserVoyageCreateOrConnectWithoutUserInput = {
+    where: UserVoyageWhereUniqueInput
+    create: XOR<UserVoyageCreateWithoutUserInput, UserVoyageUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserVoyageCreateManyUserInputEnvelope = {
+    data: UserVoyageCreateManyUserInput | UserVoyageCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -18228,6 +19664,32 @@ export namespace Prisma {
     reviewId?: StringFilter<"ReviewLike"> | string
   }
 
+  export type UserVoyageUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserVoyageWhereUniqueInput
+    update: XOR<UserVoyageUpdateWithoutUserInput, UserVoyageUncheckedUpdateWithoutUserInput>
+    create: XOR<UserVoyageCreateWithoutUserInput, UserVoyageUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserVoyageUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserVoyageWhereUniqueInput
+    data: XOR<UserVoyageUpdateWithoutUserInput, UserVoyageUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserVoyageUpdateManyWithWhereWithoutUserInput = {
+    where: UserVoyageScalarWhereInput
+    data: XOR<UserVoyageUpdateManyMutationInput, UserVoyageUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserVoyageScalarWhereInput = {
+    AND?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
+    OR?: UserVoyageScalarWhereInput[]
+    NOT?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
+    id?: IntFilter<"UserVoyage"> | number
+    userId?: IntFilter<"UserVoyage"> | number
+    destinationId?: StringFilter<"UserVoyage"> | string
+    createdAt?: DateTimeFilter<"UserVoyage"> | Date | string
+  }
+
   export type SectionCreateWithoutDestinationInput = {
     id?: string
     titre: string
@@ -18280,6 +19742,7 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVoyagesInput = {
@@ -18301,6 +19764,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVoyagesInput = {
@@ -18366,6 +19830,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserVoyageCreateWithoutDestinationInput = {
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutUserVoyagesInput
+  }
+
+  export type UserVoyageUncheckedCreateWithoutDestinationInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
+  }
+
+  export type UserVoyageCreateOrConnectWithoutDestinationInput = {
+    where: UserVoyageWhereUniqueInput
+    create: XOR<UserVoyageCreateWithoutDestinationInput, UserVoyageUncheckedCreateWithoutDestinationInput>
+  }
+
+  export type UserVoyageCreateManyDestinationInputEnvelope = {
+    data: UserVoyageCreateManyDestinationInput | UserVoyageCreateManyDestinationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SectionUpsertWithWhereUniqueWithoutDestinationInput = {
     where: SectionWhereUniqueInput
     update: XOR<SectionUpdateWithoutDestinationInput, SectionUncheckedUpdateWithoutDestinationInput>
@@ -18424,6 +19909,7 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVoyagesInput = {
@@ -18445,6 +19931,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChecklistUpsertWithWhereUniqueWithoutVoyageInput = {
@@ -18477,6 +19964,22 @@ export namespace Prisma {
   export type ReviewUpdateManyWithWhereWithoutDestinationInput = {
     where: ReviewScalarWhereInput
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutDestinationInput>
+  }
+
+  export type UserVoyageUpsertWithWhereUniqueWithoutDestinationInput = {
+    where: UserVoyageWhereUniqueInput
+    update: XOR<UserVoyageUpdateWithoutDestinationInput, UserVoyageUncheckedUpdateWithoutDestinationInput>
+    create: XOR<UserVoyageCreateWithoutDestinationInput, UserVoyageUncheckedCreateWithoutDestinationInput>
+  }
+
+  export type UserVoyageUpdateWithWhereUniqueWithoutDestinationInput = {
+    where: UserVoyageWhereUniqueInput
+    data: XOR<UserVoyageUpdateWithoutDestinationInput, UserVoyageUncheckedUpdateWithoutDestinationInput>
+  }
+
+  export type UserVoyageUpdateManyWithWhereWithoutDestinationInput = {
+    where: UserVoyageScalarWhereInput
+    data: XOR<UserVoyageUpdateManyMutationInput, UserVoyageUncheckedUpdateManyWithoutDestinationInput>
   }
 
   export type BulletPointCreateWithoutSectionInput = {
@@ -18559,6 +20062,7 @@ export namespace Prisma {
     utilisateur?: UserCreateNestedOneWithoutVoyagesInput
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutSectionsInput = {
@@ -18573,6 +20077,7 @@ export namespace Prisma {
     utilisateurId?: number | null
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutSectionsInput = {
@@ -18681,6 +20186,7 @@ export namespace Prisma {
     utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutSectionsInput = {
@@ -18695,6 +20201,7 @@ export namespace Prisma {
     utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type SectionCreateWithoutBulletPointsInput = {
@@ -19023,6 +20530,7 @@ export namespace Prisma {
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChecklistsInput = {
@@ -19044,6 +20552,7 @@ export namespace Prisma {
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChecklistsInput = {
@@ -19063,6 +20572,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutDestinationInput
     utilisateur?: UserCreateNestedOneWithoutVoyagesInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutChecklistsInput = {
@@ -19077,6 +20587,7 @@ export namespace Prisma {
     utilisateurId?: number | null
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutChecklistsInput = {
@@ -19139,6 +20650,7 @@ export namespace Prisma {
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChecklistsInput = {
@@ -19160,6 +20672,7 @@ export namespace Prisma {
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DestinationUpsertWithoutChecklistsInput = {
@@ -19185,6 +20698,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutDestinationNestedInput
     utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutChecklistsInput = {
@@ -19199,6 +20713,7 @@ export namespace Prisma {
     utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type ChecklistItemCreateWithoutCategoryInput = {
@@ -19369,6 +20884,7 @@ export namespace Prisma {
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -19390,6 +20906,7 @@ export namespace Prisma {
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -19409,6 +20926,7 @@ export namespace Prisma {
     sections?: SectionCreateNestedManyWithoutDestinationInput
     utilisateur?: UserCreateNestedOneWithoutVoyagesInput
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutReviewsInput = {
@@ -19423,6 +20941,7 @@ export namespace Prisma {
     utilisateurId?: number | null
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutReviewsInput = {
@@ -19479,6 +20998,7 @@ export namespace Prisma {
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -19500,6 +21020,7 @@ export namespace Prisma {
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DestinationUpsertWithoutReviewsInput = {
@@ -19525,6 +21046,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutDestinationNestedInput
     utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutReviewsInput = {
@@ -19539,6 +21061,7 @@ export namespace Prisma {
     utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type ReviewLikeUpsertWithWhereUniqueWithoutReviewInput = {
@@ -19575,6 +21098,7 @@ export namespace Prisma {
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
     checklists?: ChecklistCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewLikesInput = {
@@ -19596,6 +21120,7 @@ export namespace Prisma {
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewLikesInput = {
@@ -19657,6 +21182,7 @@ export namespace Prisma {
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewLikesInput = {
@@ -19678,6 +21204,7 @@ export namespace Prisma {
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ReviewUpsertWithoutLikesInput = {
@@ -19709,6 +21236,184 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutUserVoyagesInput = {
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserVoyagesInput = {
+    id?: number
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserVoyagesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserVoyagesInput, UserUncheckedCreateWithoutUserVoyagesInput>
+  }
+
+  export type DestinationCreateWithoutUserVoyagesInput = {
+    id?: string
+    titre: string
+    pays: string
+    continent?: string | null
+    description?: string | null
+    imagePrincipale?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sections?: SectionCreateNestedManyWithoutDestinationInput
+    utilisateur?: UserCreateNestedOneWithoutVoyagesInput
+    checklists?: ChecklistCreateNestedManyWithoutVoyageInput
+    reviews?: ReviewCreateNestedManyWithoutDestinationInput
+  }
+
+  export type DestinationUncheckedCreateWithoutUserVoyagesInput = {
+    id?: string
+    titre: string
+    pays: string
+    continent?: string | null
+    description?: string | null
+    imagePrincipale?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    utilisateurId?: number | null
+    sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
+  }
+
+  export type DestinationCreateOrConnectWithoutUserVoyagesInput = {
+    where: DestinationWhereUniqueInput
+    create: XOR<DestinationCreateWithoutUserVoyagesInput, DestinationUncheckedCreateWithoutUserVoyagesInput>
+  }
+
+  export type UserUpsertWithoutUserVoyagesInput = {
+    update: XOR<UserUpdateWithoutUserVoyagesInput, UserUncheckedUpdateWithoutUserVoyagesInput>
+    create: XOR<UserCreateWithoutUserVoyagesInput, UserUncheckedCreateWithoutUserVoyagesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserVoyagesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserVoyagesInput, UserUncheckedUpdateWithoutUserVoyagesInput>
+  }
+
+  export type UserUpdateWithoutUserVoyagesInput = {
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserVoyagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type DestinationUpsertWithoutUserVoyagesInput = {
+    update: XOR<DestinationUpdateWithoutUserVoyagesInput, DestinationUncheckedUpdateWithoutUserVoyagesInput>
+    create: XOR<DestinationCreateWithoutUserVoyagesInput, DestinationUncheckedCreateWithoutUserVoyagesInput>
+    where?: DestinationWhereInput
+  }
+
+  export type DestinationUpdateToOneWithWhereWithoutUserVoyagesInput = {
+    where?: DestinationWhereInput
+    data: XOR<DestinationUpdateWithoutUserVoyagesInput, DestinationUncheckedUpdateWithoutUserVoyagesInput>
+  }
+
+  export type DestinationUpdateWithoutUserVoyagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: SectionUpdateManyWithoutDestinationNestedInput
+    utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
+    checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
+    reviews?: ReviewUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type DestinationUncheckedUpdateWithoutUserVoyagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
+    sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationCreateManyUtilisateurInput = {
@@ -19744,6 +21449,12 @@ export namespace Prisma {
     reviewId: string
   }
 
+  export type UserVoyageCreateManyUserInput = {
+    id?: number
+    destinationId: string
+    createdAt?: Date | string
+  }
+
   export type DestinationUpdateWithoutUtilisateurInput = {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
@@ -19756,6 +21467,7 @@ export namespace Prisma {
     sections?: SectionUpdateManyWithoutDestinationNestedInput
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutUtilisateurInput = {
@@ -19770,6 +21482,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateManyWithoutUtilisateurInput = {
@@ -19853,6 +21566,23 @@ export namespace Prisma {
     reviewId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UserVoyageUpdateWithoutUserInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    destination?: DestinationUpdateOneRequiredWithoutUserVoyagesNestedInput
+  }
+
+  export type UserVoyageUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    destinationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserVoyageUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    destinationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SectionCreateManyDestinationInput = {
     id?: string
     titre: string
@@ -19877,6 +21607,12 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type UserVoyageCreateManyDestinationInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
   }
 
   export type SectionUpdateWithoutDestinationInput = {
@@ -19965,6 +21701,23 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserVoyageUpdateWithoutDestinationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserVoyagesNestedInput
+  }
+
+  export type UserVoyageUncheckedUpdateWithoutDestinationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserVoyageUncheckedUpdateManyWithoutDestinationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BulletPointCreateManySectionInput = {

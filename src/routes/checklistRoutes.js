@@ -7,7 +7,8 @@ import {
   deleteChecklistItem,
   toggleAllChecklistItems,
   resetChecklist,
-  getAllUserChecklists
+  getAllUserChecklists,
+  addChecklistAndUserVoyage
 } from '../controllers/checklistController.js';
 import { deleteChecklist } from '../controllers/checklistController.js';
 import { requireAuth, attachUser } from '../middlewares/authMiddleware.js'
@@ -41,5 +42,8 @@ router.post('/checklist/:checklistId/reset',attachUser ,requireAuth, resetCheckl
 
 // ✅ Voir toutes les checklists de l'utilisateur
 router.get('/allChecklist',attachUser, requireAuth, getAllUserChecklists);
+
+// ✅ Ajouter une checklist et un voyage
+router.post('/add-checklist-and-voyage/:id', attachUser, requireAuth, addChecklistAndUserVoyage);
 
 export default router;
