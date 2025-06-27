@@ -47,9 +47,9 @@ export async function getAllReviews(req, res) {
 }
 
 
-// Liker ou retirer le like d’un avis
+// Liker ou retirer le like d'un avis
 export async function toggleLikeReview(req, res) {
-  const userId = req.session.userId;
+  const userId = req.session.user?.id;
   const { reviewId } = req.params;
 
   if (!userId) {
@@ -126,7 +126,7 @@ export async function showAllReviews(req, res) {
 
 
 export async function addReview(req, res) {
-  const userId = req.session.userId;
+  const userId = req.session.user?.id;
   const { destinationId, rating, content } = req.body;
 
   if (!userId) {

@@ -59,7 +59,7 @@
 		  </div>
 		  <div class="divider"></div>
 		  <div class="stat-block">
-			<div class="stat-value">{{ user.voyages | length }}</div>
+			<div class="stat-value">{{ user.userVoyages | length }}</div>
 			<div class="stat-label">Voyages</div>
 		  </div>
 		</div>
@@ -68,9 +68,10 @@
 		<section class="profile-section">
 			<h2>Mes prochains voyages</h2>
 			<div class="voyage-list">
-				{% for voyage in user.voyages %}
+				{% for trip in user.userVoyages %}
+					{% set voyage = trip.destination %}
 					{% set imagePath = voyage.imagePrincipale starts with '/uploads/' ? voyage.imagePrincipale : '/uploads/' ~ voyage.imagePrincipale %}
-					<a href="/destination/{{ voyage.id}}" class="voyage-card" style="background-image: url('{{ imagePath }}')">
+					<a href="/destination/{{ voyage.id }}" class="voyage-card" style="background-image: url('{{ imagePath }}')">
 						<div class="overlay">
 							<h3>{{ voyage.titre }}</h3>
 							<p>{{ voyage.pays }}</p>
@@ -86,7 +87,7 @@
 <!-- === MODALE CHANGEMENT AVATAR === -->
 <div id="avatarModal" class="modal hidden">
   <div class="modal-content">
-    <h3>Changer l’avatar</h3>
+    <h3>Changer l'avatar</h3>
     <form method="POST" action="/profil/update" enctype="multipart/form-data">
       <label for="avatar">Nouvel avatar</label>
       <input type="file" id="avatar" name="avatar" accept="image/*" required>
@@ -99,7 +100,7 @@
 <!-- === MODALE CHANGEMENT COUVERTURE === -->
 <div id="coverModal" class="modal hidden">
   <div class="modal-content">
-    <h3>Changer l’image de couverture</h3>
+    <h3>Changer l'image de couverture</h3>
     <form method="POST" action="/profil/update" enctype="multipart/form-data">
       <label for="coverImage">Nouvelle couverture</label>
       <input type="file" id="coverImage" name="coverImage" accept="image/*" required>

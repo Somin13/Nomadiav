@@ -13,10 +13,16 @@ import {
 // ✅ Affiche la page userBoard avec l'utilisateur connecté ET les destinations groupées par continent
 export async function renderUserBoard(req, res) {
   try {
+    console.log('DEBUG renderUserBoard - req.user:', req.user);
+    if (!req.user) {
+      console.log('DEBUG renderUserBoard - req.user est undefined !');
+    }
     const userId = req.user.id;
+    console.log('DEBUG renderUserBoard - userId:', userId);
 
     // 🔍 Récupère les données utilisateur (nom, voyages, etc.)
     const user = await fetchUserProfile(userId);
+    console.log('DEBUG renderUserBoard - user profile:', user);
 
     // 🌍 Récupère toutes les destinations pour les afficher par continent
     const destinations = await prisma.destination.findMany({
@@ -30,6 +36,7 @@ export async function renderUserBoard(req, res) {
         description: true
       },
     });
+    console.log('DEBUG renderUserBoard - destinations:', destinations.length);
 
     // 📦 Regroupe les destinations par continent
     const grouped = {};
@@ -55,12 +62,19 @@ export async function renderUserBoard(req, res) {
 // 🧑‍💼 Affiche la page profil
 export async function renderUserProfile(req, res) {
   try {
-    const userId = req.user.id
-    const user = await fetchUserProfile(userId)
-    res.render('user/profil', { user })
+    const userId = req.user.id;
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        userVoyages: {
+          include: { destination: true }
+        }
+      }
+    });
+    res.render('user/profil', { user });
   } catch (err) {
-    console.error("❌ Erreur renderUserProfile :", err)
-    res.status(500).send("Erreur serveur")
+    console.error("❌ Erreur renderUserProfile :", err);
+    res.status(500).send("Erreur serveur");
   }
 }
 
@@ -133,7 +147,7 @@ export async function uploadCover(req, res) {
 
 export async function updateUserProfile(req, res) {
   try {
-    const userId = req.session.userId;
+    const userId = req.user.id;
 
     // 🧼 Si un champ doit être effacé (ex: clearField=instagram)
     if (req.body.clearField) {
@@ -214,7 +228,7 @@ export async function updatePrivacy(req, res) {
   }
 }
 
-// 🌍 Change le type d’aventurier
+// 🌍 Change le type d'aventurier
 export async function updateAdventurerType(req, res) {
   try {
     const type = req.body.type
@@ -245,6 +259,77 @@ export async function addTripToUser(req, res) {
   } catch (err) {
     console.error('❌ Erreur ajout voyage :', err);
     res.status(500).send("Erreur serveur");
+  }
+}
+
+export async function addVoyageToUser(req, res) {
+  const userId = req.user.id;
+  const destinationId = req.params.destinationId;
+
+  try {
+    await prisma.userVoyage.create({
+      data: {
+        userId,
+        destinationId,
+      }
+    });
+    res.redirect('/profil'); // ou autre page de confirmation
+  } catch (err) {
+    if (err.code === 'P2002') { // entrée déjà existante
+      res.redirect('/profil');
+    } else {
+      console.error('Erreur ajout voyage:', err);
+      res.status(500).send('Erreur lors de l\'ajout du voyage');
+    }
+  }
+}
+
+export async function addVoyageAndChecklist(req, res) {
+  const userId = req.user.id;
+  const destinationId = req.params.destinationId;
+
+  try {
+    // Ajoute le voyage à l'utilisateur (UserVoyage)
+    await prisma.userVoyage.create({
+      data: {
+        userId,
+        destinationId,
+      }
+    });
+  } catch (err) {
+    if (err.code !== 'P2002') { // ignore si déjà existant
+      console.error('Erreur ajout voyage:', err);
+      return res.status(500).send("Erreur lors de l'ajout du voyage");
+    }
+  }
+
+  try {
+    // Crée une checklist pour ce voyage si elle n'existe pas déjà
+    let checklist = await prisma.checklist.findFirst({
+      where: { userId, voyageId: destinationId }
+    });
+    if (!checklist) {
+      checklist = await prisma.checklist.create({
+        data: {
+          titre: `Check-list pour ce voyage`,
+          user: { connect: { id: userId } },
+          voyage: { connect: { id: destinationId } },
+          categories: {
+            create: [
+              { titre: 'Formalités administratives', icone: 'id-card' },
+              { titre: 'Santé / médical', icone: 'stethoscope' },
+              { titre: 'Bagages Essentiels', icone: 'suitcase' },
+              { titre: 'Finance et documents', icone: 'credit-card' },
+              { titre: 'Rappels personnalisés', icone: 'bell' }
+            ]
+          }
+        }
+      });
+    }
+    res.redirect('/profil');
+  } catch (err) {
+    console.error('Erreur création checklist:', err);
+    res.redirect('/profil');
   }
 }
 

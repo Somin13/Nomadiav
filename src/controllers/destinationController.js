@@ -37,14 +37,15 @@ export async function getDestinationDetails(req, res) {
     let alreadyPlanned = false;
 
     if (userId) {
-      const existingVoyage = await prisma.voyage.findFirst({
+      // Il n'y a pas de modèle Voyage, on vérifie via Checklist
+      const existingChecklist = await prisma.checklist.findFirst({
         where: {
           userId: userId,
-          destinationId: id,
+          voyageId: id,
         }
       });
 
-      alreadyPlanned = !!existingVoyage;
+      alreadyPlanned = !!existingChecklist;
     }
 
     // --- NOUVEAU : récupère les 2 derniers avis ---
@@ -64,7 +65,9 @@ export async function getDestinationDetails(req, res) {
       ? destination.imagePrincipale
       : '/uploads/' + destination.imagePrincipale;
 
+      
     // ✅ On passe les infos à la vue, y compris les 2 derniers avis
+    console.log('DEBUG user dans controller:', req.session.user);
     res.render('destinations.twig', {
       destination,
       mainImagePath,
@@ -83,7 +86,8 @@ export async function getDestinationDetails(req, res) {
 // ✅ Affiche toutes les destinations groupées par continent POUR L'UTILISATEUR CONNECTÉ
 export async function getAllDestinationsGrouped(req, res) {
   try {
-    const userId = req.session.user?.id
+    const user = req.session.user; // Récupère l'utilisateur connecté
+    const userId = user?.id;
     console.log('🧪 Rendering userBoard.twig avec groupedDestinations')
 
     if (!userId) {
@@ -111,10 +115,18 @@ export async function getAllDestinationsGrouped(req, res) {
 
     res.render('userBoard.twig', {
       groupedDestinations: grouped,
-      user: req.session.user,
+      user, // Passe l'utilisateur à la vue
     })
   } catch (err) {
     console.error('❌ Erreur récupération destinations :', err)
     res.status(500).render('error.twig', { message: 'Erreur serveur' })
   }
+}
+
+export function attachUser(req, res, next) {
+  if (req.session && req.session.user) {
+    req.user = req.session.user;
+    res.locals.user = req.session.user; // utile dans les vues Twig
+  }
+  next();
 }

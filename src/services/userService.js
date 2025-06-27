@@ -6,7 +6,7 @@ export async function fetchUserProfile(userId) {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     include: {
-      voyages: true
+      voyages: true // Inclut les destinations où utilisateurId = userId
     }
   })
 
@@ -62,7 +62,7 @@ export async function setPrivacy(userId, isPublic) {
   })
 }
 
-// 🌍 Change le type d’aventurier
+// 🌍 Change le type d'aventurier
 export async function setAdventurerType(userId, type) {
   await prisma.user.update({
     where: { id: userId },

@@ -229,6 +229,13 @@ exports.Prisma.ReviewLikeScalarFieldEnum = {
   reviewId: 'reviewId'
 };
 
+exports.Prisma.UserVoyageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  destinationId: 'destinationId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -324,6 +331,10 @@ exports.Prisma.ReviewLikeOrderByRelevanceFieldEnum = {
   id: 'id',
   reviewId: 'reviewId'
 };
+
+exports.Prisma.UserVoyageOrderByRelevanceFieldEnum = {
+  destinationId: 'destinationId'
+};
 exports.Role = exports.$Enums.Role = {
   user: 'user',
   admin: 'admin'
@@ -350,7 +361,8 @@ exports.Prisma.ModelName = {
   ChecklistCategory: 'ChecklistCategory',
   ChecklistItem: 'ChecklistItem',
   Review: 'Review',
-  ReviewLike: 'ReviewLike'
+  ReviewLike: 'ReviewLike',
+  UserVoyage: 'UserVoyage'
 };
 
 /**

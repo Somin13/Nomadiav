@@ -32,9 +32,8 @@ model User {
   checklists     Checklist[] 
   reviews Review[]
   reviewLikes ReviewLike[]
+  userVoyages    UserVoyage[]
 }
-
-
 
 enum Role {
   user
@@ -57,8 +56,8 @@ model Destination {
   utilisateur     User?               @relation("VoyagesUtilisateur", fields: [utilisateurId], references: [id])
   checklists      Checklist[]
   reviews Review[]
+  userVoyages     UserVoyage[]
 }
-
 
 model Section {
   id              String              @id @default(cuid())
@@ -177,4 +176,15 @@ model ReviewLike {
   review    Review   @relation(fields: [reviewId], references: [id])
 
   @@unique([userId, reviewId]) // Un user ne peut liker qu'une fois un même review
+}
+
+model UserVoyage {
+  id            Int          @id @default(autoincrement())
+  userId        Int
+  destinationId String
+  user          User         @relation(fields: [userId], references: [id])
+  destination   Destination  @relation(fields: [destinationId], references: [id])
+  createdAt     DateTime     @default(now())
+
+  @@unique([userId, destinationId])
 }
