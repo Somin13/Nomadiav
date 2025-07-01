@@ -10,7 +10,7 @@
 <div class="checklist-header">
   <h1>Check-list pour <span>{{ checklist.voyage.titre }}</span></h1>
 
-  {# Barre de progression #}
+  {# --- Barre de progression --- #}
   {% set total = 0 %}
   {% set checked = 0 %}
   {% for cat in checklist.categories %}
@@ -58,23 +58,41 @@
       </div>
       <ul class="category-items">
         {% for item in cat.items %}
-          <li class="category-item">
-           <form action="/checklist/{{ checklist.id }}/item/{{ item.id }}/toggle" method="POST" class="item-form" style="display:inline;">
-  <input type="checkbox"
-         onchange="this.form.submit()"
-         {% if item.isChecked %}checked{% endif %}
-  >
-  <span class="item-title {% if item.isChecked %}checked{% endif %}">
-    {{ item.titre }}
-  </span>
-  {% if item.description %}
-    <span class="item-desc">{{ item.description }}</span>
-  {% endif %}
-</form>
-<form action="/checklist/{{ checklist.id }}/item/{{ item.id }}/delete" method="POST" style="display:inline;">
-  <button type="submit" class="btn-delete" title="Supprimer">&#10060;</button>
-</form>
-
+          <li class="category-item
+              {% if item.reminderDate
+                and item.reminderDate|date('U') - "now"|date('U') < 86400
+                and not item.isChecked %}reminder-soon{% endif %}
+          ">
+            <form action="/checklist/{{ checklist.id }}/item/{{ item.id }}/toggle"
+                  method="POST" class="item-form" style="display:inline;">
+              <input type="checkbox"
+                     onchange="this.form.submit()"
+                     {% if item.isChecked %}checked{% endif %}>
+              <span class="item-title {% if item.isChecked %}checked{% endif %}">
+                {{ item.titre }}
+              </span>
+              {% if item.description %}
+                <span class="item-desc">{{ item.description }}</span>
+              {% endif %}
+              {# 🔔 Date de rappel affichée #}
+              {% if item.reminderDate %}
+                <span class="reminder-date" title="Rappel prévu">
+                  ⏰ {{ item.reminderDate|date('d/m/Y H:i') }}
+                  {% if item.reminderDate|date('U') - "now"|date('U') < 86400 and not item.isChecked %}
+                    <span class="reminder-alert">[Rappel imminent]</span>
+                  {% endif %}
+                </span>
+                {# BONUS UX : Indique qu’un rappel sera envoyé la veille si c’est prévu +24h #}
+                {% if item.reminderDate|date('U') - "now"|date('U') >= 86400 and not item.isChecked %}
+                  <span class="reminder-planned">
+                    ⏰ Un rappel sera envoyé la veille (le {{ (item.reminderDate|date_modify('-1 day'))|date('d/m/Y H:i') }})
+                  </span>
+                {% endif %}
+              {% endif %}
+            </form>
+            <form action="/checklist/{{ checklist.id }}/item/{{ item.id }}/delete" method="POST" style="display:inline;">
+              <button type="submit" class="btn-delete" title="Supprimer">&#10060;</button>
+            </form>
           </li>
         {% else %}
           <li class="category-item empty">Aucun item.</li>
@@ -83,10 +101,10 @@
       <form action="/checklist/{{ checklist.id }}/category/{{ cat.id }}/item/add" method="POST" class="add-item-form">
         <input type="text" name="titre" placeholder="Nouvel item..." required>
         <input type="text" name="description" placeholder="Description (optionnel)">
+        <input type="datetime-local" name="reminderDate" placeholder="Date de rappel (optionnel)">
         <button type="submit" class="btn-add">Ajouter</button>
       </form>
     </div>
   {% endfor %}
 </div>
-
 {% endblock %}

@@ -130,3 +130,34 @@ export function attachUser(req, res, next) {
   }
   next();
 }
+
+// ✅ Affiche toutes les destinations d’un continent
+export async function getContinentDestinations(req, res) {
+  const { continent } = req.params;
+  const user = req.session.user;
+
+  try {
+    // On récupère toutes les destinations du continent demandé
+    const destinations = await prisma.destination.findMany({
+      where: { continent },
+      orderBy: { titre: 'asc' },
+      select: {
+        id: true,
+        titre: true,
+        pays: true,
+        continent: true,
+        imagePrincipale: true,
+        description: true, // ou d’autres champs si tu veux
+      }
+    });
+
+    res.render('continentDestination.twig', {
+      continent,
+      destinations,
+      user
+    });
+  } catch (err) {
+    console.error('❌ Erreur getContinentDestinations :', err);
+    res.status(500).render('error.twig', { message: 'Erreur serveur' });
+  }
+}

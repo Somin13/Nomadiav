@@ -1,0 +1,36 @@
+{% extends "base.twig" %}
+
+{% block title %}Destinations de {{ continent }} - Nomadia{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/userBoard.css">
+{% endblock %}
+
+{% block main %}
+  <div class="hero-banner">
+    <img src="/assets/image/Rectangle32.png" alt="Bannière {{ continent }}" class="hero-image">
+    <div class="hero-text">
+      <h1 class="site-title">Destinations en {{ continent }}</h1>
+      <p class="site-slogan">Explore toutes les destinations du continent.</p>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="destinations-list">
+      {% for dest in destinations %}
+        <a href="/destination/{{ dest.id }}" class="destination-card">
+          {% set imagePath = dest.imagePrincipale starts with '/uploads/' ? dest.imagePrincipale : '/uploads/' ~ dest.imagePrincipale %}
+          <img src="{{ imagePath }}" alt="Image de {{ dest.titre }}">
+          <div class="info">
+            <h3>{{ dest.titre }}</h3>
+            {% if dest.description %}
+              <p>{{ dest.description|truncate(140, true, '...') }}</p>
+            {% endif %}
+          </div>
+        </a>
+      {% else %}
+        <p>Aucune destination trouvée pour ce continent.</p>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}

@@ -13,16 +13,16 @@ import {
 // ✅ Affiche la page userBoard avec l'utilisateur connecté ET les destinations groupées par continent
 export async function renderUserBoard(req, res) {
   try {
-    console.log('DEBUG renderUserBoard - req.user:', req.user);
+    // console.log('DEBUG renderUserBoard - req.user:', req.user);
     if (!req.user) {
-      console.log('DEBUG renderUserBoard - req.user est undefined !');
+      // console.log('DEBUG renderUserBoard - req.user est undefined !');
     }
     const userId = req.user.id;
-    console.log('DEBUG renderUserBoard - userId:', userId);
+    // console.log('DEBUG renderUserBoard - userId:', userId);
 
     // 🔍 Récupère les données utilisateur (nom, voyages, etc.)
     const user = await fetchUserProfile(userId);
-    console.log('DEBUG renderUserBoard - user profile:', user);
+    // console.log('DEBUG renderUserBoard - user profile:', user);
 
     // 🌍 Récupère toutes les destinations pour les afficher par continent
     const destinations = await prisma.destination.findMany({
@@ -36,7 +36,7 @@ export async function renderUserBoard(req, res) {
         description: true
       },
     });
-    console.log('DEBUG renderUserBoard - destinations:', destinations.length);
+    // console.log('DEBUG renderUserBoard - destinations:', destinations.length);
 
     // 📦 Regroupe les destinations par continent
     const grouped = {};
@@ -57,6 +57,7 @@ export async function renderUserBoard(req, res) {
     res.status(500).send("Erreur serveur");
   }
 }
+
 
 
 // 🧑‍💼 Affiche la page profil

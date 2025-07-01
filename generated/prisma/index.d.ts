@@ -78,6 +78,11 @@ export type ReviewLike = $Result.DefaultSelection<Prisma.$ReviewLikePayload>
  * 
  */
 export type UserVoyage = $Result.DefaultSelection<Prisma.$UserVoyagePayload>
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
 
 /**
  * Enums
@@ -366,6 +371,16 @@ export class PrismaClient<
     * ```
     */
   get userVoyage(): Prisma.UserVoyageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Notifications
+    * const notifications = await prisma.notification.findMany()
+    * ```
+    */
+  get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -818,7 +833,8 @@ export namespace Prisma {
     ChecklistItem: 'ChecklistItem',
     Review: 'Review',
     ReviewLike: 'ReviewLike',
-    UserVoyage: 'UserVoyage'
+    UserVoyage: 'UserVoyage',
+    Notification: 'Notification'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -837,7 +853,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "destination" | "section" | "bulletPoint" | "groupedBulletPoint" | "bulletPointContent" | "image" | "checklist" | "checklistCategory" | "checklistItem" | "review" | "reviewLike" | "userVoyage"
+      modelProps: "user" | "destination" | "section" | "bulletPoint" | "groupedBulletPoint" | "bulletPointContent" | "image" | "checklist" | "checklistCategory" | "checklistItem" | "review" | "reviewLike" | "userVoyage" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1699,6 +1715,72 @@ export namespace Prisma {
           }
         }
       }
+      Notification: {
+        payload: Prisma.$NotificationPayload<ExtArgs>
+        fields: Prisma.NotificationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findFirst: {
+            args: Prisma.NotificationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findMany: {
+            args: Prisma.NotificationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          create: {
+            args: Prisma.NotificationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          createMany: {
+            args: Prisma.NotificationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.NotificationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          update: {
+            args: Prisma.NotificationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          deleteMany: {
+            args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.NotificationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          aggregate: {
+            args: Prisma.NotificationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNotification>
+          }
+          groupBy: {
+            args: Prisma.NotificationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NotificationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NotificationCountArgs<ExtArgs>
+            result: $Utils.Optional<NotificationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1796,6 +1878,7 @@ export namespace Prisma {
     review?: ReviewOmit
     reviewLike?: ReviewLikeOmit
     userVoyage?: UserVoyageOmit
+    notification?: NotificationOmit
   }
 
   /* Types for Logging */
@@ -1895,6 +1978,8 @@ export namespace Prisma {
     reviews: number
     reviewLikes: number
     userVoyages: number
+    notifications: number
+    sentNotifications: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1903,6 +1988,8 @@ export namespace Prisma {
     reviews?: boolean | UserCountOutputTypeCountReviewsArgs
     reviewLikes?: boolean | UserCountOutputTypeCountReviewLikesArgs
     userVoyages?: boolean | UserCountOutputTypeCountUserVoyagesArgs
+    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+    sentNotifications?: boolean | UserCountOutputTypeCountSentNotificationsArgs
   }
 
   // Custom InputTypes
@@ -1951,6 +2038,20 @@ export namespace Prisma {
     where?: UserVoyageWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSentNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
 
   /**
    * Count Type DestinationCountOutputType
@@ -1961,6 +2062,7 @@ export namespace Prisma {
     checklists: number
     reviews: number
     userVoyages: number
+    notifications: number
   }
 
   export type DestinationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1968,6 +2070,7 @@ export namespace Prisma {
     checklists?: boolean | DestinationCountOutputTypeCountChecklistsArgs
     reviews?: boolean | DestinationCountOutputTypeCountReviewsArgs
     userVoyages?: boolean | DestinationCountOutputTypeCountUserVoyagesArgs
+    notifications?: boolean | DestinationCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -2007,6 +2110,13 @@ export namespace Prisma {
    */
   export type DestinationCountOutputTypeCountUserVoyagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserVoyageWhereInput
+  }
+
+  /**
+   * DestinationCountOutputType without action
+   */
+  export type DestinationCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -2153,15 +2263,48 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ChecklistItemCountOutputType
+   */
+
+  export type ChecklistItemCountOutputType = {
+    notifications: number
+  }
+
+  export type ChecklistItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notifications?: boolean | ChecklistItemCountOutputTypeCountNotificationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ChecklistItemCountOutputType without action
+   */
+  export type ChecklistItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCountOutputType
+     */
+    select?: ChecklistItemCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ChecklistItemCountOutputType without action
+   */
+  export type ChecklistItemCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+
+  /**
    * Count Type ReviewCountOutputType
    */
 
   export type ReviewCountOutputType = {
     likes: number
+    notifications: number
   }
 
   export type ReviewCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     likes?: boolean | ReviewCountOutputTypeCountLikesArgs
+    notifications?: boolean | ReviewCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -2180,6 +2323,13 @@ export namespace Prisma {
    */
   export type ReviewCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewLikeWhereInput
+  }
+
+  /**
+   * ReviewCountOutputType without action
+   */
+  export type ReviewCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -2470,6 +2620,8 @@ export namespace Prisma {
     reviews?: boolean | User$reviewsArgs<ExtArgs>
     reviewLikes?: boolean | User$reviewLikesArgs<ExtArgs>
     userVoyages?: boolean | User$userVoyagesArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
+    sentNotifications?: boolean | User$sentNotificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2500,6 +2652,8 @@ export namespace Prisma {
     reviews?: boolean | User$reviewsArgs<ExtArgs>
     reviewLikes?: boolean | User$reviewLikesArgs<ExtArgs>
     userVoyages?: boolean | User$userVoyagesArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
+    sentNotifications?: boolean | User$sentNotificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2511,6 +2665,8 @@ export namespace Prisma {
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       reviewLikes: Prisma.$ReviewLikePayload<ExtArgs>[]
       userVoyages: Prisma.$UserVoyagePayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      sentNotifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2873,6 +3029,8 @@ export namespace Prisma {
     reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviewLikes<T extends User$reviewLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userVoyages<T extends User$userVoyagesArgs<ExtArgs> = {}>(args?: Subset<T, User$userVoyagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sentNotifications<T extends User$sentNotificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$sentNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3380,6 +3538,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.notifications
+   */
+  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * User.sentNotifications
+   */
+  export type User$sentNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3633,6 +3839,7 @@ export namespace Prisma {
     checklists?: boolean | Destination$checklistsArgs<ExtArgs>
     reviews?: boolean | Destination$reviewsArgs<ExtArgs>
     userVoyages?: boolean | Destination$userVoyagesArgs<ExtArgs>
+    notifications?: boolean | Destination$notificationsArgs<ExtArgs>
     _count?: boolean | DestinationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["destination"]>
 
@@ -3657,6 +3864,7 @@ export namespace Prisma {
     checklists?: boolean | Destination$checklistsArgs<ExtArgs>
     reviews?: boolean | Destination$reviewsArgs<ExtArgs>
     userVoyages?: boolean | Destination$userVoyagesArgs<ExtArgs>
+    notifications?: boolean | Destination$notificationsArgs<ExtArgs>
     _count?: boolean | DestinationCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3668,6 +3876,7 @@ export namespace Prisma {
       checklists: Prisma.$ChecklistPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       userVoyages: Prisma.$UserVoyagePayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4024,6 +4233,7 @@ export namespace Prisma {
     checklists<T extends Destination$checklistsArgs<ExtArgs> = {}>(args?: Subset<T, Destination$checklistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Destination$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Destination$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userVoyages<T extends Destination$userVoyagesArgs<ExtArgs> = {}>(args?: Subset<T, Destination$userVoyagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserVoyagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends Destination$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Destination$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4517,6 +4727,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserVoyageScalarFieldEnum | UserVoyageScalarFieldEnum[]
+  }
+
+  /**
+   * Destination.notifications
+   */
+  export type Destination$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -11375,8 +11609,18 @@ export namespace Prisma {
 
   export type AggregateChecklistItem = {
     _count: ChecklistItemCountAggregateOutputType | null
+    _avg: ChecklistItemAvgAggregateOutputType | null
+    _sum: ChecklistItemSumAggregateOutputType | null
     _min: ChecklistItemMinAggregateOutputType | null
     _max: ChecklistItemMaxAggregateOutputType | null
+  }
+
+  export type ChecklistItemAvgAggregateOutputType = {
+    reminderOffset: number | null
+  }
+
+  export type ChecklistItemSumAggregateOutputType = {
+    reminderOffset: number | null
   }
 
   export type ChecklistItemMinAggregateOutputType = {
@@ -11385,6 +11629,7 @@ export namespace Prisma {
     description: string | null
     isChecked: boolean | null
     reminderDate: Date | null
+    reminderOffset: number | null
     categoryId: string | null
   }
 
@@ -11394,6 +11639,7 @@ export namespace Prisma {
     description: string | null
     isChecked: boolean | null
     reminderDate: Date | null
+    reminderOffset: number | null
     categoryId: string | null
   }
 
@@ -11403,10 +11649,19 @@ export namespace Prisma {
     description: number
     isChecked: number
     reminderDate: number
+    reminderOffset: number
     categoryId: number
     _all: number
   }
 
+
+  export type ChecklistItemAvgAggregateInputType = {
+    reminderOffset?: true
+  }
+
+  export type ChecklistItemSumAggregateInputType = {
+    reminderOffset?: true
+  }
 
   export type ChecklistItemMinAggregateInputType = {
     id?: true
@@ -11414,6 +11669,7 @@ export namespace Prisma {
     description?: true
     isChecked?: true
     reminderDate?: true
+    reminderOffset?: true
     categoryId?: true
   }
 
@@ -11423,6 +11679,7 @@ export namespace Prisma {
     description?: true
     isChecked?: true
     reminderDate?: true
+    reminderOffset?: true
     categoryId?: true
   }
 
@@ -11432,6 +11689,7 @@ export namespace Prisma {
     description?: true
     isChecked?: true
     reminderDate?: true
+    reminderOffset?: true
     categoryId?: true
     _all?: true
   }
@@ -11474,6 +11732,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ChecklistItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChecklistItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ChecklistItemMinAggregateInputType
@@ -11504,6 +11774,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ChecklistItemCountAggregateInputType | true
+    _avg?: ChecklistItemAvgAggregateInputType
+    _sum?: ChecklistItemSumAggregateInputType
     _min?: ChecklistItemMinAggregateInputType
     _max?: ChecklistItemMaxAggregateInputType
   }
@@ -11514,8 +11786,11 @@ export namespace Prisma {
     description: string | null
     isChecked: boolean
     reminderDate: Date | null
+    reminderOffset: number | null
     categoryId: string
     _count: ChecklistItemCountAggregateOutputType | null
+    _avg: ChecklistItemAvgAggregateOutputType | null
+    _sum: ChecklistItemSumAggregateOutputType | null
     _min: ChecklistItemMinAggregateOutputType | null
     _max: ChecklistItemMaxAggregateOutputType | null
   }
@@ -11540,8 +11815,11 @@ export namespace Prisma {
     description?: boolean
     isChecked?: boolean
     reminderDate?: boolean
+    reminderOffset?: boolean
     categoryId?: boolean
     category?: boolean | ChecklistCategoryDefaultArgs<ExtArgs>
+    notifications?: boolean | ChecklistItem$notificationsArgs<ExtArgs>
+    _count?: boolean | ChecklistItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["checklistItem"]>
 
 
@@ -11552,18 +11830,22 @@ export namespace Prisma {
     description?: boolean
     isChecked?: boolean
     reminderDate?: boolean
+    reminderOffset?: boolean
     categoryId?: boolean
   }
 
-  export type ChecklistItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "description" | "isChecked" | "reminderDate" | "categoryId", ExtArgs["result"]["checklistItem"]>
+  export type ChecklistItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titre" | "description" | "isChecked" | "reminderDate" | "reminderOffset" | "categoryId", ExtArgs["result"]["checklistItem"]>
   export type ChecklistItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | ChecklistCategoryDefaultArgs<ExtArgs>
+    notifications?: boolean | ChecklistItem$notificationsArgs<ExtArgs>
+    _count?: boolean | ChecklistItemCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $ChecklistItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ChecklistItem"
     objects: {
       category: Prisma.$ChecklistCategoryPayload<ExtArgs>
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11571,6 +11853,7 @@ export namespace Prisma {
       description: string | null
       isChecked: boolean
       reminderDate: Date | null
+      reminderOffset: number | null
       categoryId: string
     }, ExtArgs["result"]["checklistItem"]>
     composites: {}
@@ -11913,6 +12196,7 @@ export namespace Prisma {
   export interface Prisma__ChecklistItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     category<T extends ChecklistCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChecklistCategoryDefaultArgs<ExtArgs>>): Prisma__ChecklistCategoryClient<$Result.GetResult<Prisma.$ChecklistCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    notifications<T extends ChecklistItem$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, ChecklistItem$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11947,6 +12231,7 @@ export namespace Prisma {
     readonly description: FieldRef<"ChecklistItem", 'String'>
     readonly isChecked: FieldRef<"ChecklistItem", 'Boolean'>
     readonly reminderDate: FieldRef<"ChecklistItem", 'DateTime'>
+    readonly reminderOffset: FieldRef<"ChecklistItem", 'Int'>
     readonly categoryId: FieldRef<"ChecklistItem", 'String'>
   }
     
@@ -12291,6 +12576,30 @@ export namespace Prisma {
   }
 
   /**
+   * ChecklistItem.notifications
+   */
+  export type ChecklistItem$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * ChecklistItem without action
    */
   export type ChecklistItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12530,6 +12839,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     destination?: boolean | DestinationDefaultArgs<ExtArgs>
     likes?: boolean | Review$likesArgs<ExtArgs>
+    notifications?: boolean | Review$notificationsArgs<ExtArgs>
     _count?: boolean | ReviewCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
@@ -12550,6 +12860,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     destination?: boolean | DestinationDefaultArgs<ExtArgs>
     likes?: boolean | Review$likesArgs<ExtArgs>
+    notifications?: boolean | Review$notificationsArgs<ExtArgs>
     _count?: boolean | ReviewCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -12559,6 +12870,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       destination: Prisma.$DestinationPayload<ExtArgs>
       likes: Prisma.$ReviewLikePayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12911,6 +13223,7 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     destination<T extends DestinationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DestinationDefaultArgs<ExtArgs>>): Prisma__DestinationClient<$Result.GetResult<Prisma.$DestinationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     likes<T extends Review$likesArgs<ExtArgs> = {}>(args?: Subset<T, Review$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends Review$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Review$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13311,6 +13624,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewLikeScalarFieldEnum | ReviewLikeScalarFieldEnum[]
+  }
+
+  /**
+   * Review.notifications
+   */
+  export type Review$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -15238,6 +15575,1124 @@ export namespace Prisma {
 
 
   /**
+   * Model Notification
+   */
+
+  export type AggregateNotification = {
+    _count: NotificationCountAggregateOutputType | null
+    _avg: NotificationAvgAggregateOutputType | null
+    _sum: NotificationSumAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  export type NotificationAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    fromUserId: number | null
+  }
+
+  export type NotificationSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    fromUserId: number | null
+  }
+
+  export type NotificationMinAggregateOutputType = {
+    id: number | null
+    type: string | null
+    userId: number | null
+    fromUserId: number | null
+    reviewId: string | null
+    destinationId: string | null
+    checklistItemId: string | null
+    checklistId: string | null
+    createdAt: Date | null
+    isRead: boolean | null
+  }
+
+  export type NotificationMaxAggregateOutputType = {
+    id: number | null
+    type: string | null
+    userId: number | null
+    fromUserId: number | null
+    reviewId: string | null
+    destinationId: string | null
+    checklistItemId: string | null
+    checklistId: string | null
+    createdAt: Date | null
+    isRead: boolean | null
+  }
+
+  export type NotificationCountAggregateOutputType = {
+    id: number
+    type: number
+    userId: number
+    fromUserId: number
+    reviewId: number
+    destinationId: number
+    checklistItemId: number
+    checklistId: number
+    createdAt: number
+    isRead: number
+    _all: number
+  }
+
+
+  export type NotificationAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    fromUserId?: true
+  }
+
+  export type NotificationSumAggregateInputType = {
+    id?: true
+    userId?: true
+    fromUserId?: true
+  }
+
+  export type NotificationMinAggregateInputType = {
+    id?: true
+    type?: true
+    userId?: true
+    fromUserId?: true
+    reviewId?: true
+    destinationId?: true
+    checklistItemId?: true
+    checklistId?: true
+    createdAt?: true
+    isRead?: true
+  }
+
+  export type NotificationMaxAggregateInputType = {
+    id?: true
+    type?: true
+    userId?: true
+    fromUserId?: true
+    reviewId?: true
+    destinationId?: true
+    checklistItemId?: true
+    checklistId?: true
+    createdAt?: true
+    isRead?: true
+  }
+
+  export type NotificationCountAggregateInputType = {
+    id?: true
+    type?: true
+    userId?: true
+    fromUserId?: true
+    reviewId?: true
+    destinationId?: true
+    checklistItemId?: true
+    checklistId?: true
+    createdAt?: true
+    isRead?: true
+    _all?: true
+  }
+
+  export type NotificationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notification to aggregate.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Notifications
+    **/
+    _count?: true | NotificationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NotificationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NotificationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NotificationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type GetNotificationAggregateType<T extends NotificationAggregateArgs> = {
+        [P in keyof T & keyof AggregateNotification]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNotification[P]>
+      : GetScalarType<T[P], AggregateNotification[P]>
+  }
+
+
+
+
+  export type NotificationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithAggregationInput | NotificationOrderByWithAggregationInput[]
+    by: NotificationScalarFieldEnum[] | NotificationScalarFieldEnum
+    having?: NotificationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NotificationCountAggregateInputType | true
+    _avg?: NotificationAvgAggregateInputType
+    _sum?: NotificationSumAggregateInputType
+    _min?: NotificationMinAggregateInputType
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type NotificationGroupByOutputType = {
+    id: number
+    type: string
+    userId: number
+    fromUserId: number | null
+    reviewId: string | null
+    destinationId: string | null
+    checklistItemId: string | null
+    checklistId: string | null
+    createdAt: Date
+    isRead: boolean
+    _count: NotificationCountAggregateOutputType | null
+    _avg: NotificationAvgAggregateOutputType | null
+    _sum: NotificationSumAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  type GetNotificationGroupByPayload<T extends NotificationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NotificationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NotificationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+            : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NotificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    userId?: boolean
+    fromUserId?: boolean
+    reviewId?: boolean
+    destinationId?: boolean
+    checklistItemId?: boolean
+    checklistId?: boolean
+    createdAt?: boolean
+    isRead?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    fromUser?: boolean | Notification$fromUserArgs<ExtArgs>
+    review?: boolean | Notification$reviewArgs<ExtArgs>
+    destination?: boolean | Notification$destinationArgs<ExtArgs>
+    checklistItem?: boolean | Notification$checklistItemArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+
+
+  export type NotificationSelectScalar = {
+    id?: boolean
+    type?: boolean
+    userId?: boolean
+    fromUserId?: boolean
+    reviewId?: boolean
+    destinationId?: boolean
+    checklistItemId?: boolean
+    checklistId?: boolean
+    createdAt?: boolean
+    isRead?: boolean
+  }
+
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "userId" | "fromUserId" | "reviewId" | "destinationId" | "checklistItemId" | "checklistId" | "createdAt" | "isRead", ExtArgs["result"]["notification"]>
+  export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    fromUser?: boolean | Notification$fromUserArgs<ExtArgs>
+    review?: boolean | Notification$reviewArgs<ExtArgs>
+    destination?: boolean | Notification$destinationArgs<ExtArgs>
+    checklistItem?: boolean | Notification$checklistItemArgs<ExtArgs>
+  }
+
+  export type $NotificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Notification"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      fromUser: Prisma.$UserPayload<ExtArgs> | null
+      review: Prisma.$ReviewPayload<ExtArgs> | null
+      destination: Prisma.$DestinationPayload<ExtArgs> | null
+      checklistItem: Prisma.$ChecklistItemPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      type: string
+      userId: number
+      fromUserId: number | null
+      reviewId: string | null
+      destinationId: string | null
+      checklistItemId: string | null
+      checklistId: string | null
+      createdAt: Date
+      isRead: boolean
+    }, ExtArgs["result"]["notification"]>
+    composites: {}
+  }
+
+  type NotificationGetPayload<S extends boolean | null | undefined | NotificationDefaultArgs> = $Result.GetResult<Prisma.$NotificationPayload, S>
+
+  type NotificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NotificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NotificationCountAggregateInputType | true
+    }
+
+  export interface NotificationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Notification'], meta: { name: 'Notification' } }
+    /**
+     * Find zero or one Notification that matches the filter.
+     * @param {NotificationFindUniqueArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NotificationFindUniqueArgs>(args: SelectSubset<T, NotificationFindUniqueArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Notification that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NotificationFindUniqueOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NotificationFindUniqueOrThrowArgs>(args: SelectSubset<T, NotificationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notification that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NotificationFindFirstArgs>(args?: SelectSubset<T, NotificationFindFirstArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notification that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NotificationFindFirstOrThrowArgs>(args?: SelectSubset<T, NotificationFindFirstOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Notifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Notifications
+     * const notifications = await prisma.notification.findMany()
+     * 
+     * // Get first 10 Notifications
+     * const notifications = await prisma.notification.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const notificationWithIdOnly = await prisma.notification.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NotificationFindManyArgs>(args?: SelectSubset<T, NotificationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Notification.
+     * @param {NotificationCreateArgs} args - Arguments to create a Notification.
+     * @example
+     * // Create one Notification
+     * const Notification = await prisma.notification.create({
+     *   data: {
+     *     // ... data to create a Notification
+     *   }
+     * })
+     * 
+     */
+    create<T extends NotificationCreateArgs>(args: SelectSubset<T, NotificationCreateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Notifications.
+     * @param {NotificationCreateManyArgs} args - Arguments to create many Notifications.
+     * @example
+     * // Create many Notifications
+     * const notification = await prisma.notification.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NotificationCreateManyArgs>(args?: SelectSubset<T, NotificationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Notification.
+     * @param {NotificationDeleteArgs} args - Arguments to delete one Notification.
+     * @example
+     * // Delete one Notification
+     * const Notification = await prisma.notification.delete({
+     *   where: {
+     *     // ... filter to delete one Notification
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NotificationDeleteArgs>(args: SelectSubset<T, NotificationDeleteArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Notification.
+     * @param {NotificationUpdateArgs} args - Arguments to update one Notification.
+     * @example
+     * // Update one Notification
+     * const notification = await prisma.notification.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NotificationUpdateArgs>(args: SelectSubset<T, NotificationUpdateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Notifications.
+     * @param {NotificationDeleteManyArgs} args - Arguments to filter Notifications to delete.
+     * @example
+     * // Delete a few Notifications
+     * const { count } = await prisma.notification.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NotificationDeleteManyArgs>(args?: SelectSubset<T, NotificationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Notifications
+     * const notification = await prisma.notification.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NotificationUpdateManyArgs>(args: SelectSubset<T, NotificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Notification.
+     * @param {NotificationUpsertArgs} args - Arguments to update or create a Notification.
+     * @example
+     * // Update or create a Notification
+     * const notification = await prisma.notification.upsert({
+     *   create: {
+     *     // ... data to create a Notification
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Notification we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NotificationUpsertArgs>(args: SelectSubset<T, NotificationUpsertArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationCountArgs} args - Arguments to filter Notifications to count.
+     * @example
+     * // Count the number of Notifications
+     * const count = await prisma.notification.count({
+     *   where: {
+     *     // ... the filter for the Notifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends NotificationCountArgs>(
+      args?: Subset<T, NotificationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NotificationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NotificationAggregateArgs>(args: Subset<T, NotificationAggregateArgs>): Prisma.PrismaPromise<GetNotificationAggregateType<T>>
+
+    /**
+     * Group by Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NotificationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NotificationGroupByArgs['orderBy'] }
+        : { orderBy?: NotificationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NotificationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNotificationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Notification model
+   */
+  readonly fields: NotificationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Notification.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    fromUser<T extends Notification$fromUserArgs<ExtArgs> = {}>(args?: Subset<T, Notification$fromUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    review<T extends Notification$reviewArgs<ExtArgs> = {}>(args?: Subset<T, Notification$reviewArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    destination<T extends Notification$destinationArgs<ExtArgs> = {}>(args?: Subset<T, Notification$destinationArgs<ExtArgs>>): Prisma__DestinationClient<$Result.GetResult<Prisma.$DestinationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    checklistItem<T extends Notification$checklistItemArgs<ExtArgs> = {}>(args?: Subset<T, Notification$checklistItemArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Notification model
+   */
+  interface NotificationFieldRefs {
+    readonly id: FieldRef<"Notification", 'Int'>
+    readonly type: FieldRef<"Notification", 'String'>
+    readonly userId: FieldRef<"Notification", 'Int'>
+    readonly fromUserId: FieldRef<"Notification", 'Int'>
+    readonly reviewId: FieldRef<"Notification", 'String'>
+    readonly destinationId: FieldRef<"Notification", 'String'>
+    readonly checklistItemId: FieldRef<"Notification", 'String'>
+    readonly checklistId: FieldRef<"Notification", 'String'>
+    readonly createdAt: FieldRef<"Notification", 'DateTime'>
+    readonly isRead: FieldRef<"Notification", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Notification findUnique
+   */
+  export type NotificationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification findUniqueOrThrow
+   */
+  export type NotificationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification findFirst
+   */
+  export type NotificationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification findFirstOrThrow
+   */
+  export type NotificationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification findMany
+   */
+  export type NotificationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notifications to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification create
+   */
+  export type NotificationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Notification.
+     */
+    data: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+  }
+
+  /**
+   * Notification createMany
+   */
+  export type NotificationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Notifications.
+     */
+    data: NotificationCreateManyInput | NotificationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Notification update
+   */
+  export type NotificationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Notification.
+     */
+    data: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+    /**
+     * Choose, which Notification to update.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification updateMany
+   */
+  export type NotificationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Notifications.
+     */
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Notifications to update
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notification upsert
+   */
+  export type NotificationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Notification to update in case it exists.
+     */
+    where: NotificationWhereUniqueInput
+    /**
+     * In case the Notification found by the `where` argument doesn't exist, create a new Notification with this data.
+     */
+    create: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+    /**
+     * In case the Notification was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+  }
+
+  /**
+   * Notification delete
+   */
+  export type NotificationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter which Notification to delete.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification deleteMany
+   */
+  export type NotificationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notifications to delete
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notification.fromUser
+   */
+  export type Notification$fromUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Notification.review
+   */
+  export type Notification$reviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+  }
+
+  /**
+   * Notification.destination
+   */
+  export type Notification$destinationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Destination
+     */
+    select?: DestinationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Destination
+     */
+    omit?: DestinationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DestinationInclude<ExtArgs> | null
+    where?: DestinationWhereInput
+  }
+
+  /**
+   * Notification.checklistItem
+   */
+  export type Notification$checklistItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    where?: ChecklistItemWhereInput
+  }
+
+  /**
+   * Notification without action
+   */
+  export type NotificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -15368,6 +16823,7 @@ export namespace Prisma {
     description: 'description',
     isChecked: 'isChecked',
     reminderDate: 'reminderDate',
+    reminderOffset: 'reminderOffset',
     categoryId: 'categoryId'
   };
 
@@ -15404,6 +16860,22 @@ export namespace Prisma {
   };
 
   export type UserVoyageScalarFieldEnum = (typeof UserVoyageScalarFieldEnum)[keyof typeof UserVoyageScalarFieldEnum]
+
+
+  export const NotificationScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    userId: 'userId',
+    fromUserId: 'fromUserId',
+    reviewId: 'reviewId',
+    destinationId: 'destinationId',
+    checklistItemId: 'checklistItemId',
+    checklistId: 'checklistId',
+    createdAt: 'createdAt',
+    isRead: 'isRead'
+  };
+
+  export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -15551,6 +17023,17 @@ export namespace Prisma {
   export type UserVoyageOrderByRelevanceFieldEnum = (typeof UserVoyageOrderByRelevanceFieldEnum)[keyof typeof UserVoyageOrderByRelevanceFieldEnum]
 
 
+  export const NotificationOrderByRelevanceFieldEnum: {
+    type: 'type',
+    reviewId: 'reviewId',
+    destinationId: 'destinationId',
+    checklistItemId: 'checklistItemId',
+    checklistId: 'checklistId'
+  };
+
+  export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByRelevanceFieldEnum)[keyof typeof NotificationOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -15632,6 +17115,8 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     reviewLikes?: ReviewLikeListRelationFilter
     userVoyages?: UserVoyageListRelationFilter
+    notifications?: NotificationListRelationFilter
+    sentNotifications?: NotificationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -15655,6 +17140,8 @@ export namespace Prisma {
     reviews?: ReviewOrderByRelationAggregateInput
     reviewLikes?: ReviewLikeOrderByRelationAggregateInput
     userVoyages?: UserVoyageOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
+    sentNotifications?: NotificationOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -15682,6 +17169,8 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     reviewLikes?: ReviewLikeListRelationFilter
     userVoyages?: UserVoyageListRelationFilter
+    notifications?: NotificationListRelationFilter
+    sentNotifications?: NotificationListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -15746,6 +17235,7 @@ export namespace Prisma {
     checklists?: ChecklistListRelationFilter
     reviews?: ReviewListRelationFilter
     userVoyages?: UserVoyageListRelationFilter
+    notifications?: NotificationListRelationFilter
   }
 
   export type DestinationOrderByWithRelationInput = {
@@ -15763,6 +17253,7 @@ export namespace Prisma {
     checklists?: ChecklistOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
     userVoyages?: UserVoyageOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
     _relevance?: DestinationOrderByRelevanceInput
   }
 
@@ -15784,6 +17275,7 @@ export namespace Prisma {
     checklists?: ChecklistListRelationFilter
     reviews?: ReviewListRelationFilter
     userVoyages?: UserVoyageListRelationFilter
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type DestinationOrderByWithAggregationInput = {
@@ -16240,8 +17732,10 @@ export namespace Prisma {
     description?: StringNullableFilter<"ChecklistItem"> | string | null
     isChecked?: BoolFilter<"ChecklistItem"> | boolean
     reminderDate?: DateTimeNullableFilter<"ChecklistItem"> | Date | string | null
+    reminderOffset?: IntNullableFilter<"ChecklistItem"> | number | null
     categoryId?: StringFilter<"ChecklistItem"> | string
     category?: XOR<ChecklistCategoryScalarRelationFilter, ChecklistCategoryWhereInput>
+    notifications?: NotificationListRelationFilter
   }
 
   export type ChecklistItemOrderByWithRelationInput = {
@@ -16250,8 +17744,10 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     isChecked?: SortOrder
     reminderDate?: SortOrderInput | SortOrder
+    reminderOffset?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     category?: ChecklistCategoryOrderByWithRelationInput
+    notifications?: NotificationOrderByRelationAggregateInput
     _relevance?: ChecklistItemOrderByRelevanceInput
   }
 
@@ -16264,8 +17760,10 @@ export namespace Prisma {
     description?: StringNullableFilter<"ChecklistItem"> | string | null
     isChecked?: BoolFilter<"ChecklistItem"> | boolean
     reminderDate?: DateTimeNullableFilter<"ChecklistItem"> | Date | string | null
+    reminderOffset?: IntNullableFilter<"ChecklistItem"> | number | null
     categoryId?: StringFilter<"ChecklistItem"> | string
     category?: XOR<ChecklistCategoryScalarRelationFilter, ChecklistCategoryWhereInput>
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type ChecklistItemOrderByWithAggregationInput = {
@@ -16274,10 +17772,13 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     isChecked?: SortOrder
     reminderDate?: SortOrderInput | SortOrder
+    reminderOffset?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     _count?: ChecklistItemCountOrderByAggregateInput
+    _avg?: ChecklistItemAvgOrderByAggregateInput
     _max?: ChecklistItemMaxOrderByAggregateInput
     _min?: ChecklistItemMinOrderByAggregateInput
+    _sum?: ChecklistItemSumOrderByAggregateInput
   }
 
   export type ChecklistItemScalarWhereWithAggregatesInput = {
@@ -16289,6 +17790,7 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"ChecklistItem"> | string | null
     isChecked?: BoolWithAggregatesFilter<"ChecklistItem"> | boolean
     reminderDate?: DateTimeNullableWithAggregatesFilter<"ChecklistItem"> | Date | string | null
+    reminderOffset?: IntNullableWithAggregatesFilter<"ChecklistItem"> | number | null
     categoryId?: StringWithAggregatesFilter<"ChecklistItem"> | string
   }
 
@@ -16306,6 +17808,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     destination?: XOR<DestinationScalarRelationFilter, DestinationWhereInput>
     likes?: ReviewLikeListRelationFilter
+    notifications?: NotificationListRelationFilter
   }
 
   export type ReviewOrderByWithRelationInput = {
@@ -16319,6 +17822,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     destination?: DestinationOrderByWithRelationInput
     likes?: ReviewLikeOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
     _relevance?: ReviewOrderByRelevanceInput
   }
 
@@ -16336,6 +17840,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     destination?: XOR<DestinationScalarRelationFilter, DestinationWhereInput>
     likes?: ReviewLikeListRelationFilter
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type ReviewOrderByWithAggregationInput = {
@@ -16475,6 +17980,101 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"UserVoyage"> | Date | string
   }
 
+  export type NotificationWhereInput = {
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    id?: IntFilter<"Notification"> | number
+    type?: StringFilter<"Notification"> | string
+    userId?: IntFilter<"Notification"> | number
+    fromUserId?: IntNullableFilter<"Notification"> | number | null
+    reviewId?: StringNullableFilter<"Notification"> | string | null
+    destinationId?: StringNullableFilter<"Notification"> | string | null
+    checklistItemId?: StringNullableFilter<"Notification"> | string | null
+    checklistId?: StringNullableFilter<"Notification"> | string | null
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    isRead?: BoolFilter<"Notification"> | boolean
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    fromUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    review?: XOR<ReviewNullableScalarRelationFilter, ReviewWhereInput> | null
+    destination?: XOR<DestinationNullableScalarRelationFilter, DestinationWhereInput> | null
+    checklistItem?: XOR<ChecklistItemNullableScalarRelationFilter, ChecklistItemWhereInput> | null
+  }
+
+  export type NotificationOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    userId?: SortOrder
+    fromUserId?: SortOrderInput | SortOrder
+    reviewId?: SortOrderInput | SortOrder
+    destinationId?: SortOrderInput | SortOrder
+    checklistItemId?: SortOrderInput | SortOrder
+    checklistId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    isRead?: SortOrder
+    user?: UserOrderByWithRelationInput
+    fromUser?: UserOrderByWithRelationInput
+    review?: ReviewOrderByWithRelationInput
+    destination?: DestinationOrderByWithRelationInput
+    checklistItem?: ChecklistItemOrderByWithRelationInput
+    _relevance?: NotificationOrderByRelevanceInput
+  }
+
+  export type NotificationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    type?: StringFilter<"Notification"> | string
+    userId?: IntFilter<"Notification"> | number
+    fromUserId?: IntNullableFilter<"Notification"> | number | null
+    reviewId?: StringNullableFilter<"Notification"> | string | null
+    destinationId?: StringNullableFilter<"Notification"> | string | null
+    checklistItemId?: StringNullableFilter<"Notification"> | string | null
+    checklistId?: StringNullableFilter<"Notification"> | string | null
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    isRead?: BoolFilter<"Notification"> | boolean
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    fromUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    review?: XOR<ReviewNullableScalarRelationFilter, ReviewWhereInput> | null
+    destination?: XOR<DestinationNullableScalarRelationFilter, DestinationWhereInput> | null
+    checklistItem?: XOR<ChecklistItemNullableScalarRelationFilter, ChecklistItemWhereInput> | null
+  }, "id">
+
+  export type NotificationOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    userId?: SortOrder
+    fromUserId?: SortOrderInput | SortOrder
+    reviewId?: SortOrderInput | SortOrder
+    destinationId?: SortOrderInput | SortOrder
+    checklistItemId?: SortOrderInput | SortOrder
+    checklistId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    isRead?: SortOrder
+    _count?: NotificationCountOrderByAggregateInput
+    _avg?: NotificationAvgOrderByAggregateInput
+    _max?: NotificationMaxOrderByAggregateInput
+    _min?: NotificationMinOrderByAggregateInput
+    _sum?: NotificationSumOrderByAggregateInput
+  }
+
+  export type NotificationScalarWhereWithAggregatesInput = {
+    AND?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    OR?: NotificationScalarWhereWithAggregatesInput[]
+    NOT?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Notification"> | number
+    type?: StringWithAggregatesFilter<"Notification"> | string
+    userId?: IntWithAggregatesFilter<"Notification"> | number
+    fromUserId?: IntNullableWithAggregatesFilter<"Notification"> | number | null
+    reviewId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    destinationId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    checklistItemId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    checklistId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
+    isRead?: BoolWithAggregatesFilter<"Notification"> | boolean
+  }
+
   export type UserCreateInput = {
     nom: string
     prenom: string
@@ -16495,6 +18095,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -16518,6 +18120,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromUserInput
   }
 
   export type UserUpdateInput = {
@@ -16540,6 +18144,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -16563,6 +18169,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -16632,6 +18240,7 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateInput = {
@@ -16648,6 +18257,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUpdateInput = {
@@ -16664,6 +18274,7 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateInput = {
@@ -16680,6 +18291,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationCreateManyInput = {
@@ -17117,7 +18729,9 @@ export namespace Prisma {
     description?: string | null
     isChecked?: boolean
     reminderDate?: Date | string | null
+    reminderOffset?: number | null
     category: ChecklistCategoryCreateNestedOneWithoutItemsInput
+    notifications?: NotificationCreateNestedManyWithoutChecklistItemInput
   }
 
   export type ChecklistItemUncheckedCreateInput = {
@@ -17126,7 +18740,9 @@ export namespace Prisma {
     description?: string | null
     isChecked?: boolean
     reminderDate?: Date | string | null
+    reminderOffset?: number | null
     categoryId: string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutChecklistItemInput
   }
 
   export type ChecklistItemUpdateInput = {
@@ -17135,7 +18751,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isChecked?: BoolFieldUpdateOperationsInput | boolean
     reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
     category?: ChecklistCategoryUpdateOneRequiredWithoutItemsNestedInput
+    notifications?: NotificationUpdateManyWithoutChecklistItemNestedInput
   }
 
   export type ChecklistItemUncheckedUpdateInput = {
@@ -17144,7 +18762,9 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isChecked?: BoolFieldUpdateOperationsInput | boolean
     reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
     categoryId?: StringFieldUpdateOperationsInput | string
+    notifications?: NotificationUncheckedUpdateManyWithoutChecklistItemNestedInput
   }
 
   export type ChecklistItemCreateManyInput = {
@@ -17153,6 +18773,7 @@ export namespace Prisma {
     description?: string | null
     isChecked?: boolean
     reminderDate?: Date | string | null
+    reminderOffset?: number | null
     categoryId: string
   }
 
@@ -17162,6 +18783,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isChecked?: BoolFieldUpdateOperationsInput | boolean
     reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ChecklistItemUncheckedUpdateManyInput = {
@@ -17170,6 +18792,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isChecked?: BoolFieldUpdateOperationsInput | boolean
     reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
     categoryId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -17182,6 +18805,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutReviewsInput
     destination: DestinationCreateNestedOneWithoutReviewsInput
     likes?: ReviewLikeCreateNestedManyWithoutReviewInput
+    notifications?: NotificationCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateInput = {
@@ -17193,6 +18817,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     likes?: ReviewLikeUncheckedCreateNestedManyWithoutReviewInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUpdateInput = {
@@ -17204,6 +18829,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
     destination?: DestinationUpdateOneRequiredWithoutReviewsNestedInput
     likes?: ReviewLikeUpdateManyWithoutReviewNestedInput
+    notifications?: NotificationUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
@@ -17215,6 +18841,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     likes?: ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewCreateManyInput = {
@@ -17329,6 +18956,89 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type NotificationCreateInput = {
+    type: string
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+    user: UserCreateNestedOneWithoutNotificationsInput
+    fromUser?: UserCreateNestedOneWithoutSentNotificationsInput
+    review?: ReviewCreateNestedOneWithoutNotificationsInput
+    destination?: DestinationCreateNestedOneWithoutNotificationsInput
+    checklistItem?: ChecklistItemCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationUpdateInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    fromUser?: UserUpdateOneWithoutSentNotificationsNestedInput
+    review?: ReviewUpdateOneWithoutNotificationsNestedInput
+    destination?: DestinationUpdateOneWithoutNotificationsNestedInput
+    checklistItem?: ChecklistItemUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationCreateManyInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationUpdateManyMutationInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -17423,6 +19133,12 @@ export namespace Prisma {
     none?: UserVoyageWhereInput
   }
 
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -17445,6 +19161,10 @@ export namespace Prisma {
   }
 
   export type UserVoyageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18066,7 +19786,12 @@ export namespace Prisma {
     description?: SortOrder
     isChecked?: SortOrder
     reminderDate?: SortOrder
+    reminderOffset?: SortOrder
     categoryId?: SortOrder
+  }
+
+  export type ChecklistItemAvgOrderByAggregateInput = {
+    reminderOffset?: SortOrder
   }
 
   export type ChecklistItemMaxOrderByAggregateInput = {
@@ -18075,6 +19800,7 @@ export namespace Prisma {
     description?: SortOrder
     isChecked?: SortOrder
     reminderDate?: SortOrder
+    reminderOffset?: SortOrder
     categoryId?: SortOrder
   }
 
@@ -18084,7 +19810,12 @@ export namespace Prisma {
     description?: SortOrder
     isChecked?: SortOrder
     reminderDate?: SortOrder
+    reminderOffset?: SortOrder
     categoryId?: SortOrder
+  }
+
+  export type ChecklistItemSumOrderByAggregateInput = {
+    reminderOffset?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18231,6 +19962,78 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type ReviewNullableScalarRelationFilter = {
+    is?: ReviewWhereInput | null
+    isNot?: ReviewWhereInput | null
+  }
+
+  export type DestinationNullableScalarRelationFilter = {
+    is?: DestinationWhereInput | null
+    isNot?: DestinationWhereInput | null
+  }
+
+  export type ChecklistItemNullableScalarRelationFilter = {
+    is?: ChecklistItemWhereInput | null
+    isNot?: ChecklistItemWhereInput | null
+  }
+
+  export type NotificationOrderByRelevanceInput = {
+    fields: NotificationOrderByRelevanceFieldEnum | NotificationOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type NotificationCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    userId?: SortOrder
+    fromUserId?: SortOrder
+    reviewId?: SortOrder
+    destinationId?: SortOrder
+    checklistItemId?: SortOrder
+    checklistId?: SortOrder
+    createdAt?: SortOrder
+    isRead?: SortOrder
+  }
+
+  export type NotificationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    fromUserId?: SortOrder
+  }
+
+  export type NotificationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    userId?: SortOrder
+    fromUserId?: SortOrder
+    reviewId?: SortOrder
+    destinationId?: SortOrder
+    checklistItemId?: SortOrder
+    checklistId?: SortOrder
+    createdAt?: SortOrder
+    isRead?: SortOrder
+  }
+
+  export type NotificationMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    userId?: SortOrder
+    fromUserId?: SortOrder
+    reviewId?: SortOrder
+    destinationId?: SortOrder
+    checklistItemId?: SortOrder
+    checklistId?: SortOrder
+    createdAt?: SortOrder
+    isRead?: SortOrder
+  }
+
+  export type NotificationSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    fromUserId?: SortOrder
+  }
+
   export type DestinationCreateNestedManyWithoutUtilisateurInput = {
     create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
     connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
@@ -18266,6 +20069,20 @@ export namespace Prisma {
     connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<NotificationCreateWithoutFromUserInput, NotificationUncheckedCreateWithoutFromUserInput> | NotificationCreateWithoutFromUserInput[] | NotificationUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutFromUserInput | NotificationCreateOrConnectWithoutFromUserInput[]
+    createMany?: NotificationCreateManyFromUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type DestinationUncheckedCreateNestedManyWithoutUtilisateurInput = {
     create?: XOR<DestinationCreateWithoutUtilisateurInput, DestinationUncheckedCreateWithoutUtilisateurInput> | DestinationCreateWithoutUtilisateurInput[] | DestinationUncheckedCreateWithoutUtilisateurInput[]
     connectOrCreate?: DestinationCreateOrConnectWithoutUtilisateurInput | DestinationCreateOrConnectWithoutUtilisateurInput[]
@@ -18299,6 +20116,20 @@ export namespace Prisma {
     connectOrCreate?: UserVoyageCreateOrConnectWithoutUserInput | UserVoyageCreateOrConnectWithoutUserInput[]
     createMany?: UserVoyageCreateManyUserInputEnvelope
     connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<NotificationCreateWithoutFromUserInput, NotificationUncheckedCreateWithoutFromUserInput> | NotificationCreateWithoutFromUserInput[] | NotificationUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutFromUserInput | NotificationCreateOrConnectWithoutFromUserInput[]
+    createMany?: NotificationCreateManyFromUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -18391,6 +20222,34 @@ export namespace Prisma {
     deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutFromUserInput, NotificationUncheckedCreateWithoutFromUserInput> | NotificationCreateWithoutFromUserInput[] | NotificationUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutFromUserInput | NotificationCreateOrConnectWithoutFromUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutFromUserInput | NotificationUpsertWithWhereUniqueWithoutFromUserInput[]
+    createMany?: NotificationCreateManyFromUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutFromUserInput | NotificationUpdateWithWhereUniqueWithoutFromUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutFromUserInput | NotificationUpdateManyWithWhereWithoutFromUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -18469,6 +20328,34 @@ export namespace Prisma {
     deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
   }
 
+  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutFromUserInput, NotificationUncheckedCreateWithoutFromUserInput> | NotificationCreateWithoutFromUserInput[] | NotificationUncheckedCreateWithoutFromUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutFromUserInput | NotificationCreateOrConnectWithoutFromUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutFromUserInput | NotificationUpsertWithWhereUniqueWithoutFromUserInput[]
+    createMany?: NotificationCreateManyFromUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutFromUserInput | NotificationUpdateWithWhereUniqueWithoutFromUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutFromUserInput | NotificationUpdateManyWithWhereWithoutFromUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type SectionCreateNestedManyWithoutDestinationInput = {
     create?: XOR<SectionCreateWithoutDestinationInput, SectionUncheckedCreateWithoutDestinationInput> | SectionCreateWithoutDestinationInput[] | SectionUncheckedCreateWithoutDestinationInput[]
     connectOrCreate?: SectionCreateOrConnectWithoutDestinationInput | SectionCreateOrConnectWithoutDestinationInput[]
@@ -18503,6 +20390,13 @@ export namespace Prisma {
     connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutDestinationInput = {
+    create?: XOR<NotificationCreateWithoutDestinationInput, NotificationUncheckedCreateWithoutDestinationInput> | NotificationCreateWithoutDestinationInput[] | NotificationUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutDestinationInput | NotificationCreateOrConnectWithoutDestinationInput[]
+    createMany?: NotificationCreateManyDestinationInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type SectionUncheckedCreateNestedManyWithoutDestinationInput = {
     create?: XOR<SectionCreateWithoutDestinationInput, SectionUncheckedCreateWithoutDestinationInput> | SectionCreateWithoutDestinationInput[] | SectionUncheckedCreateWithoutDestinationInput[]
     connectOrCreate?: SectionCreateOrConnectWithoutDestinationInput | SectionCreateOrConnectWithoutDestinationInput[]
@@ -18529,6 +20423,13 @@ export namespace Prisma {
     connectOrCreate?: UserVoyageCreateOrConnectWithoutDestinationInput | UserVoyageCreateOrConnectWithoutDestinationInput[]
     createMany?: UserVoyageCreateManyDestinationInputEnvelope
     connect?: UserVoyageWhereUniqueInput | UserVoyageWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutDestinationInput = {
+    create?: XOR<NotificationCreateWithoutDestinationInput, NotificationUncheckedCreateWithoutDestinationInput> | NotificationCreateWithoutDestinationInput[] | NotificationUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutDestinationInput | NotificationCreateOrConnectWithoutDestinationInput[]
+    createMany?: NotificationCreateManyDestinationInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type SectionUpdateManyWithoutDestinationNestedInput = {
@@ -18597,6 +20498,20 @@ export namespace Prisma {
     deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutDestinationNestedInput = {
+    create?: XOR<NotificationCreateWithoutDestinationInput, NotificationUncheckedCreateWithoutDestinationInput> | NotificationCreateWithoutDestinationInput[] | NotificationUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutDestinationInput | NotificationCreateOrConnectWithoutDestinationInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutDestinationInput | NotificationUpsertWithWhereUniqueWithoutDestinationInput[]
+    createMany?: NotificationCreateManyDestinationInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutDestinationInput | NotificationUpdateWithWhereUniqueWithoutDestinationInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutDestinationInput | NotificationUpdateManyWithWhereWithoutDestinationInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -18659,6 +20574,20 @@ export namespace Prisma {
     update?: UserVoyageUpdateWithWhereUniqueWithoutDestinationInput | UserVoyageUpdateWithWhereUniqueWithoutDestinationInput[]
     updateMany?: UserVoyageUpdateManyWithWhereWithoutDestinationInput | UserVoyageUpdateManyWithWhereWithoutDestinationInput[]
     deleteMany?: UserVoyageScalarWhereInput | UserVoyageScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutDestinationNestedInput = {
+    create?: XOR<NotificationCreateWithoutDestinationInput, NotificationUncheckedCreateWithoutDestinationInput> | NotificationCreateWithoutDestinationInput[] | NotificationUncheckedCreateWithoutDestinationInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutDestinationInput | NotificationCreateOrConnectWithoutDestinationInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutDestinationInput | NotificationUpsertWithWhereUniqueWithoutDestinationInput[]
+    createMany?: NotificationCreateManyDestinationInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutDestinationInput | NotificationUpdateWithWhereUniqueWithoutDestinationInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutDestinationInput | NotificationUpdateManyWithWhereWithoutDestinationInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type BulletPointCreateNestedManyWithoutSectionInput = {
@@ -19035,6 +20964,20 @@ export namespace Prisma {
     connect?: ChecklistCategoryWhereUniqueInput
   }
 
+  export type NotificationCreateNestedManyWithoutChecklistItemInput = {
+    create?: XOR<NotificationCreateWithoutChecklistItemInput, NotificationUncheckedCreateWithoutChecklistItemInput> | NotificationCreateWithoutChecklistItemInput[] | NotificationUncheckedCreateWithoutChecklistItemInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutChecklistItemInput | NotificationCreateOrConnectWithoutChecklistItemInput[]
+    createMany?: NotificationCreateManyChecklistItemInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutChecklistItemInput = {
+    create?: XOR<NotificationCreateWithoutChecklistItemInput, NotificationUncheckedCreateWithoutChecklistItemInput> | NotificationCreateWithoutChecklistItemInput[] | NotificationUncheckedCreateWithoutChecklistItemInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutChecklistItemInput | NotificationCreateOrConnectWithoutChecklistItemInput[]
+    createMany?: NotificationCreateManyChecklistItemInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -19045,6 +20988,34 @@ export namespace Prisma {
     upsert?: ChecklistCategoryUpsertWithoutItemsInput
     connect?: ChecklistCategoryWhereUniqueInput
     update?: XOR<XOR<ChecklistCategoryUpdateToOneWithWhereWithoutItemsInput, ChecklistCategoryUpdateWithoutItemsInput>, ChecklistCategoryUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type NotificationUpdateManyWithoutChecklistItemNestedInput = {
+    create?: XOR<NotificationCreateWithoutChecklistItemInput, NotificationUncheckedCreateWithoutChecklistItemInput> | NotificationCreateWithoutChecklistItemInput[] | NotificationUncheckedCreateWithoutChecklistItemInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutChecklistItemInput | NotificationCreateOrConnectWithoutChecklistItemInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutChecklistItemInput | NotificationUpsertWithWhereUniqueWithoutChecklistItemInput[]
+    createMany?: NotificationCreateManyChecklistItemInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutChecklistItemInput | NotificationUpdateWithWhereUniqueWithoutChecklistItemInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutChecklistItemInput | NotificationUpdateManyWithWhereWithoutChecklistItemInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutChecklistItemNestedInput = {
+    create?: XOR<NotificationCreateWithoutChecklistItemInput, NotificationUncheckedCreateWithoutChecklistItemInput> | NotificationCreateWithoutChecklistItemInput[] | NotificationUncheckedCreateWithoutChecklistItemInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutChecklistItemInput | NotificationCreateOrConnectWithoutChecklistItemInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutChecklistItemInput | NotificationUpsertWithWhereUniqueWithoutChecklistItemInput[]
+    createMany?: NotificationCreateManyChecklistItemInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutChecklistItemInput | NotificationUpdateWithWhereUniqueWithoutChecklistItemInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutChecklistItemInput | NotificationUpdateManyWithWhereWithoutChecklistItemInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutReviewsInput = {
@@ -19066,11 +21037,25 @@ export namespace Prisma {
     connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutReviewInput = {
+    create?: XOR<NotificationCreateWithoutReviewInput, NotificationUncheckedCreateWithoutReviewInput> | NotificationCreateWithoutReviewInput[] | NotificationUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutReviewInput | NotificationCreateOrConnectWithoutReviewInput[]
+    createMany?: NotificationCreateManyReviewInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type ReviewLikeUncheckedCreateNestedManyWithoutReviewInput = {
     create?: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput> | ReviewLikeCreateWithoutReviewInput[] | ReviewLikeUncheckedCreateWithoutReviewInput[]
     connectOrCreate?: ReviewLikeCreateOrConnectWithoutReviewInput | ReviewLikeCreateOrConnectWithoutReviewInput[]
     createMany?: ReviewLikeCreateManyReviewInputEnvelope
     connect?: ReviewLikeWhereUniqueInput | ReviewLikeWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutReviewInput = {
+    create?: XOR<NotificationCreateWithoutReviewInput, NotificationUncheckedCreateWithoutReviewInput> | NotificationCreateWithoutReviewInput[] | NotificationUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutReviewInput | NotificationCreateOrConnectWithoutReviewInput[]
+    createMany?: NotificationCreateManyReviewInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
@@ -19103,6 +21088,20 @@ export namespace Prisma {
     deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutReviewNestedInput = {
+    create?: XOR<NotificationCreateWithoutReviewInput, NotificationUncheckedCreateWithoutReviewInput> | NotificationCreateWithoutReviewInput[] | NotificationUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutReviewInput | NotificationCreateOrConnectWithoutReviewInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutReviewInput | NotificationUpsertWithWhereUniqueWithoutReviewInput[]
+    createMany?: NotificationCreateManyReviewInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutReviewInput | NotificationUpdateWithWhereUniqueWithoutReviewInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutReviewInput | NotificationUpdateManyWithWhereWithoutReviewInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput = {
     create?: XOR<ReviewLikeCreateWithoutReviewInput, ReviewLikeUncheckedCreateWithoutReviewInput> | ReviewLikeCreateWithoutReviewInput[] | ReviewLikeUncheckedCreateWithoutReviewInput[]
     connectOrCreate?: ReviewLikeCreateOrConnectWithoutReviewInput | ReviewLikeCreateOrConnectWithoutReviewInput[]
@@ -19115,6 +21114,20 @@ export namespace Prisma {
     update?: ReviewLikeUpdateWithWhereUniqueWithoutReviewInput | ReviewLikeUpdateWithWhereUniqueWithoutReviewInput[]
     updateMany?: ReviewLikeUpdateManyWithWhereWithoutReviewInput | ReviewLikeUpdateManyWithWhereWithoutReviewInput[]
     deleteMany?: ReviewLikeScalarWhereInput | ReviewLikeScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutReviewNestedInput = {
+    create?: XOR<NotificationCreateWithoutReviewInput, NotificationUncheckedCreateWithoutReviewInput> | NotificationCreateWithoutReviewInput[] | NotificationUncheckedCreateWithoutReviewInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutReviewInput | NotificationCreateOrConnectWithoutReviewInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutReviewInput | NotificationUpsertWithWhereUniqueWithoutReviewInput[]
+    createMany?: NotificationCreateManyReviewInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutReviewInput | NotificationUpdateWithWhereUniqueWithoutReviewInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutReviewInput | NotificationUpdateManyWithWhereWithoutReviewInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutReviewLikesInput = {
@@ -19171,6 +21184,84 @@ export namespace Prisma {
     upsert?: DestinationUpsertWithoutUserVoyagesInput
     connect?: DestinationWhereUniqueInput
     update?: XOR<XOR<DestinationUpdateToOneWithWhereWithoutUserVoyagesInput, DestinationUpdateWithoutUserVoyagesInput>, DestinationUncheckedUpdateWithoutUserVoyagesInput>
+  }
+
+  export type UserCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSentNotificationsInput = {
+    create?: XOR<UserCreateWithoutSentNotificationsInput, UserUncheckedCreateWithoutSentNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentNotificationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ReviewCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<ReviewCreateWithoutNotificationsInput, ReviewUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutNotificationsInput
+    connect?: ReviewWhereUniqueInput
+  }
+
+  export type DestinationCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<DestinationCreateWithoutNotificationsInput, DestinationUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: DestinationCreateOrConnectWithoutNotificationsInput
+    connect?: DestinationWhereUniqueInput
+  }
+
+  export type ChecklistItemCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<ChecklistItemCreateWithoutNotificationsInput, ChecklistItemUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: ChecklistItemCreateOrConnectWithoutNotificationsInput
+    connect?: ChecklistItemWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
+    upsert?: UserUpsertWithoutNotificationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserUpdateOneWithoutSentNotificationsNestedInput = {
+    create?: XOR<UserCreateWithoutSentNotificationsInput, UserUncheckedCreateWithoutSentNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSentNotificationsInput
+    upsert?: UserUpsertWithoutSentNotificationsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSentNotificationsInput, UserUpdateWithoutSentNotificationsInput>, UserUncheckedUpdateWithoutSentNotificationsInput>
+  }
+
+  export type ReviewUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<ReviewCreateWithoutNotificationsInput, ReviewUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: ReviewCreateOrConnectWithoutNotificationsInput
+    upsert?: ReviewUpsertWithoutNotificationsInput
+    disconnect?: ReviewWhereInput | boolean
+    delete?: ReviewWhereInput | boolean
+    connect?: ReviewWhereUniqueInput
+    update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutNotificationsInput, ReviewUpdateWithoutNotificationsInput>, ReviewUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type DestinationUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<DestinationCreateWithoutNotificationsInput, DestinationUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: DestinationCreateOrConnectWithoutNotificationsInput
+    upsert?: DestinationUpsertWithoutNotificationsInput
+    disconnect?: DestinationWhereInput | boolean
+    delete?: DestinationWhereInput | boolean
+    connect?: DestinationWhereUniqueInput
+    update?: XOR<XOR<DestinationUpdateToOneWithWhereWithoutNotificationsInput, DestinationUpdateWithoutNotificationsInput>, DestinationUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type ChecklistItemUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<ChecklistItemCreateWithoutNotificationsInput, ChecklistItemUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: ChecklistItemCreateOrConnectWithoutNotificationsInput
+    upsert?: ChecklistItemUpsertWithoutNotificationsInput
+    disconnect?: ChecklistItemWhereInput | boolean
+    delete?: ChecklistItemWhereInput | boolean
+    connect?: ChecklistItemWhereUniqueInput
+    update?: XOR<XOR<ChecklistItemUpdateToOneWithWhereWithoutNotificationsInput, ChecklistItemUpdateWithoutNotificationsInput>, ChecklistItemUncheckedUpdateWithoutNotificationsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -19425,6 +21516,7 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutUtilisateurInput = {
@@ -19440,6 +21532,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutUtilisateurInput = {
@@ -19488,6 +21581,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     destination: DestinationCreateNestedOneWithoutReviewsInput
     likes?: ReviewLikeCreateNestedManyWithoutReviewInput
+    notifications?: NotificationCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutUserInput = {
@@ -19498,6 +21592,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     likes?: ReviewLikeUncheckedCreateNestedManyWithoutReviewInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewCreateOrConnectWithoutUserInput = {
@@ -19548,6 +21643,72 @@ export namespace Prisma {
 
   export type UserVoyageCreateManyUserInputEnvelope = {
     data: UserVoyageCreateManyUserInput | UserVoyageCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutUserInput = {
+    type: string
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+    fromUser?: UserCreateNestedOneWithoutSentNotificationsInput
+    review?: ReviewCreateNestedOneWithoutNotificationsInput
+    destination?: DestinationCreateNestedOneWithoutNotificationsInput
+    checklistItem?: ChecklistItemCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutUserInput = {
+    id?: number
+    type: string
+    fromUserId?: number | null
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationCreateOrConnectWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationCreateManyUserInputEnvelope = {
+    data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutFromUserInput = {
+    type: string
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+    user: UserCreateNestedOneWithoutNotificationsInput
+    review?: ReviewCreateNestedOneWithoutNotificationsInput
+    destination?: DestinationCreateNestedOneWithoutNotificationsInput
+    checklistItem?: ChecklistItemCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutFromUserInput = {
+    id?: number
+    type: string
+    userId: number
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationCreateOrConnectWithoutFromUserInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutFromUserInput, NotificationUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type NotificationCreateManyFromUserInputEnvelope = {
+    data: NotificationCreateManyFromUserInput | NotificationCreateManyFromUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -19690,6 +21851,54 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"UserVoyage"> | Date | string
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutUserInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: IntFilter<"Notification"> | number
+    type?: StringFilter<"Notification"> | string
+    userId?: IntFilter<"Notification"> | number
+    fromUserId?: IntNullableFilter<"Notification"> | number | null
+    reviewId?: StringNullableFilter<"Notification"> | string | null
+    destinationId?: StringNullableFilter<"Notification"> | string | null
+    checklistItemId?: StringNullableFilter<"Notification"> | string | null
+    checklistId?: StringNullableFilter<"Notification"> | string | null
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    isRead?: BoolFilter<"Notification"> | boolean
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutFromUserInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutFromUserInput, NotificationUncheckedUpdateWithoutFromUserInput>
+    create: XOR<NotificationCreateWithoutFromUserInput, NotificationUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutFromUserInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutFromUserInput, NotificationUncheckedUpdateWithoutFromUserInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutFromUserInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutFromUserInput>
+  }
+
   export type SectionCreateWithoutDestinationInput = {
     id?: string
     titre: string
@@ -19743,6 +21952,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromUserInput
   }
 
   export type UserUncheckedCreateWithoutVoyagesInput = {
@@ -19765,6 +21976,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromUserInput
   }
 
   export type UserCreateOrConnectWithoutVoyagesInput = {
@@ -19808,6 +22021,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutReviewsInput
     likes?: ReviewLikeCreateNestedManyWithoutReviewInput
+    notifications?: NotificationCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutDestinationInput = {
@@ -19818,6 +22032,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     likes?: ReviewLikeUncheckedCreateNestedManyWithoutReviewInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewCreateOrConnectWithoutDestinationInput = {
@@ -19848,6 +22063,39 @@ export namespace Prisma {
 
   export type UserVoyageCreateManyDestinationInputEnvelope = {
     data: UserVoyageCreateManyDestinationInput | UserVoyageCreateManyDestinationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutDestinationInput = {
+    type: string
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+    user: UserCreateNestedOneWithoutNotificationsInput
+    fromUser?: UserCreateNestedOneWithoutSentNotificationsInput
+    review?: ReviewCreateNestedOneWithoutNotificationsInput
+    checklistItem?: ChecklistItemCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutDestinationInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    reviewId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationCreateOrConnectWithoutDestinationInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutDestinationInput, NotificationUncheckedCreateWithoutDestinationInput>
+  }
+
+  export type NotificationCreateManyDestinationInputEnvelope = {
+    data: NotificationCreateManyDestinationInput | NotificationCreateManyDestinationInput[]
     skipDuplicates?: boolean
   }
 
@@ -19910,6 +22158,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVoyagesInput = {
@@ -19932,6 +22182,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
   export type ChecklistUpsertWithWhereUniqueWithoutVoyageInput = {
@@ -19980,6 +22232,22 @@ export namespace Prisma {
   export type UserVoyageUpdateManyWithWhereWithoutDestinationInput = {
     where: UserVoyageScalarWhereInput
     data: XOR<UserVoyageUpdateManyMutationInput, UserVoyageUncheckedUpdateManyWithoutDestinationInput>
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutDestinationInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutDestinationInput, NotificationUncheckedUpdateWithoutDestinationInput>
+    create: XOR<NotificationCreateWithoutDestinationInput, NotificationUncheckedCreateWithoutDestinationInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutDestinationInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutDestinationInput, NotificationUncheckedUpdateWithoutDestinationInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutDestinationInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutDestinationInput>
   }
 
   export type BulletPointCreateWithoutSectionInput = {
@@ -20063,6 +22331,7 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutSectionsInput = {
@@ -20078,6 +22347,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutSectionsInput = {
@@ -20187,6 +22457,7 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutSectionsInput = {
@@ -20202,6 +22473,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type SectionCreateWithoutBulletPointsInput = {
@@ -20531,6 +22803,8 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromUserInput
   }
 
   export type UserUncheckedCreateWithoutChecklistsInput = {
@@ -20553,6 +22827,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromUserInput
   }
 
   export type UserCreateOrConnectWithoutChecklistsInput = {
@@ -20573,6 +22849,7 @@ export namespace Prisma {
     utilisateur?: UserCreateNestedOneWithoutVoyagesInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutChecklistsInput = {
@@ -20588,6 +22865,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutChecklistsInput = {
@@ -20651,6 +22929,8 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChecklistsInput = {
@@ -20673,6 +22953,8 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
   export type DestinationUpsertWithoutChecklistsInput = {
@@ -20699,6 +22981,7 @@ export namespace Prisma {
     utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutChecklistsInput = {
@@ -20714,6 +22997,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type ChecklistItemCreateWithoutCategoryInput = {
@@ -20722,6 +23006,8 @@ export namespace Prisma {
     description?: string | null
     isChecked?: boolean
     reminderDate?: Date | string | null
+    reminderOffset?: number | null
+    notifications?: NotificationCreateNestedManyWithoutChecklistItemInput
   }
 
   export type ChecklistItemUncheckedCreateWithoutCategoryInput = {
@@ -20730,6 +23016,8 @@ export namespace Prisma {
     description?: string | null
     isChecked?: boolean
     reminderDate?: Date | string | null
+    reminderOffset?: number | null
+    notifications?: NotificationUncheckedCreateNestedManyWithoutChecklistItemInput
   }
 
   export type ChecklistItemCreateOrConnectWithoutCategoryInput = {
@@ -20790,6 +23078,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"ChecklistItem"> | string | null
     isChecked?: BoolFilter<"ChecklistItem"> | boolean
     reminderDate?: DateTimeNullableFilter<"ChecklistItem"> | Date | string | null
+    reminderOffset?: IntNullableFilter<"ChecklistItem"> | number | null
     categoryId?: StringFilter<"ChecklistItem"> | string
   }
 
@@ -20841,6 +23130,39 @@ export namespace Prisma {
     create: XOR<ChecklistCategoryCreateWithoutItemsInput, ChecklistCategoryUncheckedCreateWithoutItemsInput>
   }
 
+  export type NotificationCreateWithoutChecklistItemInput = {
+    type: string
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+    user: UserCreateNestedOneWithoutNotificationsInput
+    fromUser?: UserCreateNestedOneWithoutSentNotificationsInput
+    review?: ReviewCreateNestedOneWithoutNotificationsInput
+    destination?: DestinationCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutChecklistItemInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationCreateOrConnectWithoutChecklistItemInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutChecklistItemInput, NotificationUncheckedCreateWithoutChecklistItemInput>
+  }
+
+  export type NotificationCreateManyChecklistItemInputEnvelope = {
+    data: NotificationCreateManyChecklistItemInput | NotificationCreateManyChecklistItemInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ChecklistCategoryUpsertWithoutItemsInput = {
     update: XOR<ChecklistCategoryUpdateWithoutItemsInput, ChecklistCategoryUncheckedUpdateWithoutItemsInput>
     create: XOR<ChecklistCategoryCreateWithoutItemsInput, ChecklistCategoryUncheckedCreateWithoutItemsInput>
@@ -20866,6 +23188,22 @@ export namespace Prisma {
     checklistId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutChecklistItemInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutChecklistItemInput, NotificationUncheckedUpdateWithoutChecklistItemInput>
+    create: XOR<NotificationCreateWithoutChecklistItemInput, NotificationUncheckedCreateWithoutChecklistItemInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutChecklistItemInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutChecklistItemInput, NotificationUncheckedUpdateWithoutChecklistItemInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutChecklistItemInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutChecklistItemInput>
+  }
+
   export type UserCreateWithoutReviewsInput = {
     nom: string
     prenom: string
@@ -20885,6 +23223,8 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -20907,6 +23247,8 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -20927,6 +23269,7 @@ export namespace Prisma {
     utilisateur?: UserCreateNestedOneWithoutVoyagesInput
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutReviewsInput = {
@@ -20942,6 +23285,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutReviewsInput = {
@@ -20966,6 +23310,39 @@ export namespace Prisma {
 
   export type ReviewLikeCreateManyReviewInputEnvelope = {
     data: ReviewLikeCreateManyReviewInput | ReviewLikeCreateManyReviewInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutReviewInput = {
+    type: string
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+    user: UserCreateNestedOneWithoutNotificationsInput
+    fromUser?: UserCreateNestedOneWithoutSentNotificationsInput
+    destination?: DestinationCreateNestedOneWithoutNotificationsInput
+    checklistItem?: ChecklistItemCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutReviewInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationCreateOrConnectWithoutReviewInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutReviewInput, NotificationUncheckedCreateWithoutReviewInput>
+  }
+
+  export type NotificationCreateManyReviewInputEnvelope = {
+    data: NotificationCreateManyReviewInput | NotificationCreateManyReviewInput[]
     skipDuplicates?: boolean
   }
 
@@ -20999,6 +23376,8 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -21021,6 +23400,8 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
   export type DestinationUpsertWithoutReviewsInput = {
@@ -21047,6 +23428,7 @@ export namespace Prisma {
     utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutReviewsInput = {
@@ -21062,6 +23444,7 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type ReviewLikeUpsertWithWhereUniqueWithoutReviewInput = {
@@ -21078,6 +23461,22 @@ export namespace Prisma {
   export type ReviewLikeUpdateManyWithWhereWithoutReviewInput = {
     where: ReviewLikeScalarWhereInput
     data: XOR<ReviewLikeUpdateManyMutationInput, ReviewLikeUncheckedUpdateManyWithoutReviewInput>
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutReviewInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutReviewInput, NotificationUncheckedUpdateWithoutReviewInput>
+    create: XOR<NotificationCreateWithoutReviewInput, NotificationUncheckedCreateWithoutReviewInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutReviewInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutReviewInput, NotificationUncheckedUpdateWithoutReviewInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutReviewInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutReviewInput>
   }
 
   export type UserCreateWithoutReviewLikesInput = {
@@ -21099,6 +23498,8 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewLikesInput = {
@@ -21121,6 +23522,8 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewLikesInput = {
@@ -21136,6 +23539,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutReviewsInput
     destination: DestinationCreateNestedOneWithoutReviewsInput
+    notifications?: NotificationCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewUncheckedCreateWithoutLikesInput = {
@@ -21146,6 +23550,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutReviewInput
   }
 
   export type ReviewCreateOrConnectWithoutLikesInput = {
@@ -21183,6 +23588,8 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewLikesInput = {
@@ -21205,6 +23612,8 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
   export type ReviewUpsertWithoutLikesInput = {
@@ -21226,6 +23635,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
     destination?: DestinationUpdateOneRequiredWithoutReviewsNestedInput
+    notifications?: NotificationUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutLikesInput = {
@@ -21236,6 +23646,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUncheckedUpdateManyWithoutReviewNestedInput
   }
 
   export type UserCreateWithoutUserVoyagesInput = {
@@ -21257,6 +23668,8 @@ export namespace Prisma {
     checklists?: ChecklistCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromUserInput
   }
 
   export type UserUncheckedCreateWithoutUserVoyagesInput = {
@@ -21279,6 +23692,8 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
     reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromUserInput
   }
 
   export type UserCreateOrConnectWithoutUserVoyagesInput = {
@@ -21299,6 +23714,7 @@ export namespace Prisma {
     utilisateur?: UserCreateNestedOneWithoutVoyagesInput
     checklists?: ChecklistCreateNestedManyWithoutVoyageInput
     reviews?: ReviewCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationUncheckedCreateWithoutUserVoyagesInput = {
@@ -21314,6 +23730,7 @@ export namespace Prisma {
     sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
     checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutDestinationInput
   }
 
   export type DestinationCreateOrConnectWithoutUserVoyagesInput = {
@@ -21351,6 +23768,8 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserVoyagesInput = {
@@ -21373,6 +23792,8 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
     reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromUserNestedInput
   }
 
   export type DestinationUpsertWithoutUserVoyagesInput = {
@@ -21399,6 +23820,7 @@ export namespace Prisma {
     utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutUserVoyagesInput = {
@@ -21414,6 +23836,423 @@ export namespace Prisma {
     sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type UserCreateWithoutNotificationsInput = {
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromUserInput
+  }
+
+  export type UserUncheckedCreateWithoutNotificationsInput = {
+    id?: number
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type UserCreateOrConnectWithoutNotificationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type UserCreateWithoutSentNotificationsInput = {
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
+    checklists?: ChecklistCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSentNotificationsInput = {
+    id?: number
+    nom: string
+    prenom: string
+    email: string
+    password: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    bio?: string | null
+    instagram?: string | null
+    facebook?: string | null
+    youtube?: string | null
+    isPublic?: boolean
+    adventurerType?: string | null
+    avatar?: string | null
+    coverImage?: string | null
+    voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    reviewLikes?: ReviewLikeUncheckedCreateNestedManyWithoutUserInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSentNotificationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSentNotificationsInput, UserUncheckedCreateWithoutSentNotificationsInput>
+  }
+
+  export type ReviewCreateWithoutNotificationsInput = {
+    id?: string
+    rating: number
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutReviewsInput
+    destination: DestinationCreateNestedOneWithoutReviewsInput
+    likes?: ReviewLikeCreateNestedManyWithoutReviewInput
+  }
+
+  export type ReviewUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    userId: number
+    destinationId: string
+    rating: number
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likes?: ReviewLikeUncheckedCreateNestedManyWithoutReviewInput
+  }
+
+  export type ReviewCreateOrConnectWithoutNotificationsInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutNotificationsInput, ReviewUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type DestinationCreateWithoutNotificationsInput = {
+    id?: string
+    titre: string
+    pays: string
+    continent?: string | null
+    description?: string | null
+    imagePrincipale?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sections?: SectionCreateNestedManyWithoutDestinationInput
+    utilisateur?: UserCreateNestedOneWithoutVoyagesInput
+    checklists?: ChecklistCreateNestedManyWithoutVoyageInput
+    reviews?: ReviewCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageCreateNestedManyWithoutDestinationInput
+  }
+
+  export type DestinationUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    titre: string
+    pays: string
+    continent?: string | null
+    description?: string | null
+    imagePrincipale?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    utilisateurId?: number | null
+    sections?: SectionUncheckedCreateNestedManyWithoutDestinationInput
+    checklists?: ChecklistUncheckedCreateNestedManyWithoutVoyageInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutDestinationInput
+    userVoyages?: UserVoyageUncheckedCreateNestedManyWithoutDestinationInput
+  }
+
+  export type DestinationCreateOrConnectWithoutNotificationsInput = {
+    where: DestinationWhereUniqueInput
+    create: XOR<DestinationCreateWithoutNotificationsInput, DestinationUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type ChecklistItemCreateWithoutNotificationsInput = {
+    id?: string
+    titre: string
+    description?: string | null
+    isChecked?: boolean
+    reminderDate?: Date | string | null
+    reminderOffset?: number | null
+    category: ChecklistCategoryCreateNestedOneWithoutItemsInput
+  }
+
+  export type ChecklistItemUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    titre: string
+    description?: string | null
+    isChecked?: boolean
+    reminderDate?: Date | string | null
+    reminderOffset?: number | null
+    categoryId: string
+  }
+
+  export type ChecklistItemCreateOrConnectWithoutNotificationsInput = {
+    where: ChecklistItemWhereUniqueInput
+    create: XOR<ChecklistItemCreateWithoutNotificationsInput, ChecklistItemUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type UserUpsertWithoutNotificationsInput = {
+    update: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserUpdateWithoutNotificationsInput = {
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutNotificationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type UserUpsertWithoutSentNotificationsInput = {
+    update: XOR<UserUpdateWithoutSentNotificationsInput, UserUncheckedUpdateWithoutSentNotificationsInput>
+    create: XOR<UserCreateWithoutSentNotificationsInput, UserUncheckedCreateWithoutSentNotificationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSentNotificationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSentNotificationsInput, UserUncheckedUpdateWithoutSentNotificationsInput>
+  }
+
+  export type UserUpdateWithoutSentNotificationsInput = {
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
+    checklists?: ChecklistUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSentNotificationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImage?: NullableStringFieldUpdateOperationsInput | string | null
+    voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviewLikes?: ReviewLikeUncheckedUpdateManyWithoutUserNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ReviewUpsertWithoutNotificationsInput = {
+    update: XOR<ReviewUpdateWithoutNotificationsInput, ReviewUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<ReviewCreateWithoutNotificationsInput, ReviewUncheckedCreateWithoutNotificationsInput>
+    where?: ReviewWhereInput
+  }
+
+  export type ReviewUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: ReviewWhereInput
+    data: XOR<ReviewUpdateWithoutNotificationsInput, ReviewUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type ReviewUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutReviewsNestedInput
+    destination?: DestinationUpdateOneRequiredWithoutReviewsNestedInput
+    likes?: ReviewLikeUpdateManyWithoutReviewNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    destinationId?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likes?: ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput
+  }
+
+  export type DestinationUpsertWithoutNotificationsInput = {
+    update: XOR<DestinationUpdateWithoutNotificationsInput, DestinationUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<DestinationCreateWithoutNotificationsInput, DestinationUncheckedCreateWithoutNotificationsInput>
+    where?: DestinationWhereInput
+  }
+
+  export type DestinationUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: DestinationWhereInput
+    data: XOR<DestinationUpdateWithoutNotificationsInput, DestinationUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type DestinationUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sections?: SectionUpdateManyWithoutDestinationNestedInput
+    utilisateur?: UserUpdateOneWithoutVoyagesNestedInput
+    checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
+    reviews?: ReviewUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type DestinationUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    pays?: StringFieldUpdateOperationsInput | string
+    continent?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imagePrincipale?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    utilisateurId?: NullableIntFieldUpdateOperationsInput | number | null
+    sections?: SectionUncheckedUpdateManyWithoutDestinationNestedInput
+    checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
+    userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type ChecklistItemUpsertWithoutNotificationsInput = {
+    update: XOR<ChecklistItemUpdateWithoutNotificationsInput, ChecklistItemUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<ChecklistItemCreateWithoutNotificationsInput, ChecklistItemUncheckedCreateWithoutNotificationsInput>
+    where?: ChecklistItemWhereInput
+  }
+
+  export type ChecklistItemUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: ChecklistItemWhereInput
+    data: XOR<ChecklistItemUpdateWithoutNotificationsInput, ChecklistItemUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type ChecklistItemUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isChecked?: BoolFieldUpdateOperationsInput | boolean
+    reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
+    category?: ChecklistCategoryUpdateOneRequiredWithoutItemsNestedInput
+  }
+
+  export type ChecklistItemUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isChecked?: BoolFieldUpdateOperationsInput | boolean
+    reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: StringFieldUpdateOperationsInput | string
   }
 
   export type DestinationCreateManyUtilisateurInput = {
@@ -21455,6 +24294,30 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type NotificationCreateManyUserInput = {
+    id?: number
+    type: string
+    fromUserId?: number | null
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationCreateManyFromUserInput = {
+    id?: number
+    type: string
+    userId: number
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
   export type DestinationUpdateWithoutUtilisateurInput = {
     id?: StringFieldUpdateOperationsInput | string
     titre?: StringFieldUpdateOperationsInput | string
@@ -21468,6 +24331,7 @@ export namespace Prisma {
     checklists?: ChecklistUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateWithoutUtilisateurInput = {
@@ -21483,6 +24347,7 @@ export namespace Prisma {
     checklists?: ChecklistUncheckedUpdateManyWithoutVoyageNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutDestinationNestedInput
     userVoyages?: UserVoyageUncheckedUpdateManyWithoutDestinationNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutDestinationNestedInput
   }
 
   export type DestinationUncheckedUpdateManyWithoutUtilisateurInput = {
@@ -21530,6 +24395,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     destination?: DestinationUpdateOneRequiredWithoutReviewsNestedInput
     likes?: ReviewLikeUpdateManyWithoutReviewNestedInput
+    notifications?: NotificationUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutUserInput = {
@@ -21540,6 +24406,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     likes?: ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateManyWithoutUserInput = {
@@ -21583,6 +24450,76 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type NotificationUpdateWithoutUserInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    fromUser?: UserUpdateOneWithoutSentNotificationsNestedInput
+    review?: ReviewUpdateOneWithoutNotificationsNestedInput
+    destination?: DestinationUpdateOneWithoutNotificationsNestedInput
+    checklistItem?: ChecklistItemUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationUpdateWithoutFromUserInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    review?: ReviewUpdateOneWithoutNotificationsNestedInput
+    destination?: DestinationUpdateOneWithoutNotificationsNestedInput
+    checklistItem?: ChecklistItemUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutFromUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutFromUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type SectionCreateManyDestinationInput = {
     id?: string
     titre: string
@@ -21613,6 +24550,18 @@ export namespace Prisma {
     id?: number
     userId: number
     createdAt?: Date | string
+  }
+
+  export type NotificationCreateManyDestinationInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    reviewId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
   }
 
   export type SectionUpdateWithoutDestinationInput = {
@@ -21682,6 +24631,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutReviewsNestedInput
     likes?: ReviewLikeUpdateManyWithoutReviewNestedInput
+    notifications?: NotificationUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateWithoutDestinationInput = {
@@ -21692,6 +24642,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     likes?: ReviewLikeUncheckedUpdateManyWithoutReviewNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutReviewNestedInput
   }
 
   export type ReviewUncheckedUpdateManyWithoutDestinationInput = {
@@ -21718,6 +24669,41 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUpdateWithoutDestinationInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    fromUser?: UserUpdateOneWithoutSentNotificationsNestedInput
+    review?: ReviewUpdateOneWithoutNotificationsNestedInput
+    checklistItem?: ChecklistItemUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutDestinationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutDestinationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type BulletPointCreateManySectionInput = {
@@ -21850,6 +24836,7 @@ export namespace Prisma {
     description?: string | null
     isChecked?: boolean
     reminderDate?: Date | string | null
+    reminderOffset?: number | null
   }
 
   export type ChecklistItemUpdateWithoutCategoryInput = {
@@ -21858,6 +24845,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isChecked?: BoolFieldUpdateOperationsInput | boolean
     reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
+    notifications?: NotificationUpdateManyWithoutChecklistItemNestedInput
   }
 
   export type ChecklistItemUncheckedUpdateWithoutCategoryInput = {
@@ -21866,6 +24855,8 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isChecked?: BoolFieldUpdateOperationsInput | boolean
     reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
+    notifications?: NotificationUncheckedUpdateManyWithoutChecklistItemNestedInput
   }
 
   export type ChecklistItemUncheckedUpdateManyWithoutCategoryInput = {
@@ -21874,11 +24865,71 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     isChecked?: BoolFieldUpdateOperationsInput | boolean
     reminderDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reminderOffset?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type NotificationCreateManyChecklistItemInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    reviewId?: string | null
+    destinationId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type NotificationUpdateWithoutChecklistItemInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    fromUser?: UserUpdateOneWithoutSentNotificationsNestedInput
+    review?: ReviewUpdateOneWithoutNotificationsNestedInput
+    destination?: DestinationUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutChecklistItemInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutChecklistItemInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    reviewId?: NullableStringFieldUpdateOperationsInput | string | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewLikeCreateManyReviewInput = {
     id?: string
     userId: number
+  }
+
+  export type NotificationCreateManyReviewInput = {
+    id?: number
+    type: string
+    userId: number
+    fromUserId?: number | null
+    destinationId?: string | null
+    checklistItemId?: string | null
+    checklistId?: string | null
+    createdAt?: Date | string
+    isRead?: boolean
   }
 
   export type ReviewLikeUpdateWithoutReviewInput = {
@@ -21894,6 +24945,41 @@ export namespace Prisma {
   export type ReviewLikeUncheckedUpdateManyWithoutReviewInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type NotificationUpdateWithoutReviewInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    fromUser?: UserUpdateOneWithoutSentNotificationsNestedInput
+    destination?: DestinationUpdateOneWithoutNotificationsNestedInput
+    checklistItem?: ChecklistItemUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutReviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutReviewInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    destinationId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistItemId?: NullableStringFieldUpdateOperationsInput | string | null
+    checklistId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
   }
 
 

@@ -3,6 +3,7 @@ import session from 'express-session';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import cron from 'node-cron';
 
 import authRoutes from './src/routes/authRoutes.js';
 import destinationRoutes from './src/routes/destinationRoutes.js';
@@ -11,6 +12,9 @@ import destinationAdminRoutes from './src/routes/destinationAdminRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import checklistRoutes from './src/routes/checklistRoutes.js';
 import reviewsRoutes from './src/routes/reviewsRoutes.js';
+import notificationRoutes from './src/routes/notificationRoutes.js';
+import { checkChecklistReminders } from './src/jobs/checkReminders.js';
+
 
 import { attachUser } from './src/middlewares/authMiddleware.js';
 import { showAllReviews } from './src/controllers/reviewsController.js';
@@ -19,6 +23,14 @@ dotenv.config();
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+cron.schedule('0 * * * *', async () => { // toutes les heures à XX:00
+  try {
+    await checkChecklistReminders();
+  } catch (e) {
+    console.error('[CRON] Erreur lors du check des rappels checklist:', e);
+  }
+});
 
 // Middleware pour servir fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
@@ -64,6 +76,7 @@ app.use('/', adminRoutes);
 app.use('/', destinationAdminRoutes);
 app.use('/', userRoutes);
 app.use('/', checklistRoutes);
+app.use('/', notificationRoutes);
 
 // Routes API prefixées par /api
 app.use('/api', reviewsRoutes);
@@ -72,4 +85,5 @@ app.use('/api', reviewsRoutes);
 app.listen(3016, () => {
   console.log('✅ Serveur démarré sur le port 3016');
 });
-//test
+
+

@@ -48,8 +48,9 @@ export async function getAllReviews(req, res) {
 
 
 // Liker ou retirer le like d'un avis
+// Liker ou retirer le like d'un avis
 export async function toggleLikeReview(req, res) {
-  const userId = req.session.user?.id;
+  const userId = req.session.user?.id || req.user?.id; // selon ton middleware d'auth
   const { reviewId } = req.params;
 
   if (!userId) {
@@ -85,6 +86,15 @@ export async function toggleLikeReview(req, res) {
       await prisma.reviewLike.delete({
         where: { id: existingLike.id }
       });
+      // Supprime la notification associée
+      await prisma.notification.deleteMany({
+        where: {
+          type: 'like',
+          userId: review.userId,
+          fromUserId: userId,
+          reviewId: review.id
+        }
+      });
       return res.json({ liked: false });
     } else {
       await prisma.reviewLike.create({
@@ -93,6 +103,18 @@ export async function toggleLikeReview(req, res) {
           reviewId,
         }
       });
+
+      // Crée la notif sauf si le likeur est l’auteur lui-même
+      if (userId !== review.userId) {
+        await prisma.notification.create({
+          data: {
+            type: 'like',
+            userId: review.userId,       // destinataire
+            fromUserId: userId,          // celui qui a liké
+            reviewId: review.id
+          }
+        });
+      }
       return res.json({ liked: true });
     }
   } catch (error) {
@@ -169,3 +191,4 @@ export async function addReview(req, res) {
     }
   }
 }
+

@@ -210,6 +210,7 @@ exports.Prisma.ChecklistItemScalarFieldEnum = {
   description: 'description',
   isChecked: 'isChecked',
   reminderDate: 'reminderDate',
+  reminderOffset: 'reminderOffset',
   categoryId: 'categoryId'
 };
 
@@ -234,6 +235,19 @@ exports.Prisma.UserVoyageScalarFieldEnum = {
   userId: 'userId',
   destinationId: 'destinationId',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  userId: 'userId',
+  fromUserId: 'fromUserId',
+  reviewId: 'reviewId',
+  destinationId: 'destinationId',
+  checklistItemId: 'checklistItemId',
+  checklistId: 'checklistId',
+  createdAt: 'createdAt',
+  isRead: 'isRead'
 };
 
 exports.Prisma.SortOrder = {
@@ -335,6 +349,14 @@ exports.Prisma.ReviewLikeOrderByRelevanceFieldEnum = {
 exports.Prisma.UserVoyageOrderByRelevanceFieldEnum = {
   destinationId: 'destinationId'
 };
+
+exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
+  type: 'type',
+  reviewId: 'reviewId',
+  destinationId: 'destinationId',
+  checklistItemId: 'checklistItemId',
+  checklistId: 'checklistId'
+};
 exports.Role = exports.$Enums.Role = {
   user: 'user',
   admin: 'admin'
@@ -362,7 +384,8 @@ exports.Prisma.ModelName = {
   ChecklistItem: 'ChecklistItem',
   Review: 'Review',
   ReviewLike: 'ReviewLike',
-  UserVoyage: 'UserVoyage'
+  UserVoyage: 'UserVoyage',
+  Notification: 'Notification'
 };
 
 /**

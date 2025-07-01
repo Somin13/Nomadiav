@@ -1,0 +1,48 @@
+{% extends "base.twig" %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block main %}
+  <h1>Notifications</h1>
+  <ul class="notifications-list">
+    {% for notif in notifications %}
+      <li class="{% if not notif.isRead %}notif-unread{% endif %}">
+        {% if notif.type == 'like' %}
+          <div>
+            <img src="{{ notif.fromUser.avatar ? '/uploads/' ~ notif.fromUser.avatar : '/default-avatar.png' }}" class="notif-avatar" alt="Avatar" />
+            <strong>{{ notif.fromUser.prenom }} {{ notif.fromUser.nom }}</strong> a aimé votre avis !
+            <span class="notif-date">{{ notif.createdAt|date('d/m/Y H:i') }}</span>
+            <a href="/destination/{{ notif.review.destinationId }}#avis-{{ notif.review.id }}">Voir l'avis</a>
+          </div>
+
+        {% elseif notif.type == 'nouvelle_destination' %}
+          <div>
+            <span class="notif-icon">🗺️</span>
+            <strong>{{ notif.destination.titre }}</strong> – nouvelle destination ajoutée
+            <a href="/destination/{{ notif.destinationId }}">Voir</a>
+            <span class="notif-date">{{ notif.createdAt|date('d/m/Y H:i') }}</span>
+          </div>
+
+        {% elseif notif.type == 'rappel_checklist' %}
+          <div>
+            <span class="notif-icon">⏰</span>
+            <strong>Rappel :</strong>
+            {% if notif.checklistItem %}
+              L’item « <strong>{{ notif.checklistItem.titre }}</strong> » de ta check-list
+              {% if notif.destination %}
+                pour le voyage <strong>{{ notif.destination.titre }}</strong>
+              {% endif %}
+              est à faire pour le <strong>{{ notif.checklistItem.reminderDate|date('d/m/Y H:i') }}</strong>.
+              <a href="/checklist/{{ notif.checklistId }}">Voir la check-list</a>
+            {% else %}
+              Un rappel de ta check-list approche !
+            {% endif %}
+            <span class="notif-date">{{ notif.createdAt|date('d/m/Y H:i') }}</span>
+          </div>
+        {% endif %}
+      </li>
+    {% else %}
+      <li>Aucune notification pour l’instant.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
