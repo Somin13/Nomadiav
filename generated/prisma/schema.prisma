@@ -131,7 +131,7 @@ model Checklist {
   createdAt  DateTime            @default(now())
   updatedAt  DateTime            @updatedAt
 
-  user   User        @relation(fields: [userId], references: [id])
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   voyage Destination @relation(fields: [voyageId], references: [id], onDelete: Cascade)
 }
 
@@ -168,7 +168,7 @@ model Review {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  user        User        @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   destination Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
 
   likes         ReviewLike[]
@@ -180,7 +180,7 @@ model ReviewLike {
   userId   Int
   reviewId String
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
 
   @@unique([userId, reviewId]) // Un user ne peut liker qu'une fois un même review
@@ -190,7 +190,7 @@ model UserVoyage {
   id            Int         @id @default(autoincrement())
   userId        Int
   destinationId String
-  user          User        @relation(fields: [userId], references: [id])
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -202,7 +202,7 @@ model Notification {
   id              Int      @id @default(autoincrement())
   type            String
   userId          Int
-  fromUserId      Int?
+  fromUserId      Int? // <-- ce champ doit être défini AVANT la relation fromUser
   reviewId        String?
   destinationId   String?
   checklistItemId String?
@@ -210,11 +210,9 @@ model Notification {
   createdAt       DateTime @default(now())
   isRead          Boolean  @default(false)
 
-  user        User         @relation("NotifRecipient", fields: [userId], references: [id])
-  fromUser    User?        @relation("NotifSender", fields: [fromUserId], references: [id])
-  review      Review?      @relation(fields: [reviewId], references: [id])
-  destination Destination? @relation(fields: [destinationId], references: [id])
-
-  // ➕ AJOUTE CE CHAMP INVERSE :
+  user          User           @relation("NotifRecipient", fields: [userId], references: [id], onDelete: Cascade)
+  fromUser      User?          @relation("NotifSender", fields: [fromUserId], references: [id], onDelete: Cascade)
+  review        Review?        @relation(fields: [reviewId], references: [id])
+  destination   Destination?   @relation(fields: [destinationId], references: [id])
   checklistItem ChecklistItem? @relation(fields: [checklistItemId], references: [id])
 }

@@ -1,0 +1,41 @@
+
+
+{% block style %}
+<link rel="stylesheet" href="/assets/css/dashboard.css">
+{% endblock %}
+
+{% block main %}
+<div class="admin-main-content">
+  <h1>Liste des utilisateurs</h1>
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Type d'aventurier</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.nom }}</td>
+        <td>{{ user.prenom }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.adventurerType ?? 'N/A' }}</td>
+        <td>
+          <form action="/admin/users/delete/{{ user.id }}" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5">Aucun utilisateur trouvé.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

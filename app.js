@@ -7,13 +7,14 @@ import cron from 'node-cron';
 
 import authRoutes from './src/routes/authRoutes.js';
 import destinationRoutes from './src/routes/destinationRoutes.js';
-import adminRoutes from './src/routes/dashAdmRoutes.js';
+import adminRoutes from './src/routes/adminRoutes.js';
 import destinationAdminRoutes from './src/routes/destinationAdminRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import checklistRoutes from './src/routes/checklistRoutes.js';
 import reviewsRoutes from './src/routes/reviewsRoutes.js';
 import notificationRoutes from './src/routes/notificationRoutes.js';
 import { checkChecklistReminders } from './src/jobs/checkReminders.js';
+import adminUserRoutes from './src/routes/adminUserRoutes.js';
 
 
 import { attachUser } from './src/middlewares/authMiddleware.js';
@@ -77,6 +78,7 @@ app.use('/', destinationAdminRoutes);
 app.use('/', userRoutes);
 app.use('/', checklistRoutes);
 app.use('/', notificationRoutes);
+app.use('/', adminUserRoutes)
 
 // Routes API prefixées par /api
 app.use('/api', reviewsRoutes);
