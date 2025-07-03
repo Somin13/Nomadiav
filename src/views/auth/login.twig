@@ -1,8 +1,35 @@
 {% extends "base.twig" %}
 
 {% block style %}
-
-    <link rel="stylesheet" href="/assets/css/auth.css">
+  <link rel="stylesheet" href="/assets/css/auth.css">
+  <style>
+    /* Toast personnalisé */
+    .custom-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 55px;
+      transform: translateX(-50%) translateY(100px);
+      min-width: 240px;
+      max-width: 90vw;
+      background: #ffe9e6;
+      color: #c0392b;
+      padding: 1em 2em;
+      border-radius: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.12);
+      opacity: 0;
+      z-index: 9999;
+      font-size: 1.06rem;
+      transition: opacity .28s, transform .3s;
+      pointer-events: none;
+      text-align: center;
+    }
+    .custom-toast.toast-error { background: #ffd9d9; color: #c0392b; }
+    .custom-toast.toast-info  { background: #e3fcf8; color: #257a6a; }
+    .custom-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
 {% endblock %}
 
 {% block title %}Connexion – Nomadia{% endblock %}
@@ -10,17 +37,38 @@
 {% block main %}
 
 <div>
-<h1>Connexion</h1>
+  <h1>Connexion</h1>
   <div class="divForm">
     <form action="/login" method="POST" class="space-y-4">
       <input name="email" type="email" placeholder="Email">
       <input name="password" type="password" placeholder="Mot de passe">
       <button type="submit">Se connecter</button>
     </form>
-    
   </div>
   <p>Pas encore de compte ? <a href="/signup">Créer un compte</a></p>
-  </div>
+</div>
 
+{% if toast %}
+  <div id="toast" data-type="{{ toast.type }}" data-message="{{ toast.message|e('js') }}"></div>
+{% endif %}
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const toastDiv = document.getElementById('toast');
+  if (toastDiv) {
+    showToast(toastDiv.dataset.message, toastDiv.dataset.type);
+  }
+  function showToast(msg, type = 'info') {
+    const t = document.createElement('div');
+    t.className = 'custom-toast ' + (type === 'error' ? 'toast-error' : 'toast-info');
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 350);
+    }, 2500);
+  }
+});
+</script>
 {% endblock %}

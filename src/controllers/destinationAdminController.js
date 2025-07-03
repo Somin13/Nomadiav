@@ -188,8 +188,14 @@ export async function getDestinationById(req, res) {
 // ✅ Affiche toutes les destinations + nombre utilisateurs
 export async function showAllDestinations(req, res) {
   try {
+    // 🟠 AJOUTE ICI L'INCLUDE POUR LES REVIEWS :
     const destinations = await prisma.destination.findMany({
       orderBy: { createdAt: 'desc' },
+      include: {
+        _count: {
+          select: { reviews: true }
+        }
+      }
     });
     const userCount = await prisma.user.count();
     res.render('dashAdm', { destinations, userCount });
@@ -198,6 +204,7 @@ export async function showAllDestinations(req, res) {
     res.status(500).send('Erreur serveur');
   }
 }
+
 
 // ✅ Supprime une destination avec toutes ses données liées
 export async function deleteDestination(req, res) {

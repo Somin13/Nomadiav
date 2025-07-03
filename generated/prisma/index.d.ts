@@ -2371,6 +2371,7 @@ export namespace Prisma {
     youtube: string | null
     isPublic: boolean | null
     adventurerType: string | null
+    isBanned: boolean | null
     avatar: string | null
     coverImage: string | null
   }
@@ -2389,6 +2390,7 @@ export namespace Prisma {
     youtube: string | null
     isPublic: boolean | null
     adventurerType: string | null
+    isBanned: boolean | null
     avatar: string | null
     coverImage: string | null
   }
@@ -2407,6 +2409,7 @@ export namespace Prisma {
     youtube: number
     isPublic: number
     adventurerType: number
+    isBanned: number
     avatar: number
     coverImage: number
     _all: number
@@ -2435,6 +2438,7 @@ export namespace Prisma {
     youtube?: true
     isPublic?: true
     adventurerType?: true
+    isBanned?: true
     avatar?: true
     coverImage?: true
   }
@@ -2453,6 +2457,7 @@ export namespace Prisma {
     youtube?: true
     isPublic?: true
     adventurerType?: true
+    isBanned?: true
     avatar?: true
     coverImage?: true
   }
@@ -2471,6 +2476,7 @@ export namespace Prisma {
     youtube?: true
     isPublic?: true
     adventurerType?: true
+    isBanned?: true
     avatar?: true
     coverImage?: true
     _all?: true
@@ -2576,6 +2582,7 @@ export namespace Prisma {
     youtube: string | null
     isPublic: boolean
     adventurerType: string | null
+    isBanned: boolean
     avatar: string | null
     coverImage: string | null
     _count: UserCountAggregateOutputType | null
@@ -2613,6 +2620,7 @@ export namespace Prisma {
     youtube?: boolean
     isPublic?: boolean
     adventurerType?: boolean
+    isBanned?: boolean
     avatar?: boolean
     coverImage?: boolean
     voyages?: boolean | User$voyagesArgs<ExtArgs>
@@ -2641,11 +2649,12 @@ export namespace Prisma {
     youtube?: boolean
     isPublic?: boolean
     adventurerType?: boolean
+    isBanned?: boolean
     avatar?: boolean
     coverImage?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nom" | "prenom" | "email" | "password" | "role" | "createdAt" | "bio" | "instagram" | "facebook" | "youtube" | "isPublic" | "adventurerType" | "avatar" | "coverImage", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nom" | "prenom" | "email" | "password" | "role" | "createdAt" | "bio" | "instagram" | "facebook" | "youtube" | "isPublic" | "adventurerType" | "isBanned" | "avatar" | "coverImage", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     voyages?: boolean | User$voyagesArgs<ExtArgs>
     checklists?: boolean | User$checklistsArgs<ExtArgs>
@@ -2682,6 +2691,7 @@ export namespace Prisma {
       youtube: string | null
       isPublic: boolean
       adventurerType: string | null
+      isBanned: boolean
       avatar: string | null
       coverImage: string | null
     }, ExtArgs["result"]["user"]>
@@ -3073,6 +3083,7 @@ export namespace Prisma {
     readonly youtube: FieldRef<"User", 'String'>
     readonly isPublic: FieldRef<"User", 'Boolean'>
     readonly adventurerType: FieldRef<"User", 'String'>
+    readonly isBanned: FieldRef<"User", 'Boolean'>
     readonly avatar: FieldRef<"User", 'String'>
     readonly coverImage: FieldRef<"User", 'String'>
   }
@@ -16720,6 +16731,7 @@ export namespace Prisma {
     youtube: 'youtube',
     isPublic: 'isPublic',
     adventurerType: 'adventurerType',
+    isBanned: 'isBanned',
     avatar: 'avatar',
     coverImage: 'coverImage'
   };
@@ -17108,6 +17120,7 @@ export namespace Prisma {
     youtube?: StringNullableFilter<"User"> | string | null
     isPublic?: BoolFilter<"User"> | boolean
     adventurerType?: StringNullableFilter<"User"> | string | null
+    isBanned?: BoolFilter<"User"> | boolean
     avatar?: StringNullableFilter<"User"> | string | null
     coverImage?: StringNullableFilter<"User"> | string | null
     voyages?: DestinationListRelationFilter
@@ -17133,6 +17146,7 @@ export namespace Prisma {
     youtube?: SortOrderInput | SortOrder
     isPublic?: SortOrder
     adventurerType?: SortOrderInput | SortOrder
+    isBanned?: SortOrder
     avatar?: SortOrderInput | SortOrder
     coverImage?: SortOrderInput | SortOrder
     voyages?: DestinationOrderByRelationAggregateInput
@@ -17162,6 +17176,7 @@ export namespace Prisma {
     youtube?: StringNullableFilter<"User"> | string | null
     isPublic?: BoolFilter<"User"> | boolean
     adventurerType?: StringNullableFilter<"User"> | string | null
+    isBanned?: BoolFilter<"User"> | boolean
     avatar?: StringNullableFilter<"User"> | string | null
     coverImage?: StringNullableFilter<"User"> | string | null
     voyages?: DestinationListRelationFilter
@@ -17187,6 +17202,7 @@ export namespace Prisma {
     youtube?: SortOrderInput | SortOrder
     isPublic?: SortOrder
     adventurerType?: SortOrderInput | SortOrder
+    isBanned?: SortOrder
     avatar?: SortOrderInput | SortOrder
     coverImage?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -17213,6 +17229,7 @@ export namespace Prisma {
     youtube?: StringNullableWithAggregatesFilter<"User"> | string | null
     isPublic?: BoolWithAggregatesFilter<"User"> | boolean
     adventurerType?: StringNullableWithAggregatesFilter<"User"> | string | null
+    isBanned?: BoolWithAggregatesFilter<"User"> | boolean
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
     coverImage?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
@@ -18088,6 +18105,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
@@ -18113,6 +18131,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
@@ -18137,6 +18156,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
@@ -18162,6 +18182,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
@@ -18187,6 +18208,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
   }
@@ -18204,6 +18226,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -18222,6 +18245,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -19188,6 +19212,7 @@ export namespace Prisma {
     youtube?: SortOrder
     isPublic?: SortOrder
     adventurerType?: SortOrder
+    isBanned?: SortOrder
     avatar?: SortOrder
     coverImage?: SortOrder
   }
@@ -19210,6 +19235,7 @@ export namespace Prisma {
     youtube?: SortOrder
     isPublic?: SortOrder
     adventurerType?: SortOrder
+    isBanned?: SortOrder
     avatar?: SortOrder
     coverImage?: SortOrder
   }
@@ -19228,6 +19254,7 @@ export namespace Prisma {
     youtube?: SortOrder
     isPublic?: SortOrder
     adventurerType?: SortOrder
+    isBanned?: SortOrder
     avatar?: SortOrder
     coverImage?: SortOrder
   }
@@ -21946,6 +21973,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     checklists?: ChecklistCreateNestedManyWithoutUserInput
@@ -21970,6 +21998,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     checklists?: ChecklistUncheckedCreateNestedManyWithoutUserInput
@@ -22152,6 +22181,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     checklists?: ChecklistUpdateManyWithoutUserNestedInput
@@ -22176,6 +22206,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     checklists?: ChecklistUncheckedUpdateManyWithoutUserNestedInput
@@ -22797,6 +22828,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
@@ -22821,6 +22853,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
@@ -22923,6 +22956,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
@@ -22947,6 +22981,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
@@ -23217,6 +23252,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
@@ -23241,6 +23277,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
@@ -23370,6 +23407,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
@@ -23394,6 +23432,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
@@ -23492,6 +23531,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
@@ -23516,6 +23556,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
@@ -23582,6 +23623,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
@@ -23606,6 +23648,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
@@ -23662,6 +23705,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
@@ -23686,6 +23730,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
@@ -23762,6 +23807,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
@@ -23786,6 +23832,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
@@ -23852,6 +23899,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
@@ -23876,6 +23924,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
@@ -23904,6 +23953,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationCreateNestedManyWithoutUtilisateurInput
@@ -23928,6 +23978,7 @@ export namespace Prisma {
     youtube?: string | null
     isPublic?: boolean
     adventurerType?: string | null
+    isBanned?: boolean
     avatar?: string | null
     coverImage?: string | null
     voyages?: DestinationUncheckedCreateNestedManyWithoutUtilisateurInput
@@ -24056,6 +24107,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
@@ -24080,6 +24132,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput
@@ -24114,6 +24167,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUpdateManyWithoutUtilisateurNestedInput
@@ -24138,6 +24192,7 @@ export namespace Prisma {
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     adventurerType?: NullableStringFieldUpdateOperationsInput | string | null
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     coverImage?: NullableStringFieldUpdateOperationsInput | string | null
     voyages?: DestinationUncheckedUpdateManyWithoutUtilisateurNestedInput

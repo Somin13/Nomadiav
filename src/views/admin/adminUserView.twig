@@ -1,12 +1,27 @@
 
 
 {% block style %}
-<link rel="stylesheet" href="/assets/css/dashboard.css">
+<link rel="stylesheet" href="/assets/css/adminView.css">
 {% endblock %}
 
 {% block main %}
+ 
+
 <div class="admin-main-content">
-  <h1>Liste des utilisateurs</h1>
+ <!-- ✅ SIDEBAR FIXE À GAUCHE -->
+  <aside class="admin-sidebar">
+    <h2 class="sidebar-title">Admin</h2>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="/dashAdm">🏝 Destinations</a></li>
+<li><a href="/admin/adminUserView">👥 Utilisateurs</a></li>
+        <li><a href="/logout">🚪 Déconnexion</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="admin-contain">
+   <h1>Liste des utilisateurs</h1>
   <table class="users-table">
     <thead>
       <tr>
@@ -17,25 +32,35 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody>
-      {% for user in users %}
+   <tbody>
+  {% set hasUser = false %}
+  {% for user in users %}
+    {% if user.role != 'admin' %}
+      {% set hasUser = true %}
       <tr>
         <td>{{ user.nom }}</td>
         <td>{{ user.prenom }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.adventurerType ?? 'N/A' }}</td>
-        <td>
-          <form action="/admin/users/delete/{{ user.id }}" method="POST" style="display:inline;">
-            <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</button>
-          </form>
-        </td>
+       <td>
+  <a href="/admin/users/{{ user.id }}" class="btn-view" title="Voir le profil">👁 Voir</a>
+  <form action="/admin/users/delete/{{ user.id }}" method="POST" style="display:inline;">
+    <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</button>
+  </form>
+</td>
+
       </tr>
-      {% else %}
-      <tr>
-        <td colspan="5">Aucun utilisateur trouvé.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
+    {% endif %}
+  {% endfor %}
+  {% if not hasUser %}
+    <tr>
+      <td colspan="5">Aucun utilisateur trouvé.</td>
+    </tr>
+  {% endif %}
+</tbody>
+
   </table>
+  </main>
+ 
 </div>
 {% endblock %}

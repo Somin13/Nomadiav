@@ -44,37 +44,40 @@ export async function handleSignup(req, res) {
   res.redirect('/login');
 }
 
+// Ajoute en haut si besoin
+// import flash from 'connect-flash';
+
 export async function handleLogin(req, res) {
   const { email, password } = req.body;
 
   const user = await prisma.user.findUnique({ where: { email } });
 
   if (!user) {
-    return res.status(401).send('Utilisateur introuvable.');
+    req.session.toast = { type: 'error', message: 'Utilisateur introuvable.' };
+    return res.redirect('/login');
+  }
+
+  if (user.isBanned) {
+    req.session.toast = { type: 'error', message: 'Votre compte a été banni.' };
+    return res.redirect('/login');
   }
 
   const valid = await comparePassword(password, user.password);
   if (!valid) {
-    return res.status(401).send('Mot de passe incorrect.');
+    req.session.toast = { type: 'error', message: 'Mot de passe incorrect.' };
+    return res.redirect('/login');
   }
 
   req.session.user = user;
   req.session.role = user.role;
 
-  //  Redirection vers /dashAdm
   if (user.role === 'admin') {
-
-  res.redirect('/dashAdm');
-
-} else {
-
-
-  res.redirect('/userBoard');
-
-  
+    return res.redirect('/dashAdm');
+  } else {
+    return res.redirect('/userBoard');
+  }
 }
 
-}
 
 // Déconnecte l'utilisateur en détruisant la session
 export function logoutUser(req, res) {

@@ -70,34 +70,40 @@
 
     <a href="/admin/destinations/add" class="btn-ajouter">➕ Ajouter une destination</a>
 
-    <table class="destinations-table">
-      <thead>
-        <tr>
-          <th>Destination</th>
-          <th>Pays</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for dest in destinations %}
-          <tr>
-            <td>{{ dest.titre }}</td>
-            <td>{{ dest.pays }}</td>
-            <td>
-              <a href="/admin/destinations/edit/{{ dest.id }}">✏️ Modifier</a>
-              |
-              <form action="/admin/destinations/delete/{{ dest.id }}" method="POST" style="display:inline;">
-                <button type="submit" onclick="return confirm('Supprimer cette destination ?')">🗑 Supprimer</button>
-              </form>
-            </td>
-          </tr>
-        {% else %}
-          <tr>
-            <td colspan="3">Aucune destination pour le moment.</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+   <table class="destinations-table">
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Pays</th>
+      <th>Commentaires</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dest in destinations %}
+      <tr>
+        <td>{{ dest.titre }}</td>
+        <td>{{ dest.pays }}</td>
+        <td style="text-align:center;">
+          {{ dest._count.reviews ?? 0 }}
+          <a href="/admin/destinations/{{ dest.id }}/reviews" class="admin-btn" style="margin-left:8px;padding:0.2em 0.8em;font-size:0.96em;">Voir les avis</a>
+        </td>
+        <td>
+          <a href="/admin/destinations/edit/{{ dest.id }}">✏️ Modifier</a>
+          |
+          <form action="/admin/destinations/delete/{{ dest.id }}" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Supprimer cette destination ?')">🗑 Supprimer</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="4">Aucune destination pour le moment.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
   </main>
 
 </div>

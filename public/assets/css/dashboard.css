@@ -168,6 +168,24 @@ a:hover {
   color: #555;
 }
 
+.admin-btn {
+  background: #ffe8db;
+  color: #ff6d2e;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+  text-decoration: none;
+  margin-left: 0.4em;
+}
+.admin-btn:hover {
+  background: #ffdabd;
+  color: #792f1d;
+  text-decoration: underline;
+}
+
+
 /* --- ANIMATION --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

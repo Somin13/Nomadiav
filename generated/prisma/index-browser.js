@@ -134,6 +134,7 @@ exports.Prisma.UserScalarFieldEnum = {
   youtube: 'youtube',
   isPublic: 'isPublic',
   adventurerType: 'adventurerType',
+  isBanned: 'isBanned',
   avatar: 'avatar',
   coverImage: 'coverImage'
 };

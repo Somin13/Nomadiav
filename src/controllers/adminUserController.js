@@ -29,3 +29,85 @@ export async function deleteUserById(req, res) {
     res.status(500).send("Erreur lors de la suppression");
   }
 }
+
+// GET : Afficher le profil complet d’un utilisateur pour l’admin
+export async function viewUserProfile(req, res) {
+  const { id } = req.params;
+  try {
+    // On récupère tout ce que tu veux afficher (à adapter selon tes modèles)
+    const user = await prisma.user.findUnique({
+      where: { id: Number(id) },
+      include: {
+        voyages: true,     // Affiche ses voyages (si tu veux)
+        checklists: true,  // Idem pour ses checklists
+        // reviews: true,  // Tu peux ajouter reviews, ou autres relations si besoin
+      }
+    });
+
+    if (!user) {
+      return res.status(404).render('404.twig', { message: "Utilisateur introuvable" });
+    }
+
+    res.render('admin/adminUserProfile.twig', { user });
+  } catch (err) {
+    console.error('Erreur viewUserProfile:', err);
+    res.status(500).send("Erreur lors de l'affichage du profil utilisateur");
+  }
+}
+
+// Affiche tous les avis d’une destination pour l’admin
+export async function viewDestinationReviews(req, res) {
+  const { destinationId } = req.params;
+  try {
+    const destination = await prisma.destination.findUnique({
+      where: { id: destinationId },
+      select: { titre: true }
+    });
+    const reviews = await prisma.review.findMany({
+      where: { destinationId },
+      include: {
+        user: true,
+        likes: true,
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+    res.render('admin/adminDestinationReviews.twig', { destination, reviews, destinationId });
+  } catch (err) {
+    res.status(500).send("Erreur serveur");
+  }
+}
+
+// Pour supprimer un avis
+export async function deleteReview(req, res) {
+  const { reviewId } = req.params;
+  const { destinationId } = req.body; // si tu veux rediriger après
+  try {
+    await prisma.review.delete({ where: { id: Number(reviewId) } });
+    res.redirect(`/admin/destinations/${destinationId}/reviews`);
+  } catch (err) {
+    res.status(500).send("Erreur suppression avis");
+  }
+}
+
+// Bannir un utilisateur par son ID
+export async function banUser(req, res) {
+  const { userId } = req.params;
+  const { destinationId } = req.body; // pour la redirection
+
+  // Empêcher de bannir l’admin (ou soi-même, si tu veux)
+  if (req.session.user && Number(userId) === req.session.user.id) {
+    return res.status(403).send("Impossible de se bannir soi-même.");
+  }
+
+  try {
+    await prisma.user.update({
+      where: { id: Number(userId) },
+      data: { isBanned: true }
+    });
+    res.redirect(`/admin/destinations/${destinationId}/reviews`);
+  } catch (err) {
+    console.error('Erreur banUser:', err);
+    res.status(500).send("Erreur lors du bannissement");
+  }
+}
+

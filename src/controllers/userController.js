@@ -115,37 +115,6 @@ export async function uploadCover(req, res) {
   }
 }
 
-
-// ✏️ Met à jour les infos du profil
-// export async function updateUserProfile(req, res) {
-//   try {
-//     const userId = req.user.id
-//     const { nom, prenom, bio, instagram, facebook, youtube } = req.body
-
-//     const avatarFile = req.files?.avatar?.[0]
-//     const coverFile = req.files?.coverImage?.[0]
-
-//     const avatar = avatarFile ? '/uploads/' + avatarFile.filename : undefined
-//     const coverImage = coverFile ? '/uploads/' + coverFile.filename : undefined
-
-//     await updateUserInfo(userId, {
-//       nom,
-//       prenom,
-//       bio,
-//       instagram,
-//       facebook,
-//       youtube,
-//       avatar,
-//       coverImage
-//     })
-
-//     res.redirect('/profil')
-//   } catch (err) {
-//     console.error("❌ Erreur updateUserProfile :", err)
-//     res.status(400).send("Erreur lors de la mise à jour du profil")
-//   }
-// }
-
 export async function updateUserProfile(req, res) {
   try {
     const userId = req.user.id;

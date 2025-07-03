@@ -23,6 +23,7 @@ model User {
   youtube        String?
   isPublic       Boolean  @default(true)
   adventurerType String?
+  isBanned   Boolean  @default(false)
 
   // ➕ CHAMPS IMAGES
   avatar         String?   // ex: "user123.jpg"

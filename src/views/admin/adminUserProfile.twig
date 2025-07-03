@@ -1,0 +1,128 @@
+
+
+
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/profil.css">
+  <style>
+    .admin-banner-info {
+      display: flex; align-items: center; gap: 2rem; margin-bottom: 1.5rem;
+    }
+    .admin-back-btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 12px;
+      background: #fff5ec;
+      color: #ff6d2e;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s, color 0.2s;
+      margin-bottom: 1.3rem;
+      display: inline-block;
+    }
+    .admin-back-btn:hover {
+      background: #ffe2d0;
+      color: #792f1d;
+      text-decoration: underline;
+    }
+    .admin-profile-label { color: #b86428; font-weight: 600; margin-right: 0.6em;}
+    .admin-section-title { margin: 2rem 0 1rem; color: #cc7722; font-size: 1.2rem; }
+    .profile-banner .edit-icon, .profile-drawer, .modal { display: none !important; } /* cache les boutons edit/drawer pour l’admin */
+  </style>
+{% endblock %}
+
+{% block main %}
+<div class="profile-wrapper">
+
+  <a href="/admin/adminUserView" class="admin-back-btn">← Retour à la liste</a>
+  
+  <!-- === EN-TÊTE PROFIL === -->
+  <div class="profile-banner">
+    <img src="{{ user.coverImage ?? '/uploads/default-cover.jpg' }}" alt="Couverture" class="cover-img">
+    <div class="avatar-wrapper">
+      <img src="{{ user.avatar ?? '/uploads/default-avatar.png' }}" alt="Avatar" class="avatar-img">
+    </div>
+  </div>
+  
+  <div class="info-bio">
+    <h1 class="profile-name">{{ user.prenom }} {{ user.nom }}</h1>
+    <p class="bio">{{ user.bio }}</p>
+    <div style="margin:1.1em 0 0.7em 0;">
+      <span class="admin-profile-label">Email :</span> {{ user.email }}
+    </div>
+    {% if user.instagram or user.youtube or user.facebook %}
+      <div class="social-grid">
+        {% if user.instagram %}
+          <a href="{{ user.instagram }}" target="_blank" aria-label="Instagram">
+            <img src="/image/instagram.webp" alt="Instagram">
+          </a>
+        {% endif %}
+        {% if user.youtube %}
+          <a href="{{ user.youtube }}" target="_blank" aria-label="YouTube">
+            <img src="/image/youtube-play(1).png" alt="YouTube">
+          </a>
+        {% endif %}
+        {% if user.facebook %}
+          <a href="{{ user.facebook }}" target="_blank" aria-label="Facebook">
+            <img src="/image/facebook-new(1).png" alt="Facebook">
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- === STATS PROFIL === -->
+  <div class="profile-stats">
+    <div class="stat-block">
+      <div class="stat-label">{{ user.adventurerType ?? 'Aventurier' }}</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat-block">
+      <div class="stat-value">{{ user.userVoyages | length }}</div>
+      <div class="stat-label">Voyages</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat-block">
+      <div class="stat-label">Profil public :</div>
+      <div class="stat-value">{{ user.isPublic ? "Oui" : "Non" }}</div>
+    </div>
+  </div>
+
+  <!-- === SECTION VOYAGES === -->
+  <section class="profile-section">
+    <h2 class="admin-section-title">Prochains voyages</h2>
+    <div class="voyage-list">
+      {% for trip in user.userVoyages %}
+        {% set voyage = trip.destination %}
+        {% set imagePath = voyage.imagePrincipale starts with '/uploads/' ? voyage.imagePrincipale : '/uploads/' ~ voyage.imagePrincipale %}
+        <a href="/destination/{{ voyage.id }}" class="voyage-card" style="background-image: url('{{ imagePath }}')">
+          <div class="overlay">
+            <h3>{{ voyage.titre }}</h3>
+            <p>{{ voyage.pays }}</p>
+          </div>
+        </a>
+      {% else %}
+        <p>Aucun voyage prévu pour le moment.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- === SECTION CHECKLISTS (exemple, si tu veux voir ce qu'il a créé) === -->
+  {% if user.checklists and user.checklists|length > 0 %}
+  <section class="profile-section">
+    <h2 class="admin-section-title">Checklists</h2>
+    <ul>
+      {% for checklist in user.checklists %}
+        <li>
+          <span class="admin-profile-label">{{ checklist.titre }}</span>
+          {% if checklist.items %}
+            ({{ checklist.items|length }} items)
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <!-- Tu peux rajouter d’autres blocs admin ici selon ce que tu veux voir (reviews, date d’inscription, etc) -->
+
+</div>
+{% endblock %}
