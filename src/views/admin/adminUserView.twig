@@ -1,0 +1,45 @@
+{% extends "baseAdmin.twig" %}
+
+{% block style %}
+  <link rel="stylesheet" href="/assets/css/adminView.css">
+{% endblock %}
+
+{% block main %}
+  <h1>Liste des utilisateurs</h1>
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Type d'aventurier</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set hasUser = false %}
+      {% for user in users %}
+        {% if user.role != 'admin' %}
+          {% set hasUser = true %}
+          <tr>
+            <td>{{ user.nom }}</td>
+            <td>{{ user.prenom }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.adventurerType ?? 'N/A' }}</td>
+            <td>
+              <a href="/admin/users/{{ user.id }}" class="btn-view" title="Voir le profil">👁 Voir</a>
+              <form action="/admin/users/delete/{{ user.id }}" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</button>
+              </form>
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+      {% if not hasUser %}
+        <tr>
+          <td colspan="5">Aucun utilisateur trouvé.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+{% endblock %}

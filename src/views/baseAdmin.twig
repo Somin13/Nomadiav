@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Nomadia{% endblock %}</title>
 
-  <link rel="stylesheet" href="/assets/css/header.css"> 
-  <link rel="stylesheet" href="/assets/css/footer.css">
+
 
   
 
-  {% block style %}{% endblock %}
+  {% block style %}
+
+
+  {% endblock %}
+      <link rel="stylesheet" href="/assets/css/dashboard.css">
+
 
   {# === Toast CSS intégré ici pour éviter un fichier externe (tu peux extraire après) === #}
  <style>
@@ -113,7 +117,8 @@
 </head>
 <body class="bg-beige text-brun font-sans">
 
-  {% include "partials/header.twig" %}
+
+
 
   {# === TOASTS FLASH === #}
   <div class="toast-container" id="toast-container">
@@ -141,13 +146,18 @@
   </div>
   {# === FIN TOASTS === #}
 
-  <main class="min-h-[80vh]">
-    {% block main %}{% endblock %}
-  </main>
+ <div class="main-container">
+    {# === Inclusion de la sidebar admin === #}
+    {% include 'partials/headerAdmin.twig' %}
+   
 
-  {% if user %}
-    {% include "partials/footer.twig" %}
-  {% endif %}
+    {# === Zone de contenu principal #}
+    <main class="admin-main-content">
+      {% block main %}{% endblock %}
+    </main>
+  </div>
+
+
 
   {# === Script toast (auto-disparition & fermeture manuelle) === #}
   <script>

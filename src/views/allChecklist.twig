@@ -3,7 +3,7 @@
 {% block title %}Toutes mes check-lists{% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" href="/assets/css/checklist.css">
+  <link rel="stylesheet" href="/assets/css/allChecklist.css">
 {% endblock %}
 
 {% block main %}
@@ -26,7 +26,7 @@
   </p>
   <a href="/checklist/{{ checklist.id }}" class="btn">Voir la check-list</a>
   <form action="/checklist/{{ checklist.id }}/delete" method="POST" style="display:inline;">
-    <button type="submit" class="btn btn-danger" onclick="return confirm('Supprimer cette check-list ?')">Supprimer</button>
+    <button type="submit" class="btn btn-danger ">Supprimer</button>
   </form>
 </div>
 

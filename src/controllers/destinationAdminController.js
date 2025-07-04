@@ -1,43 +1,59 @@
-import prisma from '../config/prisma.js'; // ✅ À ne déclarer qu'une seule fois
-
+import prisma from '../config/prisma.js';
 
 // ✅ Affiche le formulaire
 export function renderAddDestination(req, res) {
   res.render('admin/addDestination');
 }
 
+<<<<<<< Updated upstream
 // ✅ Traite l’ajout complet d’une destination
 export async function handleAddDestination(req, res) {
   try {
     const { titre, pays, continent, description } = req.body;
 
+=======
+// Ajout complet d'une destination + notifications à tous les users (sauf admin)
+export async function handleAddDestination(req, res) {
+  try {
+    const { titre, pays, continent, description } = req.body;
+>>>>>>> Stashed changes
     const imagePrincipaleFile = req.files.find(f => f.fieldname === 'imagePrincipale');
     const imagePrincipale = imagePrincipaleFile ? '/uploads/' + imagePrincipaleFile.filename : null;
 
     const destination = await prisma.destination.create({
-      data: {
-        titre,
-        pays,
-        continent,
-        description,
-        imagePrincipale,
-      },
+      data: { titre, pays, continent, description, imagePrincipale },
     });
 
-    const parseField = (field) => {
-      try {
-        return typeof field === 'string' ? JSON.parse(field) : field;
-      } catch {
-        return field;
-      }
-    };
+<<<<<<< Updated upstream
+=======
+    // 2️⃣ NOTIFICATION "nouvelle_destination" envoyée à tous les utilisateurs sauf l'admin qui ajoute
+    const adminId = req.user?.id || req.session.user?.id;
+    const allUsers = await prisma.user.findMany({ where: { id: { not: adminId } } });
+    const notificationsData = allUsers.map(user => ({
+      type: 'nouvelle_destination',
+      userId: user.id,
+      fromUserId: adminId,
+      destinationId: destination.id,
+    }));
+    if (notificationsData.length > 0) {
+      await prisma.notification.createMany({ data: notificationsData });
+    }
 
+    // 3️⃣ Traitement des sections, bullet points, groupes, images
+>>>>>>> Stashed changes
+    const parseField = (field) => {
+      try { return typeof field === 'string' ? JSON.parse(field) : field; }
+      catch { return field; }
+    };
     const sectionsRaw = req.body.sections || [];
     const sections = Array.isArray(sectionsRaw)
       ? sectionsRaw.map(parseField)
       : [parseField(sectionsRaw)];
+<<<<<<< Updated upstream
 
     // ✅ Enum Prisma : Types valides
+=======
+>>>>>>> Stashed changes
     const allowedTypes = ['GUIDE', 'PRESENTATION', 'ACCES', 'FORMALITES', 'CONSEILS', 'POURQUOI'];
 
     for (let i = 0; i < sections.length; i++) {
@@ -46,7 +62,10 @@ export async function handleAddDestination(req, res) {
       const formattedType = (sectionData.type || 'GUIDE').toUpperCase();
       const finalType = allowedTypes.includes(formattedType) ? formattedType : 'GUIDE';
 
+<<<<<<< Updated upstream
       // ✅ Création section
+=======
+>>>>>>> Stashed changes
       const newSection = await prisma.section.create({
         data: {
           titre: sectionData.titre,
@@ -79,7 +98,6 @@ export async function handleAddDestination(req, res) {
             sectionId: newSection.id,
           },
         });
-
         const contents = groups[j].contenus || [];
         for (let k = 0; k < contents.length; k++) {
           await prisma.bulletPointContent.create({
@@ -104,16 +122,24 @@ export async function handleAddDestination(req, res) {
       }
     }
 
+<<<<<<< Updated upstream
+=======
+    req.flash('success', 'Destination ajoutée avec succès !'); // ✅
+>>>>>>> Stashed changes
     res.redirect('/dashAdm');
   } catch (err) {
     console.error('❌ Erreur lors de l’ajout complet de la destination :', err);
-    res.status(500).send("Erreur lors de l’ajout de la destination");
+    req.flash('error', "Erreur lors de l’ajout de la destination.");
+    res.redirect('/dashAdm');
   }
 }
 
+<<<<<<< Updated upstream
 
 
 
+=======
+>>>>>>> Stashed changes
 // ✅ Contrôleur : Affiche une destination complète pour l'utilisateur
 export async function getDestinationById(req, res) {
   const id = req.params.id;
@@ -126,24 +152,19 @@ export async function getDestinationById(req, res) {
           orderBy: { ordre: 'asc' },
           include: {
             images: true,
-            groupedPoints: { // ✅ CORRECT
+            groupedPoints: {
               orderBy: { ordre: 'asc' },
-              include: {
-                contents: {
-                  orderBy: { ordre: 'asc' }
-                }
-              }
+              include: { contents: { orderBy: { ordre: 'asc' } } }
             },
-            bulletPoints: {
-              orderBy: { ordre: 'asc' }
-            }
+            bulletPoints: { orderBy: { ordre: 'asc' } }
           }
         }
       }
     });
 
     if (!destination) {
-      return res.status(404).render('error.twig', { message: 'Destination introuvable' });
+      req.flash('error', 'Destination introuvable.');
+      return res.redirect('/dashAdm');
     }
 
     const mainImagePath = destination.imagePrincipale?.startsWith('/uploads/')
@@ -156,24 +177,27 @@ export async function getDestinationById(req, res) {
     });
   } catch (err) {
     console.error('❌ Erreur affichage destination :', err);
-    res.status(500).send("Erreur serveur");
+    req.flash('error', 'Erreur lors de l\'affichage de la destination.');
+    res.redirect('/dashAdm');
   }
 }
-
-
-
 
 // ✅ Affiche toutes les destinations + nombre utilisateurs
 export async function showAllDestinations(req, res) {
   try {
     const destinations = await prisma.destination.findMany({
       orderBy: { createdAt: 'desc' },
+<<<<<<< Updated upstream
+=======
+      include: { _count: { select: { reviews: true } } }
+>>>>>>> Stashed changes
     });
     const userCount = await prisma.user.count();
     res.render('dashAdm', { destinations, userCount });
   } catch (err) {
     console.error('❌ Erreur récupération dashboard admin :', err);
-    res.status(500).send('Erreur serveur');
+    req.flash('error', 'Erreur lors du chargement des destinations.');
+    res.redirect('/dashAdm');
   }
 }
 
@@ -181,57 +205,32 @@ export async function showAllDestinations(req, res) {
 export async function deleteDestination(req, res) {
   const id = req.params.id;
   try {
-    // 🧱 Récupère toutes les sections de la destination
     const sections = await prisma.section.findMany({
       where: { destinationId: id },
       select: { id: true }
     });
     const sectionIds = sections.map(s => s.id);
-
-    // 🧱 Récupère tous les groupes liés à ces sections
     const groups = await prisma.groupedBulletPoint.findMany({
       where: { sectionId: { in: sectionIds } },
       select: { id: true }
     });
     const groupIds = groups.map(g => g.id);
 
-    // ✅ Supprime les contenus des groupes
-    await prisma.bulletPointContent.deleteMany({
-      where: { groupId: { in: groupIds } }
-    });
+    await prisma.bulletPointContent.deleteMany({ where: { groupId: { in: groupIds } } });
+    await prisma.groupedBulletPoint.deleteMany({ where: { sectionId: { in: sectionIds } } });
+    await prisma.bulletPoint.deleteMany({ where: { sectionId: { in: sectionIds } } });
+    await prisma.image.deleteMany({ where: { sectionId: { in: sectionIds } } });
+    await prisma.section.deleteMany({ where: { destinationId: id } });
+    await prisma.destination.delete({ where: { id } });
 
-    // ✅ Supprime les groupes de bullet points
-    await prisma.groupedBulletPoint.deleteMany({
-      where: { sectionId: { in: sectionIds } }
-    });
-
-    // ✅ Supprime les bullet points normaux
-    await prisma.bulletPoint.deleteMany({
-      where: { sectionId: { in: sectionIds } }
-    });
-
-    // ✅ Supprime les images des sections
-    await prisma.image.deleteMany({
-      where: { sectionId: { in: sectionIds } }
-    });
-
-    // ✅ Supprime les sections (maintenant que tout ce qui y est lié est supprimé)
-    await prisma.section.deleteMany({
-      where: { destinationId: id }
-    });
-
-    // ✅ Supprime la destination
-    await prisma.destination.delete({
-      where: { id }
-    });
-
+    req.flash('success', 'Destination supprimée avec succès !');
     res.redirect('/dashAdm');
   } catch (error) {
     console.error('❌ Erreur suppression destination :', error);
-    res.status(500).send('Erreur lors de la suppression');
+    req.flash('error', 'Erreur lors de la suppression de la destination.');
+    res.redirect('/dashAdm');
   }
 }
-
 
 // ✅ Affiche le formulaire de modification avec toutes les données liées
 export async function renderEditDestination(req, res) {
@@ -243,71 +242,56 @@ export async function renderEditDestination(req, res) {
         sections: {
           include: {
             images: true,
-            groupedPoints: {
-              include: {
-                contents: true
-              }
-            }
+            groupedPoints: { include: { contents: true } }
           }
         }
       }
     });
 
-    if (!destination) return res.status(404).send('Destination introuvable');
+    if (!destination) {
+      req.flash('error', 'Destination introuvable.');
+      return res.redirect('/dashAdm');
+    }
     res.render('admin/editDestination', { destination });
   } catch (err) {
     console.error('❌ Erreur récupération destination :', err);
-    res.status(500).send('Erreur serveur');
+    req.flash('error', 'Erreur lors de la récupération de la destination.');
+    res.redirect('/dashAdm');
   }
 }
 
 // ✅ Traite la mise à jour d'une destination
 export async function handleEditDestination(req, res) {
   const id = req.params.id;
-
   try {
     const { titre, pays, continent, description, deleted = {} } = req.body;
-
     const imagePrincipaleFile = req.files?.find(f => f.fieldname === 'imagePrincipale');
     const imagePrincipale = imagePrincipaleFile ? '/uploads/' + imagePrincipaleFile.filename : null;
 
-    // ✅ Mise à jour de la destination
+    // Mise à jour de la destination
     const updateData = { titre, pays, continent, description };
     if (imagePrincipale) updateData.imagePrincipale = imagePrincipale;
+    await prisma.destination.update({ where: { id }, data: updateData });
 
-    await prisma.destination.update({
-      where: { id },
-      data: updateData,
-    });
-
-    // ✅ Sécurise les champs deleted
-    const forceArray = (data) => {
-      if (!data) return [];
-      return Array.isArray(data) ? data : [data];
-    };
-
+    // Sécurise les champs deleted
+    const forceArray = (data) => { if (!data) return []; return Array.isArray(data) ? data : [data]; };
     const deletedSections = forceArray(deleted.deletedSections);
     const deletedGroups = forceArray(deleted.deletedGroups);
     const deletedBulletPoints = forceArray(deleted.deletedBulletPoints);
-    const deletedImages = forceArray(deleted.deletedImages);
+    const deletedImages = forceArray(deletedImages);
 
     if (deletedSections.length)
       await prisma.section.deleteMany({ where: { id: { in: deletedSections } } });
-
     if (deletedGroups.length)
       await prisma.groupedBulletPoint.deleteMany({ where: { id: { in: deletedGroups } } });
-
     if (deletedBulletPoints.length)
       await prisma.bulletPointContent.deleteMany({ where: { id: { in: deletedBulletPoints } } });
-
     if (deletedImages.length)
       await prisma.image.deleteMany({ where: { id: { in: deletedImages } } });
 
-    // ✅ Traitement des sections restantes
+    // Traitement des sections restantes
     const sectionsRaw = req.body.sections || [];
-    const sections = Array.isArray(sectionsRaw)
-      ? sectionsRaw
-      : Object.values(sectionsRaw);
+    const sections = Array.isArray(sectionsRaw) ? sectionsRaw : Object.values(sectionsRaw);
 
     for (let i = 0; i < sections.length; i++) {
       const sectionData = sections[i];
@@ -335,22 +319,18 @@ export async function handleEditDestination(req, res) {
         });
       }
 
-      // ✅ Traitement des groupes
+      // Traitement des groupes
       const groups = sectionData.groups || [];
       for (let j = 0; j < groups.length; j++) {
         let groupId;
-
-        // ✅ Si le groupe existe déjà → update + suppression des anciens bullet points
         if (groups[j].id) {
           await prisma.groupedBulletPoint.update({
             where: { id: groups[j].id },
             data: { titre: groups[j].titre, ordre: j },
           });
-
           await prisma.bulletPointContent.deleteMany({
             where: { groupId: groups[j].id },
           });
-
           groupId = groups[j].id;
         } else {
           const group = await prisma.groupedBulletPoint.create({
@@ -363,7 +343,7 @@ export async function handleEditDestination(req, res) {
           groupId = group.id;
         }
 
-        // ✅ Ajout des bullet points
+        // Ajout des bullet points
         const contents = groups[j].contenus || [];
         for (let k = 0; k < contents.length; k++) {
           await prisma.bulletPointContent.create({
@@ -376,7 +356,7 @@ export async function handleEditDestination(req, res) {
         }
       }
 
-      // ✅ Ajout des nouvelles images (si existantes)
+      // Ajout des nouvelles images (si existantes)
       const imageFiles = req.files?.filter(file => file.fieldname === `sections[${i}][images][]`) || [];
       for (const img of imageFiles) {
         await prisma.image.create({
@@ -388,10 +368,11 @@ export async function handleEditDestination(req, res) {
       }
     }
 
+    req.flash('success', 'Destination modifiée avec succès !');
     res.redirect('/dashAdm');
   } catch (err) {
     console.error('❌ Erreur mise à jour destination :', err);
-    res.status(500).send('Erreur lors de la mise à jour');
+    req.flash('error', 'Erreur lors de la mise à jour de la destination.');
+    res.redirect('/dashAdm');
   }
 }
-

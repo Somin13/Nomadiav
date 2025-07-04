@@ -1,15 +1,14 @@
 {% extends "base.twig" %}
 
 {% block style %}
-
-    <link rel="stylesheet" href="/assets/css/auth.css">
+  <link rel="stylesheet" href="/assets/css/auth.css">
 {% endblock %}
 
 {% block title %}Inscription – Nomadia{% endblock %}
 
 {% block main %}
-  <div >
-    <h1 >Inscription</h1>
+  <div>
+    <h1>Inscription</h1>
     <div class="divForm">
      <form action="/signup" method="POST" class="space-y-4">
       <input name="nom" type="text" placeholder="Nom">
@@ -19,12 +18,7 @@
       <input name="confirmPassword" type="password" placeholder="Confirmation">
       <button type="submit">S’enregistrer</button>
     </form>
-    
     </div>
    <p>Déjà inscrit ? <a href="/login">Se connecter</a></p>
   </div>
-
-</body>
-</html>
-
 {% endblock %}

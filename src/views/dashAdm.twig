@@ -1,10 +1,12 @@
+{# dashboardAdmin.twig #}
+{% extends "baseAdmin.twig" %}
 
 {% block style %}
   <link rel="stylesheet" href="/assets/css/dashboard.css">
 {% endblock %}
 
-
 {% block main %}
+<<<<<<< Updated upstream
 <!-- === CONTENEUR GLOBAL AVEC SIDEBAR === -->
 <div class="main-container">
 
@@ -23,49 +25,52 @@
 
   <!-- ✅ CONTENU ADMIN PRINCIPAL -->
   <main class="admin-main-content">
+=======
+>>>>>>> Stashed changes
   <!-- ✅ CARTES STATISTIQUES -->
-<div class="admin-stats-grid">
-  <div class="stat-card">
-    <div class="stat-icon">📍</div>
-    <div class="stat-info">
-      <div class="stat-number">{{ destinations|length }}</div>
-      <div class="stat-label">Destinations totales</div>
-    </div>
-  </div>
-
-  <div class="stat-card">
-    <div class="stat-icon">🕒</div>
-    <div class="stat-info">
-      <div class="stat-number">
-        {% if destinations|length > 0 %}
-          {{ destinations[0].createdAt|date('d/m/Y') }}
-        {% else %}
-          N/A
-        {% endif %}
+  <div class="admin-stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📍</div>
+      <div class="stat-info">
+        <div class="stat-number">{{ destinations|length }}</div>
+        <div class="stat-label">Destinations totales</div>
       </div>
-      <div class="stat-label">Dernier ajout</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🕒</div>
+      <div class="stat-info">
+        <div class="stat-number">
+          {% if destinations|length > 0 %}
+            {{ destinations[0].createdAt|date('d/m/Y') }}
+          {% else %}
+            N/A
+          {% endif %}
+        </div>
+        <div class="stat-label">Dernier ajout</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-info">
+        <div class="stat-number">{{ userCount }}</div>
+        <div class="stat-label">Utilisateurs inscrits</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👤</div>
+      <div class="stat-info">
+        <div class="stat-number">{{ app.session.user.email ?? 'Admin' }}</div>
+        <div class="stat-label">Connecté</div>
+      </div>
     </div>
   </div>
-  
-  <!--  Carte nombre d’utilisateurs -->
-<div class="stat-card">
-  <div class="stat-icon">👥</div>
-  <div class="stat-info">
-    <div class="stat-number">{{ userCount }}</div>
-    <div class="stat-label">Utilisateurs inscrits</div>
-  </div>
-</div>
 
+  <h1>Bienvenue dans le tableau de bord administrateur</h1>
+  <p>Tu pourras gérer les destinations ici.</p>
 
-  <div class="stat-card">
-    <div class="stat-icon">👤</div>
-    <div class="stat-info">
-      <div class="stat-number">{{ app.session.user.email ?? 'Admin' }}</div>
-      <div class="stat-label">Connecté</div>
-    </div>
-  </div>
-</div>
+  <a href="/admin/destinations/add" class="btn-ajouter">➕ Ajouter une destination</a>
 
+<<<<<<< Updated upstream
     <h1>Bienvenue dans le tableau de bord administrateur</h1>
     <p>Tu pourras gérer les destinations ici.</p>
 
@@ -104,4 +109,39 @@
 </div>
 
 
+=======
+  <table class="destinations-table">
+    <thead>
+      <tr>
+        <th>Destination</th>
+        <th>Pays</th>
+        <th>Commentaires</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dest in destinations %}
+        <tr>
+          <td>{{ dest.titre }}</td>
+          <td>{{ dest.pays }}</td>
+          <td style="text-align:center;">
+            {{ dest._count.reviews ?? 0 }}
+            <a href="/admin/destinations/{{ dest.id }}/reviews" class="admin-btn" style="margin-left:8px;padding:0.2em 0.8em;font-size:0.96em;">Voir les avis</a>
+          </td>
+          <td>
+            <a href="/admin/destinations/edit/{{ dest.id }}">✏️ Modifier</a>
+            |
+            <form action="/admin/destinations/delete/{{ dest.id }}" method="POST" style="display:inline;">
+              <button type="submit">🗑 Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="4">Aucune destination pour le moment.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+>>>>>>> Stashed changes
 {% endblock %}

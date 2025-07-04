@@ -1,0 +1,161 @@
+/* --- RESET GÉNÉRAL --- */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #fff7f1;
+  color: #333;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #792f1d;
+  margin-bottom: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: #ff6d2e;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #d94e12;
+}
+
+/* --- LAYOUT GLOBAL --- */
+.main-container {
+  display: flex;          /* FLEX sur le container global */
+  min-height: 100vh;
+}
+
+
+
+/* --- CONTENU PRINCIPAL --- */
+.admin-main-content {
+  flex: 1;
+  padding: 2rem;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* --- Titre page --- */
+.admin-main-content h1 {
+  font-size: 2.1rem;
+  margin-bottom: 2.2rem;
+  font-weight: bold;
+  color: #792f1d;
+  letter-spacing: 0.01em;
+}
+
+/* --- TABLEAU UTILISATEURS --- */
+.users-table {
+  width: 100%;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.users-table th,
+.users-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.users-table th {
+  background-color: #ffe8db;
+  color: #792f1d;
+  font-size: 1.05rem;
+}
+
+.users-table td {
+  background-color: #fffdfc;
+  color: #333;
+}
+
+.users-table tr:hover td {
+  background-color: #fff2ea;
+  transition: background 0.12s;
+}
+
+/* --- BOUTON SUPPRIMER --- */
+.users-table button[type="submit"] {
+  background: #ff6d2e;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px 0 rgba(255, 109, 46, 0.07);
+}
+
+.users-table button[type="submit"]:hover {
+  background: #e95512;
+  transform: scale(1.04);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 800px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+ 
+  .users-table th, .users-table td {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.97rem;
+  }
+  .sidebar-nav a {
+    padding: 0.6rem 0.8rem;
+    font-size: 1rem;
+  }
+}
+
+/* --- Scrollbar douce --- */
+.admin-main-content, .admin-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #ffd6ad #fffdfc;
+}
+.admin-main-content::-webkit-scrollbar,
+.admin-sidebar::-webkit-scrollbar {
+  width: 6px;
+  background: #fffdfc;
+}
+.admin-main-content::-webkit-scrollbar-thumb,
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: #ffd6ad;
+  border-radius: 12px;
+}
+
+.btn-view {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  margin-right: 0.3rem;
+  background: #ffe8db;
+  color: #ff6d2e;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-view:hover {
+  background: #ffdabd;
+  color: #792f1d;
+  transform: scale(1.05);
+  text-decoration: underline;
+}
