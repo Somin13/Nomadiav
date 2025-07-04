@@ -216,3 +216,21 @@ a:hover {
   text-decoration: underline;
 }
 
+  .banned-label {
+    color: #e95512;
+    font-weight: 600;
+    font-size: 0.97em;
+    margin-left: 0.2em;
+  }
+  .ban-btn, .unban-btn {
+    background: #ffe8db;
+    color: #e95512;
+    border: none;
+    border-radius: 8px;
+    padding: 0.3em 1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 0.5em;
+    transition: background .2s, color .2s;
+  }
+  .ban-btn:hover, .unban-btn:hover { background: #ffd3b9; color: #792f1d; }

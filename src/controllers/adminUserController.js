@@ -111,3 +111,50 @@ export async function banUser(req, res) {
   }
 }
 
+// Débannir un utilisateur
+export async function unbanUser(req, res) {
+  const { userId } = req.params;
+  await prisma.user.update({
+    where: { id: Number(userId) },
+    data: { isBanned: false }
+  });
+  res.redirect('/admin/adminUserView');
+}
+
+
+// POST /admin/users/:userId/ban  (depuis la liste utilisateurs)
+export async function banUserFromList(req, res) {
+  const { userId } = req.params;
+
+  // Empêche de bannir l’admin (ou soi-même)
+  if (req.session.user && Number(userId) === req.session.user.id) {
+    return res.status(403).send("Impossible de se bannir soi-même.");
+  }
+
+  try {
+    await prisma.user.update({
+      where: { id: Number(userId) },
+      data: { isBanned: true }
+    });
+    res.redirect('/admin/adminUserView'); // 👈 Redirection vers la liste utilisateurs
+  } catch (err) {
+    console.error('Erreur banUserFromList:', err);
+    res.status(500).send("Erreur lors du bannissement");
+  }
+}
+
+// Même chose pour unban
+export async function unbanUserFromList(req, res) {
+  const { userId } = req.params;
+  try {
+    await prisma.user.update({
+      where: { id: Number(userId) },
+      data: { isBanned: false }
+    });
+    res.redirect('/admin/adminUserView');
+  } catch (err) {
+    console.error('Erreur unbanUserFromList:', err);
+    res.status(500).send("Erreur lors du débannissement");
+  }
+}
+

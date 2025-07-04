@@ -1,25 +1,19 @@
-
-
 {% block style %}
 <link rel="stylesheet" href="/assets/css/adminView.css">
 {% endblock %}
 
 {% block main %}
- 
-
 <div class="admin-main-content">
- <!-- ✅ SIDEBAR FIXE À GAUCHE -->
   <aside class="admin-sidebar">
     <h2 class="sidebar-title">Admin</h2>
     <nav>
       <ul class="sidebar-nav">
         <li><a href="/dashAdm">🏝 Destinations</a></li>
-<li><a href="/admin/adminUserView">👥 Utilisateurs</a></li>
+        <li><a href="/admin/adminUserView">👥 Utilisateurs</a></li>
         <li><a href="/logout">🚪 Déconnexion</a></li>
       </ul>
     </nav>
   </aside>
-
   <main class="admin-contain">
    <h1>Liste des utilisateurs</h1>
   <table class="users-table">
@@ -37,18 +31,43 @@
   {% for user in users %}
     {% if user.role != 'admin' %}
       {% set hasUser = true %}
-      <tr>
-        <td>{{ user.nom }}</td>
+      <tr{% if user.isBanned %} style="opacity:0.67; background:#fff7f3;"{% endif %}>
+        <td>
+          {{ user.nom }}
+          {% if user.isBanned %}
+            <span class="banned-label">(Banni)</span>
+          {% endif %}
+        </td>
         <td>{{ user.prenom }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.adventurerType ?? 'N/A' }}</td>
-       <td>
-  <a href="/admin/users/{{ user.id }}" class="btn-view" title="Voir le profil">👁 Voir</a>
-  <form action="/admin/users/delete/{{ user.id }}" method="POST" style="display:inline;">
-    <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</button>
-  </form>
-</td>
+        <td>
+          <a href="/admin/users/{{ user.id }}" class="btn-view" title="Voir le profil">👁 Voir</a>
+          <form action="/admin/users/delete/{{ user.id }}" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Supprimer cet utilisateur ?')">🗑 Supprimer</button>
+          </form>
+         {% if user.isBanned %}
+  <a href="#" class="unban-btn"
+     onclick="event.preventDefault(); submitBanForm('{{ user.id }}', false)">✔ Débannir</a>
+{% else %}
+  <a href="#" class="ban-btn"
+     onclick="event.preventDefault(); submitBanForm('{{ user.id }}', true)">🚫 Bannir</a>
+{% endif %}
+<form id="banForm-{{ user.id }}" action="/admin/users/{{ user.id }}/ban" method="POST" style="display:none;">
+  <input type="hidden" name="unban" value="false">
+</form>
+<form id="unbanForm-{{ user.id }}" action="/admin/users/{{ user.id }}/unban" method="POST" style="display:none;">
+  <input type="hidden" name="unban" value="true">
+</form>
+<script>
+function submitBanForm(userId, ban) {
+  if (ban && !confirm('Bannir cet utilisateur ?')) return;
+  if (!ban && !confirm('Débannir cet utilisateur ?')) return;
+  document.getElementById(ban ? 'banForm-' + userId : 'unbanForm-' + userId).submit();
+}
+</script>
 
+        </td>
       </tr>
     {% endif %}
   {% endfor %}
@@ -58,9 +77,7 @@
     </tr>
   {% endif %}
 </tbody>
-
   </table>
   </main>
- 
 </div>
 {% endblock %}
